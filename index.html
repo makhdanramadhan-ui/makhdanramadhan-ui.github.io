@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M. Akhdan Ramadhan | Computer Engineering & AI Systems</title>
+  <meta name="description" content="Portfolio of M. Akhdan Ramadhan - Computer Engineering Technology student at IPB University specializing in Autonomous AI Agents, Reverse Engineering, and Distributed Systems.">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              dark: '#030712',
+              card: '#0B1120',
+              border: '#1e293b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #030712;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+    }
+    .grid-bg {
+      background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .glow-emerald {
+      box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.25);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0B1120;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #10b981;
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-gray-100 min-h-screen selection:bg-emerald-500 selection:text-black grid-bg custom-scrollbar">
+
+  <!-- Top Navigation -->
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-[#030712]/80 border-b border-gray-800/80 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
+        <a href="#about" class="font-mono font-bold tracking-tight text-white hover:text-emerald-400 transition-colors text-lg">
+          makhdan<span class="text-emerald-400">@lynx</span>:~$
+        </a>
+      </div>
+      <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-400">
+        <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+        <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
+        <a href="#skills" class="hover:text-emerald-400 transition-colors">Skills</a>
+        <a href="#terminal" class="hover:text-emerald-400 transition-colors">Terminal</a>
+        <a href="https://github.com/makhdanramadhan-ui" target="_blank" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-700 hover:border-emerald-500 text-white transition-all">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero / About Section -->
+  <section id="about" class="relative pt-20 pb-16 px-6 overflow-hidden">
+    <div id="hero" class="absolute -top-24"></div>
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-medium mb-6">
+        <span class="flex h-2 w-2 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span>IPB University • Computer Engineering Technology</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Building <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">Autonomous AI Agents</span> & Resilient Systems.
+      </h1>
+
+      <p class="text-lg sm:text-xl text-gray-400 max-w-3xl leading-relaxed mb-8">
+         I'm <strong class="text-white font-semibold">M. Akhdan Ramadhan</strong>, a Computer Engineering Technology student at IPB University building AI-assisted automation, browser tools, and cloud integrations through hands-on projects.
+      </p>
+
+      <div class="flex flex-wrap gap-4 items-center">
+        <a href="#projects" class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20">
+          <span>Explore Projects</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <a href="M-Akhdan-Ramadhan-CV.pdf" download class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 border border-emerald-500/50 text-emerald-300 font-semibold text-sm transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download CV (PDF)</span>
+        </a>
+        <a href="#terminal" class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-200 font-mono text-sm transition-all">
+          <i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i>
+          <span>Launch Interactive Shell</span>
+        </a>
+        <button onclick="copyEmail()" class="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-gray-900/60 hover:bg-gray-800 border border-gray-800 text-gray-300 text-sm transition-all">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          <span id="copy-email-text">Copy Email</span>
+        </button>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-gray-800/80">
+        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+          <div class="text-2xl font-bold font-mono text-emerald-400">AI + APIs</div>
+          <div class="text-xs text-gray-400 mt-1">Workflow Automation</div>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+          <div class="text-2xl font-bold font-mono text-cyan-400">5+ Real</div>
+          <div class="text-xs text-gray-400 mt-1">Personal Engineering Projects</div>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+          <div class="text-2xl font-bold font-mono text-indigo-400">Node.js</div>
+          <div class="text-xs text-gray-400 mt-1">Bots &amp; Background Services</div>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+          <div class="text-2xl font-bold font-mono text-amber-400">Zero Fluff</div>
+          <div class="text-xs text-gray-400 mt-1">Engineering Ethos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">Engineered Systems</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mt-1">Featured Autonomous Projects</h2>
+        </div>
+        <span class="hidden sm:inline-block px-3 py-1 rounded-full bg-gray-900 border border-gray-800 text-xs font-mono text-gray-400">
+          Grounded in Real Code
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Project 1: Reddit Job Proposal Assistant -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-emerald-500/50 p-6 transition-all duration-300 flex flex-col justify-between hover:glow-emerald">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-medium">
+                Autonomous Bot / Web Scraping
+              </span>
+              <span class="text-xs font-mono text-gray-500">Node.js • RSS • AI</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">
+              Reddit Job Discovery & Proposal Assistant
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Background service that scans public Reddit hiring feeds across five scheduled daily windows. Filters developer and automation jobs, drafts tailored proposals with a <code class="text-emerald-400 text-xs">High-Reasoning Agentic AI Harness</code>, and runs an AI quality review. Sends drafts and post links to Telegram for manual review and submission.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Reddit RSS</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">node:sqlite</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Agentic Harness</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Telegram API</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-emerald-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Personal Automation Project</span>
+            <span>5 Slots/Day Quota</span>
+          </div>
+        </div>
+
+        <!-- Project 2: IPB Mobile Attendance Reverse Engineering -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-cyan-500/50 p-6 transition-all duration-300 flex flex-col justify-between hover:glow-cyan">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-medium">
+                Reverse Engineering / SecOps
+              </span>
+              <span class="text-xs font-mono text-gray-500">Python • Smali</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-3">
+              IPB Mobile APK Reverse-Engineering & WhatsApp Daemon
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Studied Android APK bytecode and app network behavior using Apktool, Smali, and mitmproxy. Built a Python polling service that checks class schedules and attendance status, detects changes, and sends WhatsApp notifications through the Fonnte gateway.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">mitmproxy</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Apktool / Smali</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">TLS Bypass</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Fonnte WA Gateway</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-cyan-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Protocol Bridge</span>
+            <span>Campus Real-World</span>
+          </div>
+        </div>
+
+        <!-- Project 3: Distributed Cross-Device Failover Controller -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-indigo-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 font-mono text-xs font-medium">
+                Distributed Systems / DevOps
+              </span>
+              <span class="text-xs font-mono text-gray-500">PowerShell • Tailscale</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors mb-3">
+              Cross-Device Distributed Bot Server (`SERVER CONTROL`)
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Orchestration tool connecting a desktop and laptop over an encrypted Tailscale network. Provides a one-click handoff for three background agents by stopping the peer processes, transferring SQLite state and session files, and starting services on the selected machine with health checks.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Tailscale Mesh</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">HTTPS Reverse Proxy</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Atomic State Sync</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Daemon Watchdog</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-indigo-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> PC &lt;-&gt; Laptop Mesh</span>
+            <span>Controlled Service Handoff</span>
+          </div>
+        </div>
+
+        <!-- Project 4: SeaBank Serverless Edge Tracker & Telemetry -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-amber-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/30 text-amber-400 font-mono text-xs font-medium">
+                Edge Serverless / Mobile Telemetry
+              </span>
+              <span class="text-xs font-mono text-gray-500">Cloudflare Workers • D1</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-3">
+              SeaBank Edge Ledger & Anti-Theft Device Locator
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Serverless pipeline combining personal finance automation and device-location reporting. Ingests Android banking notifications via MacroDroid webhooks into Cloudflare D1. A Telegram command can request GPS coordinates and battery information from the user's phone.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Cloudflare Workers</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Cloudflare D1 SQL</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Android MacroDroid</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">GPS Telemetry</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-amber-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> 100% Serverless Edge</span>
+            <span>D1 SQL Storage</span>
+          </div>
+        </div>
+
+        <!-- Project 5: Autonomous Video Clipper Bot -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-emerald-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-medium">
+                Multimedia / AI Pipeline
+              </span>
+              <span class="text-xs font-mono text-gray-500">FFmpeg • Node.js</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">
+              ContentRewards AI Autonomous Video Pipeline
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Headless media generation engine creating vertical short-form videos automatically. Orchestrates FFmpeg filters (9:16 blur-pad crop, dynamic audio mixing, animated subtitle overlays) paired with LLM prompt analysis for high-retention hooks, monitored via Telegram Bot supervisor.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">FFmpeg</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Video Transcoding</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">AI Hook Extractor</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">SQLite Quotas</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-emerald-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Daily Automated Batch</span>
+            <span>Short-Form Video</span>
+          </div>
+        </div>
+
+        <!-- Project 6: Autonomous Binance Crypto Spot Bot -->
+        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-teal-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-teal-950/80 border border-teal-500/30 text-teal-400 font-mono text-xs font-medium">
+                Quantitative Trading / Docker
+              </span>
+              <span class="text-xs font-mono text-gray-500">n8n • PostgreSQL</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-teal-400 transition-colors mb-3">
+              Autonomous Binance Spot Trading Multi-Agent
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+              Personal cryptocurrency automation project combining API integration, AI-assisted market analysis, scheduled execution, and Telegram monitoring. Development has included Docker-based n8n workflows and a standalone Node.js service with persistent state, process watchdogs, and configurable risk checks.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Docker Compose</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">n8n Workflows</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">SearXNG Sandbox</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Process Watchdog</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
+            <span class="text-teal-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Strict Risk Guardrails</span>
+            <span>Personal Research Project</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Skills Section -->
+  <section id="skills" class="py-16 px-6 bg-gray-950/40 border-y border-gray-800/60">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">Capabilities</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Full-Stack Systems & AI Architecture</h2>
+        <p class="text-gray-400 text-sm mt-3">From low-level APK disassembly and embedded C to distributed edge cloud workers and multi-agent AI orchestration.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Skill Column 1 -->
+        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
+          <div class="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Autonomous AI & Systems</h3>
+            <p class="text-gray-400 text-xs mb-4">LLM integrations, prompt design, and long-running background services.</p>
+          <ul class="space-y-2 text-xs font-mono text-gray-300">
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> High-Reasoning Agentic AI & LLM Harnesses</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Cloudflare AI (Edge Inference Fallback)</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Puppeteer-Core & Anti-Fingerprinting</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Windows Silent VBS Daemons & Watchdogs</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Telegram Bot API Polling & Dispatch</li>
+          </ul>
+        </div>
+
+        <!-- Skill Column 2 -->
+        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
+          <div class="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5">
+            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Reverse Eng & Networking</h3>
+          <p class="text-gray-400 text-xs mb-4">Traffic inspection, mobile bytecode decompilation, and private mesh infrastructure.</p>
+          <ul class="space-y-2 text-xs font-mono text-gray-300">
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> Android APK Smali Decompilation</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> TLS Pinning & SSL Certificate Bypass</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> mitmproxy / mitmdump Traffic Analysis</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> Tailscale VPN Mesh & HTTPS Proxies</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> WireGuard & Cloudflare WARP Edge</li>
+          </ul>
+        </div>
+
+        <!-- Skill Column 3 -->
+        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
+          <div class="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-5">
+            <i data-lucide="server" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Cloud, Edge & Hardware</h3>
+          <p class="text-gray-400 text-xs mb-4">Serverless V8 runtimes, lightweight SQL engines, and embedded microcontrollers.</p>
+          <ul class="space-y-2 text-xs font-mono text-gray-300">
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Cloudflare Workers (V8 Serverless)</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Cloudflare D1 & Node:SQLite DatabaseSync</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Docker Compose & Microservices</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Embedded C / Arduino Hardware CLI</li>
+            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> FFmpeg Hardware Acceleration</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Terminal Section -->
+  <section id="terminal" class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="rounded-2xl bg-[#0B1120] border border-gray-800 shadow-2xl overflow-hidden font-mono text-sm">
+        <!-- Terminal Header -->
+        <div class="bg-gray-900/90 px-4 py-3 border-b border-gray-800 flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+            <span class="text-xs text-gray-400 ml-2 font-mono">akhdan@lynx-pc: ~ (zsh)</span>
+          </div>
+          <span class="text-xs text-emerald-400 font-mono">ONLINE</span>
+        </div>
+
+        <!-- Terminal Body -->
+        <div class="p-6 space-y-4 text-gray-300 min-h-[280px]">
+          <div>
+            <span class="text-emerald-400">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$ whoami
+            <div class="mt-1 text-gray-300">
+              M. Akhdan Ramadhan • Computer Engineering Technology @ IPB University.<br>
+              Autonomous Systems Architect, Bot Sniper Developer, and Reverse Engineering Enthusiast.
+            </div>
+          </div>
+
+          <div>
+            <span class="text-emerald-400">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$ cat philosophy.txt
+            <div class="mt-1 text-amber-300">
+              "Zero fluff. Verification first. The best code is minimal, resilient, and verified in production."
+            </div>
+          </div>
+
+          <div id="terminal-output"></div>
+
+          <!-- Interactive Command Input -->
+          <div class="flex items-center space-x-2 pt-2 border-t border-gray-800/80">
+            <span class="text-emerald-400 font-bold">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$
+              <input type="text" id="term-input" aria-label="Interactive terminal command" class="bg-transparent text-white focus:outline-none flex-grow min-w-0 font-mono" placeholder="type 'help', 'projects', 'stack', or 'contact'...">
+          </div>
+        </div>
+
+        <!-- Fast Command Shortcuts -->
+        <div class="bg-gray-900/40 px-6 py-2.5 border-t border-gray-800/80 flex flex-wrap gap-2 text-xs text-gray-400">
+          <span>Shortcuts:</span>
+          <button onclick="runCommand('projects')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">projects</button>
+          <button onclick="runCommand('stack')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">stack</button>
+          <button onclick="runCommand('education')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">education</button>
+          <button onclick="runCommand('contact')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">contact</button>
+          <button onclick="runCommand('clear')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-gray-800/80 px-6 text-center text-sm text-gray-500 font-mono">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        © 2026 M. Akhdan Ramadhan • IPB University
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="https://github.com/makhdanramadhan-ui" target="_blank" class="hover:text-emerald-400 transition-colors">GitHub</a>
+        <span>•</span>
+        <a href="mailto:m.akhdanramadhan@apps.ipb.ac.id" class="hover:text-emerald-400 transition-colors">Email</a>
+        <span>•</span>
+        <a href="#about" class="hover:text-emerald-400 transition-colors">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Terminal Script -->
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    function copyEmail() {
+      const email = 'm.akhdanramadhan@apps.ipb.ac.id';
+      navigator.clipboard.writeText(email).then(() => {
+        const btn = document.getElementById('copy-email-text');
+        btn.innerText = 'Copied to Clipboard!';
+        setTimeout(() => {
+          btn.innerText = 'Copy Email';
+        }, 2000);
+      });
+    }
+
+    const termInput = document.getElementById('term-input');
+    const termOutput = document.getElementById('terminal-output');
+
+    const commands = {
+      help: `Available commands:
+  - whoami     : Display developer identity & background
+  - projects   : List of personal engineering projects & tools
+  - stack      : Complete technical matrix & toolchain
+  - education  : Academic profile at IPB University
+  - contact    : Email, GitHub, and communication channels
+  - clear      : Clear terminal screen`,
+      whoami: `M. Akhdan Ramadhan
+Computer Engineering Technology — IPB University, Bogor.
+Specialty: Autonomous AI Pipelines, Headless Scraping, Reverse Engineering, Tailscale Mesh Networking.`,
+      projects: `Featured Systems:
+  1. [Reddit Job Assistant]  : RSS hiring feed scanner, AI proposal drafts, quality review, and Telegram alerts.
+  2. [IPB Mobile WhatsApp]    : Reverse-engineered campus Android APK with TLS pinning bypass & auto-attendance alerts.
+  3. [SERVER CONTROL]         : Distributed PC <-> Laptop failover orchestrator over Tailscale VPN mesh.
+  4. [SeaBank Edge Tracker]   : Serverless Cloudflare Workers + D1 SQL + MacroDroid GPS locator.
+  5. [ContentRewards Bot]     : Autonomous FFmpeg 9:16 vertical video clipping & AI hook generation.`,
+      stack: `Technologies:
+  - Languages  : Node.js (v24), Python 3.14, TypeScript, PowerShell, SQL, C/C++
+  - AI Brains  : High-Reasoning Agentic AI Harness, Cloudflare Workers AI
+  - Automation : Puppeteer-Core, MacroDroid OS hooks, Windows Task Scheduler
+  - Reverse Eng: Apktool, Smali, mitmproxy, TLS bypass, Wireshark
+  - Cloud/Mesh : Cloudflare Workers + D1, Docker Compose, Tailscale Mesh`,
+      education: `IPB University (Institut Pertanian Bogor)
+Program: Computer Engineering Technology
+Focus: Systems Architecture, Computer Networks, Embedded Systems, IoT, Edge Computing.`,
+      contact: `Get in touch:
+  - Email  : m.akhdanramadhan@apps.ipb.ac.id
+  - GitHub : https://github.com/makhdanramadhan-ui`,
+      clear: ''
+    };
+
+    function runCommand(cmd) {
+      cmd = cmd.trim().toLowerCase();
+      if (cmd === 'clear') {
+        termOutput.innerHTML = '';
+        return;
+      }
+
+      const response = commands[cmd] || `command not found: ${cmd}. Type 'help' for available commands.`;
+      const entry = document.createElement('div');
+      entry.className = 'mt-3';
+      const prompt = document.createElement('div');
+      prompt.className = 'text-emerald-400';
+      prompt.textContent = `akhdan@lynx-pc:~$ ${cmd}`;
+      const output = document.createElement('div');
+      output.className = 'mt-1 text-gray-300 whitespace-pre-line';
+      output.textContent = response;
+      entry.append(prompt, output);
+      termOutput.appendChild(entry);
+      termOutput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    termInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = termInput.value;
+        if (val) {
+          runCommand(val);
+          termInput.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
