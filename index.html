@@ -1,561 +1,713 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Muhamad Akhdan Ramadhan | Computer Engineering & AI Systems</title>
-  <meta name="description" content="Portfolio of Muhamad Akhdan Ramadhan - Computer Engineering Technology student at IPB University specializing in Autonomous AI Agents, Reverse Engineering, and Distributed Systems.">
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            brand: {
-              50: '#ecfdf5',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              dark: '#030712',
-              card: '#0B1120',
-              border: '#1e293b'
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      background-color: #030712;
-      color: #f3f4f6;
-      font-family: 'Inter', sans-serif;
-    }
-    .grid-bg {
-      background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    .glow-emerald {
-      box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.25);
-    }
-    .glow-cyan {
-      box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #0B1120;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #10b981;
-    }
-  </style>
-</head>
-<body class="bg-[#030712] text-gray-100 min-h-screen selection:bg-emerald-500 selection:text-black grid-bg custom-scrollbar">
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>
+      Muhamad Akhdan Ramadhan | Computer Engineering &amp; AI Systems
+    </title>
+    <meta
+      name="description"
+      content="Personal engineering projects by Muhamad Akhdan Ramadhan, a Computer Engineering Technology student at IPB University. AI agents, automation, cloud integrations, and developer tools."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="icon-definitions"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <symbol id="icon-github" viewBox="0 0 24 24">
+          <path
+            d="M9 19c-4.3 1.3-4.3-2.5-6-3m12 6v-3.9a3.4 3.4 0 0 0-.9-2.7c3-.3 6.2-1.5 6.2-6.9a5.4 5.4 0 0 0-1.5-3.8 5 5 0 0 0-.1-3.7S17.5.7 15 2.4a13.4 13.4 0 0 0-7 0C5.5.7 4.3 1 4.3 1a5 5 0 0 0-.1 3.7 5.4 5.4 0 0 0-1.5 3.8c0 5.4 3.2 6.6 6.2 6.9a3.4 3.4 0 0 0-.9 2.7V22"
+          />
+        </symbol>
+        <symbol id="icon-arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          />
+        </symbol>
+        <symbol id="icon-terminal" viewBox="0 0 24 24">
+          <path d="m4 17 6-5-6-5m10 12h6" />
+        </symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 6-10 7L2 6" />
+        </symbol>
+        <symbol id="icon-bot" viewBox="0 0 24 24">
+          <path d="M12 8V4H8M2 12h2m16 0h2M9 12v2m6-2v2" />
+          <rect x="4" y="8" width="16" height="12" rx="3" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+          <path d="m12 3 9 4v5c0 5-9 10-9 10S3 17 3 12V7l9-4Zm0 5v5m0 3h.01" />
+        </symbol>
+        <symbol id="icon-server" viewBox="0 0 24 24">
+          <rect x="2" y="3" width="20" height="7" rx="2" />
+          <rect x="2" y="14" width="20" height="7" rx="2" />
+          <path d="M6 6.5h.01M6 17.5h.01" />
+        </symbol>
+      </defs>
+    </svg>
 
-  <!-- Top Navigation -->
-  <nav class="sticky top-0 z-50 backdrop-blur-md bg-[#030712]/80 border-b border-gray-800/80 px-6 py-4">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <span class="h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
-        <a href="#about" class="font-mono font-bold tracking-tight text-white hover:text-emerald-400 transition-colors text-lg">
-          makhdan<span class="text-emerald-400">@lynx</span>:~$
-        </a>
-      </div>
-      <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-400">
-        <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
-        <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
-        <a href="#skills" class="hover:text-emerald-400 transition-colors">Skills</a>
-        <a href="#terminal" class="hover:text-emerald-400 transition-colors">Terminal</a>
-        <a href="https://github.com/makhdanramadhan-ui" target="_blank" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-700 hover:border-emerald-500 text-white transition-all">
-          <i data-lucide="github" class="w-4 h-4"></i>
-          <span>GitHub</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero / About Section -->
-  <section id="about" class="relative pt-20 pb-16 px-6 overflow-hidden">
-    <div id="hero" class="absolute -top-24"></div>
-    <div class="max-w-5xl mx-auto">
-      <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-medium mb-6">
-        <span class="flex h-2 w-2 relative">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-        <span>IPB University • Computer Engineering Technology</span>
-      </div>
-
-      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-        Building <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">Autonomous AI Agents</span> & Resilient Systems.
-      </h1>
-
-      <p class="text-lg sm:text-xl text-gray-400 max-w-3xl leading-relaxed mb-8">
-         I'm <strong class="text-white font-semibold">Muhamad Akhdan Ramadhan</strong>, a Computer Engineering Technology student at IPB University building AI-assisted automation, browser tools, and cloud integrations through hands-on projects.
-      </p>
-
-      <div class="flex flex-wrap gap-4 items-center">
-        <a href="#projects" class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20">
-          <span>Explore Projects</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </a>
-        <a href="M-Akhdan-Ramadhan-CV.pdf" download class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 border border-emerald-500/50 text-emerald-300 font-semibold text-sm transition-all">
-          <i data-lucide="download" class="w-4 h-4"></i>
-          <span>Download CV (PDF)</span>
-        </a>
-        <a href="#terminal" class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-200 font-mono text-sm transition-all">
-          <i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i>
-          <span>Launch Interactive Shell</span>
-        </a>
-        <button onclick="copyEmail()" class="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-gray-900/60 hover:bg-gray-800 border border-gray-800 text-gray-300 text-sm transition-all">
-          <i data-lucide="mail" class="w-4 h-4"></i>
-          <span id="copy-email-text">Copy Email</span>
-        </button>
-      </div>
-
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-gray-800/80">
-        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
-          <div class="text-2xl font-bold font-mono text-emerald-400">AI + APIs</div>
-          <div class="text-xs text-gray-400 mt-1">Workflow Automation</div>
+    <header class="site-header">
+      <nav class="nav-inner" aria-label="Main navigation">
+        <a class="wordmark" href="#about"
+          ><span class="status-dot" aria-hidden="true"></span>makhdan<span
+            class="accent"
+            >@lynx</span
+          >:~$</a
+        >
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#terminal">Terminal</a>
+          <a
+            class="github-link"
+            href="https://github.com/makhdanramadhan-ui"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg class="icon" aria-hidden="true">
+              <use href="#icon-github" />
+            </svg
+            >GitHub</a
+          >
         </div>
-        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
-          <div class="text-2xl font-bold font-mono text-cyan-400">5+ Real</div>
-          <div class="text-xs text-gray-400 mt-1">Personal Engineering Projects</div>
-        </div>
-        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
-          <div class="text-2xl font-bold font-mono text-indigo-400">Node.js</div>
-          <div class="text-xs text-gray-400 mt-1">Bots &amp; Background Services</div>
-        </div>
-        <div class="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
-          <div class="text-2xl font-bold font-mono text-amber-400">Zero Fluff</div>
-          <div class="text-xs text-gray-400 mt-1">Engineering Ethos</div>
-        </div>
-      </div>
-    </div>
-  </section>
+      </nav>
+    </header>
 
-  <!-- Projects Section -->
-  <section id="projects" class="py-16 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex items-center justify-between mb-12">
-        <div>
-          <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">Engineered Systems</span>
-          <h2 class="text-3xl sm:text-4xl font-bold text-white mt-1">Featured Autonomous Projects</h2>
-        </div>
-        <span class="hidden sm:inline-block px-3 py-1 rounded-full bg-gray-900 border border-gray-800 text-xs font-mono text-gray-400">
-          Grounded in Real Code
-        </span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <!-- Project 1: Reddit Job Proposal Assistant -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-emerald-500/50 p-6 transition-all duration-300 flex flex-col justify-between hover:glow-emerald">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-medium">
-                Autonomous Bot / Web Scraping
-              </span>
-              <span class="text-xs font-mono text-gray-500">Node.js • RSS • AI</span>
+    <main id="main" tabindex="-1">
+      <section
+        class="hero section-pad"
+        id="about"
+        aria-labelledby="hero-heading"
+      >
+        <div class="hero-inner">
+          <div class="student-badge">
+            <span class="status-dot" aria-hidden="true"></span>IPB University ·
+            Computer Engineering Technology
+          </div>
+          <h1 id="hero-heading">
+            Building
+            <span class="gradient-text">Autonomous AI Agents</span>
+            &amp; Resilient Systems.
+          </h1>
+          <p class="hero-intro">
+            I'm <strong>Muhamad Akhdan Ramadhan</strong>, a Computer Engineering
+            Technology student at IPB University building AI-assisted
+            automation, browser tools, and cloud integrations through hands-on
+            projects.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects"
+              >Explore Projects<svg class="icon" aria-hidden="true">
+                <use href="#icon-arrow" />
+              </svg></a
+            >
+            <a class="button button-cv" href="M-Akhdan-Ramadhan-CV.pdf" download
+              ><svg class="icon" aria-hidden="true">
+                <use href="#icon-download" />
+              </svg
+              >Download CV (PDF)</a
+            >
+            <a class="button button-shell" href="#terminal"
+              ><svg class="icon accent" aria-hidden="true">
+                <use href="#icon-terminal" />
+              </svg
+              >Launch Interactive Shell</a
+            >
+            <button class="button button-email" type="button" id="copy-email">
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-mail" />
+              </svg><span id="copy-email-text" role="status">Copy Email</span>
+            </button>
+          </div>
+          <div class="quick-metrics">
+            <div class="metric">
+              <div class="metric-value accent">AI + APIs</div>
+              <div class="metric-label">Workflow Automation</div>
             </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">
-              Reddit Job Discovery & Proposal Assistant
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Background service that scans public Reddit hiring feeds across five scheduled daily windows. Filters developer and automation jobs, drafts tailored proposals with a <code class="text-emerald-400 text-xs">High-Reasoning Agentic AI Harness</code>, and runs an AI quality review. Sends drafts and post links to Telegram for manual review and submission.
+            <div class="metric">
+              <div class="metric-value cyan">
+                <span id="project-count">11</span>
+                Projects
+              </div>
+              <div class="metric-label">Personal Engineering Projects</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value indigo">Node.js</div>
+              <div class="metric-label">Bots &amp; Background Services</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value amber">Build &amp; Test</div>
+              <div class="metric-label">Hands-on Engineering</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section-pad"
+        id="projects"
+        aria-labelledby="projects-heading"
+      >
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Engineered Systems</span>
+              <h2 id="projects-heading">Featured Engineering Projects</h2>
+            </div>
+            <span class="section-note">Personal projects · built hands-on</span>
+          </div>
+          <div class="project-grid">
+            <article class="project-card" id="project-reddit">
+              <div class="card-top">
+                <span class="category">AI Automation / Web Scraping</span
+                ><span class="card-stack">Node.js · RSS · AI</span>
+              </div>
+              <h3>Reddit Job Discovery &amp; Proposal Assistant</h3>
+              <p class="project-description">
+                Background service that scans public Reddit hiring feeds in
+                scheduled daily windows. Filters software and automation roles,
+                drafts tailored proposals, and runs an AI quality review before
+                notifying Telegram.
+              </p>
+              <p class="project-detail">
+                Sends applications only when a post requests email. Persists
+                delivery state and retries safe temporary SMTP failures. Reddit
+                DMs stay manual; email replies need Telegram approval.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Reddit RSS</li>
+                <li>SQLite</li>
+                <li>Gmail SMTP / IMAP</li>
+                <li>Telegram API</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Automation Project</span
+                ><span>Guarded Email Delivery</span>
+              </div>
+            </article>
+            <article class="project-card theme-cyan" id="project-campus">
+              <div class="card-top">
+                <span class="category">Reverse Engineering / Networking</span
+                ><span class="card-stack">Python · Smali</span>
+              </div>
+              <h3>IPB Mobile APK Reverse-Engineering &amp; WhatsApp Daemon</h3>
+              <p class="project-description">
+                Studied Android APK bytecode and app network behavior using
+                Apktool, Smali, and mitmproxy. Built a Python polling service
+                that checks class schedules and attendance status, detects
+                changes, and sends WhatsApp notifications through the Fonnte
+                gateway.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>mitmproxy</li>
+                <li>Apktool / Smali</li>
+                <li>Network Inspection</li>
+                <li>Fonnte WA Gateway</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Learning Project</span
+                ><span>Campus Notifications</span>
+              </div>
+            </article>
+            <article class="project-card theme-indigo" id="project-controller">
+              <div class="card-top">
+                <span class="category">Distributed Systems / DevOps</span
+                ><span class="card-stack">PowerShell · Tailscale</span>
+              </div>
+              <h3>Cross-Device Bot Server Controller</h3>
+              <p class="project-description">
+                Orchestration tool connecting a desktop and laptop over a
+                private Tailscale network. Provides a one-click handoff for
+                background agents: stops peer processes, transfers SQLite state
+                and session files, then starts services on the selected machine
+                with health checks.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Node.js</li>
+                <li>PowerShell</li>
+                <li>Tailscale Mesh</li>
+                <li>SQLite State Transfer</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Desktop ↔ Laptop</span
+                ><span>Controlled Service Handoff</span>
+              </div>
+            </article>
+            <article class="project-card theme-amber" id="project-expenses">
+              <div class="card-top">
+                <span class="category">Edge Serverless / Mobile</span
+                ><span class="card-stack">Cloudflare Workers · D1</span>
+              </div>
+              <h3>SeaBank Edge Ledger &amp; Device Locator</h3>
+              <p class="project-description">
+                Serverless pipeline combining personal expense tracking and
+                device-location reporting. Ingests Android banking notifications
+                via MacroDroid webhooks into Cloudflare D1. A Telegram command
+                requests GPS coordinates and battery information from my own
+                phone.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Cloudflare Workers</li>
+                <li>Cloudflare D1 SQL</li>
+                <li>Android MacroDroid</li>
+                <li>Telegram API</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Finance &amp; Device Tool</span
+                ><span>Serverless Backend</span>
+              </div>
+            </article>
+            <article class="project-card" id="project-video">
+              <div class="card-top">
+                <span class="category">Multimedia / AI Pipeline</span
+                ><span class="card-stack">FFmpeg · Node.js</span>
+              </div>
+              <h3>ContentRewards AI Video Processing Pipeline</h3>
+              <p class="project-description">
+                Headless media pipeline for vertical short-form videos. Combines
+                FFmpeg filters for 9:16 blur-padding, audio mixing, and text
+                overlays with AI-assisted hook generation. Stores processing
+                state and reports batch progress through Telegram.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>FFmpeg</li>
+                <li>Video Transcoding</li>
+                <li>LLM Integration</li>
+                <li>SQLite</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Media Automation</span
+                ><span>Short-Form Video</span>
+              </div>
+            </article>
+            <article class="project-card theme-teal" id="project-binance">
+              <div class="card-top">
+                <span class="category">API Integration / Trading Research</span
+                ><span class="card-stack">n8n · Node.js</span>
+              </div>
+              <h3>Binance Spot Trading Automation</h3>
+              <p class="project-description">
+                Personal cryptocurrency automation project combining API
+                integration, AI-assisted market analysis, scheduled execution,
+                and Telegram monitoring. Development has included Docker-based
+                n8n workflows and a standalone Node.js service with persistent
+                state and configurable risk checks.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Docker Compose</li>
+                <li>n8n Workflows</li>
+                <li>Exchange APIs</li>
+                <li>Process Watchdog</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Research Project</span
+                ><span>No Return Guarantees</span>
+              </div>
+            </article>
+
+            <article class="project-card theme-cyan" id="project-audit">
+              <div class="card-top">
+                <span class="category">Browser Automation / PDF Reports</span>
+              </div>
+              <h3>Evidence-Based Website Audit Bot</h3>
+              <p class="project-description">
+                Checks public business websites for reproducible issues such as
+                mobile overflow and broken links. Uses two browser observations
+                to support findings, then generates a one-page PDF with
+                evidence, suggested fixes, and retest instructions.
+              </p>
+              <p class="project-detail">
+                An AI reviewer checks report and email wording before scheduled
+                delivery. SQLite tracks leads and dispatches; Telegram reports
+                progress, with report claims grounded in observed browser
+                evidence.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Node.js</li>
+                <li>Puppeteer</li>
+                <li>PDF Generation</li>
+                <li>SQLite</li>
+                <li>SMTP / IMAP</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Automation Project</span
+                ><span>Evidence Before Claims</span>
+              </div>
+            </article>
+            <article class="project-card theme-indigo" id="project-summarizer">
+              <div class="card-top">
+                <span class="category">Messaging / AI Summarization</span>
+              </div>
+              <h3>WhatsApp → Telegram Chat Summarizer</h3>
+              <p class="project-description">
+                A personal assistant for catching up on WhatsApp group
+                conversations from Telegram. A linked WhatsApp session stores
+                message history in local SQLite; group search and flexible time
+                ranges select the context to summarize.
+              </p>
+              <p class="project-detail">
+                Produces structured summaries of topics, decisions, and
+                follow-up actions. Supports preset windows and custom date/time
+                ranges to keep long conversations manageable.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Node.js</li>
+                <li>Baileys</li>
+                <li>SQLite</li>
+                <li>LLM API</li>
+                <li>Telegram API</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Productivity Tool</span
+                ><span>Searchable Chat Context</span>
+              </div>
+            </article>
+            <article class="project-card" id="project-tracker">
+              <div class="card-top">
+                <span class="category">Developer Tooling / Observability</span>
+              </div>
+              <h3>Master Agent Tracker &amp; Watchdog</h3>
+              <p class="project-description">
+                A Telegram control panel for six background automation services.
+                Brings process status, scheduled work, and activity summaries
+                into one place, with commands to restart an individual service
+                or the managed group.
+              </p>
+              <p class="project-detail">
+                A watchdog monitors service processes and works with local
+                startup scripts. Helps inspect and manage the tools I run
+                without opening a separate terminal for each one.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Node.js</li>
+                <li>Windows Processes</li>
+                <li>Watchdog Scripts</li>
+                <li>Telegram API</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Infrastructure Tool</span
+                ><span>Multi-Service Monitoring</span>
+              </div>
+            </article>
+            <article class="project-card theme-teal" id="project-onchain">
+              <div class="card-top">
+                <span class="category">Web3 / On-Chain Data</span>
+              </div>
+              <h3>Base On-Chain Monitoring &amp; DEX Bot</h3>
+              <p class="project-description">
+                Personal research project that monitors wallet activity on Base,
+                checks token and liquidity data, and evaluates quoted Uniswap
+                routes before execution. Persists positions and transaction
+                state in SQLite and exposes monitoring commands through
+                Telegram.
+              </p>
+              <p class="project-detail">
+                Includes checks for missing security data and ambiguous
+                transactions. Trading remains risky; automated checks do not
+                establish token safety or guarantee returns.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>ethers.js</li>
+                <li>Base L2</li>
+                <li>Uniswap V3</li>
+                <li>GoPlus API</li>
+                <li>SQLite</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Research Project</span
+                ><span>On-Chain Integration</span>
+              </div>
+            </article>
+            <article class="project-card theme-amber" id="project-affiliate">
+              <div class="card-top">
+                <span class="category">Media Automation / Quality Gates</span>
+              </div>
+              <h3>Affiliate Video Production Pipeline</h3>
+              <p class="project-description">
+                A product-video pipeline combining product and material
+                validation, Indonesian narration, subtitles, vertical rendering,
+                and AI-assisted visual review.
+              </p>
+              <p class="project-detail">
+                Checkpoints let interrupted stages resume. Approval stays tied
+                to the reviewed video file, and publishing is confirmed only
+                against a verified post URL.
+              </p>
+              <ul class="tech-tags" aria-label="Technologies">
+                <li>Node.js</li>
+                <li>FFmpeg</li>
+                <li>TTS</li>
+                <li>Browser Automation</li>
+                <li>SQLite</li>
+              </ul>
+              <div class="card-footer">
+                <span>✓ Personal Automation Project</span
+                ><span>Video Production Workflow</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="skills-section section-pad"
+        id="skills"
+        aria-labelledby="skills-heading"
+      >
+        <div class="container">
+          <div class="skills-heading">
+            <span class="eyebrow">Capabilities</span>
+            <h2 id="skills-heading">Systems, Automation &amp; AI</h2>
+            <p>
+              Tools I work with across personal projects, from browser
+              automation and Android networking to background services and
+              serverless integrations.
             </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Reddit RSS</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">node:sqlite</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Agentic Harness</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Telegram API</span>
-            </div>
           </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-emerald-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Personal Automation Project</span>
-            <span>5 Slots/Day Quota</span>
-          </div>
-        </div>
-
-        <!-- Project 2: IPB Mobile Attendance Reverse Engineering -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-cyan-500/50 p-6 transition-all duration-300 flex flex-col justify-between hover:glow-cyan">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-medium">
-                Reverse Engineering / SecOps
-              </span>
-              <span class="text-xs font-mono text-gray-500">Python • Smali</span>
-            </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-3">
-              IPB Mobile APK Reverse-Engineering & WhatsApp Daemon
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Studied Android APK bytecode and app network behavior using Apktool, Smali, and mitmproxy. Built a Python polling service that checks class schedules and attendance status, detects changes, and sends WhatsApp notifications through the Fonnte gateway.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">mitmproxy</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Apktool / Smali</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">TLS Bypass</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Fonnte WA Gateway</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-cyan-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Protocol Bridge</span>
-            <span>Campus Real-World</span>
-          </div>
-        </div>
-
-        <!-- Project 3: Distributed Cross-Device Failover Controller -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-indigo-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 font-mono text-xs font-medium">
-                Distributed Systems / DevOps
-              </span>
-              <span class="text-xs font-mono text-gray-500">PowerShell • Tailscale</span>
-            </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors mb-3">
-              Cross-Device Distributed Bot Server (`SERVER CONTROL`)
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Orchestration tool connecting a desktop and laptop over an encrypted Tailscale network. Provides a one-click handoff for three background agents by stopping the peer processes, transferring SQLite state and session files, and starting services on the selected machine with health checks.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Tailscale Mesh</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">HTTPS Reverse Proxy</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Atomic State Sync</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Daemon Watchdog</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-indigo-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> PC &lt;-&gt; Laptop Mesh</span>
-            <span>Controlled Service Handoff</span>
+          <div class="skill-grid">
+            <article class="skill-card">
+              <div class="skill-icon">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-bot" />
+                </svg>
+              </div>
+              <h3>AI &amp; Automation</h3>
+              <p>
+                LLM integrations, browser tools, and long-running background
+                services.
+              </p>
+              <ul class="skill-list">
+                <li>LLM APIs, structured output &amp; quality review</li>
+                <li>Puppeteer browser automation</li>
+                <li>Telegram Bot API polling &amp; dispatch</li>
+                <li>Gmail SMTP / IMAP integration</li>
+                <li>Scheduled jobs, retries &amp; approval flows</li>
+              </ul>
+            </article>
+            <article class="skill-card theme-cyan">
+              <div class="skill-icon">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-shield" />
+                </svg>
+              </div>
+              <h3>Reverse Eng &amp; Networking</h3>
+              <p>
+                Traffic inspection, Android bytecode exploration, and private
+                networking.
+              </p>
+              <ul class="skill-list">
+                <li>Android APK analysis with Apktool &amp; Smali</li>
+                <li>mitmproxy traffic inspection</li>
+                <li>HTTP APIs &amp; webhook integrations</li>
+                <li>Tailscale private mesh networking</li>
+                <li>PowerShell service handoff scripts</li>
+              </ul>
+            </article>
+            <article class="skill-card theme-indigo">
+              <div class="skill-icon">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-server" />
+                </svg>
+              </div>
+              <h3>Cloud, Data &amp; Media</h3>
+              <p>
+                Serverless backends, persistent application state, and media
+                processing.
+              </p>
+              <ul class="skill-list">
+                <li>Cloudflare Workers &amp; D1</li>
+                <li>Node.js, Python &amp; SQL</li>
+                <li>SQLite persistence &amp; checkpointing</li>
+                <li>Docker Compose &amp; n8n workflows</li>
+                <li>FFmpeg video rendering &amp; audio filters</li>
+              </ul>
+            </article>
           </div>
         </div>
+      </section>
 
-        <!-- Project 4: SeaBank Serverless Edge Tracker & Telemetry -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-amber-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/30 text-amber-400 font-mono text-xs font-medium">
-                Edge Serverless / Mobile Telemetry
-              </span>
-              <span class="text-xs font-mono text-gray-500">Cloudflare Workers • D1</span>
+      <section
+        class="section-pad"
+        id="terminal"
+        aria-label="Interactive portfolio terminal"
+      >
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-title">
+              <span class="window-dot red" aria-hidden="true"></span
+              ><span class="window-dot yellow" aria-hidden="true"></span
+              ><span class="window-dot green" aria-hidden="true"></span
+              ><span>akhdan@lynx-pc: ~</span>
             </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-3">
-              SeaBank Edge Ledger & Anti-Theft Device Locator
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Serverless pipeline combining personal finance automation and device-location reporting. Ingests Android banking notifications via MacroDroid webhooks into Cloudflare D1. A Telegram command can request GPS coordinates and battery information from the user's phone.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Cloudflare Workers</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Cloudflare D1 SQL</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Android MacroDroid</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">GPS Telemetry</span>
+            <span class="accent">PORTFOLIO SHELL</span>
+          </div>
+          <div class="terminal-body">
+            <div>
+              <div class="prompt">
+                <span>akhdan@lynx-pc</span>:<span class="cyan">~</span>$ whoami
+              </div>
+              <p>
+                Muhamad Akhdan Ramadhan · Computer Engineering Technology @ IPB
+                University.<br>Building AI-assisted tools, bots, and
+                integrations through personal projects.
+              </p>
             </div>
-          </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-amber-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> 100% Serverless Edge</span>
-            <span>D1 SQL Storage</span>
-          </div>
-        </div>
-
-        <!-- Project 5: Autonomous Video Clipper Bot -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-emerald-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-medium">
-                Multimedia / AI Pipeline
-              </span>
-              <span class="text-xs font-mono text-gray-500">FFmpeg • Node.js</span>
+            <div>
+              <div class="prompt">
+                <span>akhdan@lynx-pc</span>:<span class="cyan">~</span>$ cat
+                philosophy.txt
+              </div>
+              <p class="amber" id="terminal-philosophy">
+                "Build useful tools. Check the evidence. Be honest about the
+                limits."
+              </p>
             </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">
-              ContentRewards AI Autonomous Video Pipeline
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Headless media generation engine creating vertical short-form videos automatically. Orchestrates FFmpeg filters (9:16 blur-pad crop, dynamic audio mixing, animated subtitle overlays) paired with LLM prompt analysis for high-retention hooks, monitored via Telegram Bot supervisor.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">FFmpeg</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Video Transcoding</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">AI Hook Extractor</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">SQLite Quotas</span>
-            </div>
+            <div
+              id="terminal-output"
+              role="log"
+              aria-live="polite"
+              aria-label="Command output"
+            ></div>
+            <form class="terminal-input-row" id="terminal-form">
+              <label class="prompt" for="term-input"
+                ><span class="terminal-username">akhdan@lynx-pc</span>:<span
+                  class="cyan"
+                  >~</span
+                >$<span class="sr-only">Portfolio command</span></label
+              ><input
+                type="text"
+                id="term-input"
+                name="command"
+                maxlength="80"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Type 'help' to explore…"
+                aria-describedby="terminal-hint"
+              >
+            </form>
           </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-emerald-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Daily Automated Batch</span>
-            <span>Short-Form Video</span>
+          <div class="terminal-shortcuts">
+            <span>Shortcuts:</span
+            ><button type="button" data-command="projects">projects</button
+            ><button type="button" data-command="stack">stack</button
+            ><button type="button" data-command="education">education</button
+            ><button type="button" data-command="contact">contact</button
+            ><button type="button" data-command="clear">clear</button>
           </div>
+          <p class="terminal-hint" id="terminal-hint">
+            An interactive portfolio demo, not a system shell.
+          </p>
         </div>
+      </section>
+    </main>
 
-        <!-- Project 6: Autonomous Binance Crypto Spot Bot -->
-        <div class="group rounded-2xl bg-[#0B1120] border border-gray-800 hover:border-teal-500/50 p-6 transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-full bg-teal-950/80 border border-teal-500/30 text-teal-400 font-mono text-xs font-medium">
-                Quantitative Trading / Docker
-              </span>
-              <span class="text-xs font-mono text-gray-500">n8n • PostgreSQL</span>
-            </div>
-            <h3 class="text-xl font-bold text-white group-hover:text-teal-400 transition-colors mb-3">
-              Autonomous Binance Spot Trading Multi-Agent
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-4">
-              Personal cryptocurrency automation project combining API integration, AI-assisted market analysis, scheduled execution, and Telegram monitoring. Development has included Docker-based n8n workflows and a standalone Node.js service with persistent state, process watchdogs, and configurable risk checks.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Docker Compose</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">n8n Workflows</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">SearXNG Sandbox</span>
-              <span class="px-2.5 py-1 rounded-md bg-gray-900 text-xs font-mono text-gray-300">Process Watchdog</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span class="text-teal-400 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Strict Risk Guardrails</span>
-            <span>Personal Research Project</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Technical Skills Section -->
-  <section id="skills" class="py-16 px-6 bg-gray-950/40 border-y border-gray-800/60">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">Capabilities</span>
-        <h2 class="text-3xl font-bold text-white mt-1">Full-Stack Systems & AI Architecture</h2>
-        <p class="text-gray-400 text-sm mt-3">From low-level APK disassembly and embedded C to distributed edge cloud workers and multi-agent AI orchestration.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- Skill Column 1 -->
-        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
-          <div class="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5">
-            <i data-lucide="bot" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Autonomous AI & Systems</h3>
-            <p class="text-gray-400 text-xs mb-4">LLM integrations, prompt design, and long-running background services.</p>
-          <ul class="space-y-2 text-xs font-mono text-gray-300">
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> High-Reasoning Agentic AI & LLM Harnesses</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Cloudflare AI (Edge Inference Fallback)</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Puppeteer-Core & Anti-Fingerprinting</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Windows Silent VBS Daemons & Watchdogs</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-400"></i> Telegram Bot API Polling & Dispatch</li>
-          </ul>
-        </div>
-
-        <!-- Skill Column 2 -->
-        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
-          <div class="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5">
-            <i data-lucide="shield-alert" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Reverse Eng & Networking</h3>
-          <p class="text-gray-400 text-xs mb-4">Traffic inspection, mobile bytecode decompilation, and private mesh infrastructure.</p>
-          <ul class="space-y-2 text-xs font-mono text-gray-300">
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> Android APK Smali Decompilation</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> TLS Pinning & SSL Certificate Bypass</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> mitmproxy / mitmdump Traffic Analysis</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> Tailscale VPN Mesh & HTTPS Proxies</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i> WireGuard & Cloudflare WARP Edge</li>
-          </ul>
-        </div>
-
-        <!-- Skill Column 3 -->
-        <div class="p-6 rounded-2xl bg-[#0B1120] border border-gray-800">
-          <div class="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-5">
-            <i data-lucide="server" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Cloud, Edge & Hardware</h3>
-          <p class="text-gray-400 text-xs mb-4">Serverless V8 runtimes, lightweight SQL engines, and embedded microcontrollers.</p>
-          <ul class="space-y-2 text-xs font-mono text-gray-300">
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Cloudflare Workers (V8 Serverless)</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Cloudflare D1 & Node:SQLite DatabaseSync</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Docker Compose & Microservices</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> Embedded C / Arduino Hardware CLI</li>
-            <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400"></i> FFmpeg Hardware Acceleration</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Terminal Section -->
-  <section id="terminal" class="py-16 px-6">
-    <div class="max-w-4xl mx-auto">
-      <div class="rounded-2xl bg-[#0B1120] border border-gray-800 shadow-2xl overflow-hidden font-mono text-sm">
-        <!-- Terminal Header -->
-        <div class="bg-gray-900/90 px-4 py-3 border-b border-gray-800 flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-            <span class="text-xs text-gray-400 ml-2 font-mono">akhdan@lynx-pc: ~ (zsh)</span>
-          </div>
-          <span class="text-xs text-emerald-400 font-mono">ONLINE</span>
-        </div>
-
-        <!-- Terminal Body -->
-        <div class="p-6 space-y-4 text-gray-300 min-h-[280px]">
-          <div>
-            <span class="text-emerald-400">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$ whoami
-            <div class="mt-1 text-gray-300">
-              Muhamad Akhdan Ramadhan • Computer Engineering Technology @ IPB University.<br>
-              Autonomous Systems Architect, Bot Sniper Developer, and Reverse Engineering Enthusiast.
-            </div>
-          </div>
-
-          <div>
-            <span class="text-emerald-400">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$ cat philosophy.txt
-            <div class="mt-1 text-amber-300">
-              "Zero fluff. Verification first. The best code is minimal, resilient, and verified in production."
-            </div>
-          </div>
-
-          <div id="terminal-output"></div>
-
-          <!-- Interactive Command Input -->
-          <div class="flex items-center space-x-2 pt-2 border-t border-gray-800/80">
-            <span class="text-emerald-400 font-bold">akhdan@lynx-pc</span>:<span class="text-cyan-400">~</span>$
-              <input type="text" id="term-input" aria-label="Interactive terminal command" class="bg-transparent text-white focus:outline-none flex-grow min-w-0 font-mono" placeholder="type 'help', 'projects', 'stack', or 'contact'...">
-          </div>
-        </div>
-
-        <!-- Fast Command Shortcuts -->
-        <div class="bg-gray-900/40 px-6 py-2.5 border-t border-gray-800/80 flex flex-wrap gap-2 text-xs text-gray-400">
-          <span>Shortcuts:</span>
-          <button onclick="runCommand('projects')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">projects</button>
-          <button onclick="runCommand('stack')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">stack</button>
-          <button onclick="runCommand('education')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">education</button>
-          <button onclick="runCommand('contact')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">contact</button>
-          <button onclick="runCommand('clear')" class="hover:text-emerald-400 text-gray-300 underline underline-offset-2">clear</button>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>© 2026 Muhamad Akhdan Ramadhan · IPB University</div>
+        <div class="footer-links">
+          <a
+            href="https://github.com/makhdanramadhan-ui"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          ><a href="mailto:m.akhdanramadhan@apps.ipb.ac.id">Email</a
+          ><a href="#about">Back to top</a>
         </div>
       </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="py-12 border-t border-gray-800/80 px-6 text-center text-sm text-gray-500 font-mono">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
-        © 2026 Muhamad Akhdan Ramadhan • IPB University
-      </div>
-      <div class="flex items-center space-x-4">
-        <a href="https://github.com/makhdanramadhan-ui" target="_blank" class="hover:text-emerald-400 transition-colors">GitHub</a>
-        <span>•</span>
-        <a href="mailto:m.akhdanramadhan@apps.ipb.ac.id" class="hover:text-emerald-400 transition-colors">Email</a>
-        <span>•</span>
-        <a href="#about" class="hover:text-emerald-400 transition-colors">Back to top</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Terminal Script -->
-  <script>
-    if (window.lucide) lucide.createIcons();
-
-    function copyEmail() {
-      const email = 'm.akhdanramadhan@apps.ipb.ac.id';
-      navigator.clipboard.writeText(email).then(() => {
-        const btn = document.getElementById('copy-email-text');
-        btn.innerText = 'Copied to Clipboard!';
-        setTimeout(() => {
-          btn.innerText = 'Copy Email';
+    <script>
+    const email = "m.akhdanramadhan@apps.ipb.ac.id";
+    const copyButton = document.getElementById("copy-email");
+    const copyText = document.getElementById("copy-email-text");
+    let copyReset;
+    copyButton.addEventListener("click", async () => {
+      clearTimeout(copyReset);
+      try {
+        await navigator.clipboard.writeText(email);
+        copyText.textContent = "Copied to Clipboard!";
+        copyReset = setTimeout(() => {
+          copyText.textContent = "Copy Email";
         }, 2000);
-      });
-    }
-
-    const termInput = document.getElementById('term-input');
-    const termOutput = document.getElementById('terminal-output');
-
-    const commands = {
-      help: `Available commands:
-  - whoami     : Display developer identity & background
-  - projects   : List of personal engineering projects & tools
-  - stack      : Complete technical matrix & toolchain
-  - education  : Academic profile at IPB University
-  - contact    : Email, GitHub, and communication channels
-  - clear      : Clear terminal screen`,
-      whoami: `Muhamad Akhdan Ramadhan
-Computer Engineering Technology — IPB University, Bogor.
-Specialty: Autonomous AI Pipelines, Headless Scraping, Reverse Engineering, Tailscale Mesh Networking.`,
-      projects: `Featured Systems:
-  1. [Reddit Job Assistant]  : RSS hiring feed scanner, AI proposal drafts, quality review, and Telegram alerts.
-  2. [IPB Mobile WhatsApp]    : Reverse-engineered campus Android APK with TLS pinning bypass & auto-attendance alerts.
-  3. [SERVER CONTROL]         : Distributed PC <-> Laptop failover orchestrator over Tailscale VPN mesh.
-  4. [SeaBank Edge Tracker]   : Serverless Cloudflare Workers + D1 SQL + MacroDroid GPS locator.
-  5. [ContentRewards Bot]     : Autonomous FFmpeg 9:16 vertical video clipping & AI hook generation.`,
-      stack: `Technologies:
-  - Languages  : Node.js (v24), Python 3.14, TypeScript, PowerShell, SQL, C/C++
-  - AI Brains  : High-Reasoning Agentic AI Harness, Cloudflare Workers AI
-  - Automation : Puppeteer-Core, MacroDroid OS hooks, Windows Task Scheduler
-  - Reverse Eng: Apktool, Smali, mitmproxy, TLS bypass, Wireshark
-  - Cloud/Mesh : Cloudflare Workers + D1, Docker Compose, Tailscale Mesh`,
-      education: `IPB University (Institut Pertanian Bogor)
-Program: Computer Engineering Technology
-Focus: Systems Architecture, Computer Networks, Embedded Systems, IoT, Edge Computing.`,
-      contact: `Get in touch:
-  - Email  : m.akhdanramadhan@apps.ipb.ac.id
-  - GitHub : https://github.com/makhdanramadhan-ui`,
-      clear: ''
-    };
-
-    function runCommand(cmd) {
-      cmd = cmd.trim().toLowerCase();
-      if (cmd === 'clear') {
-        termOutput.innerHTML = '';
-        return;
-      }
-
-      const response = commands[cmd] || `command not found: ${cmd}. Type 'help' for available commands.`;
-      const entry = document.createElement('div');
-      entry.className = 'mt-3';
-      const prompt = document.createElement('div');
-      prompt.className = 'text-emerald-400';
-      prompt.textContent = `akhdan@lynx-pc:~$ ${cmd}`;
-      const output = document.createElement('div');
-      output.className = 'mt-1 text-gray-300 whitespace-pre-line';
-      output.textContent = response;
-      entry.append(prompt, output);
-      termOutput.appendChild(entry);
-      termOutput.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-
-    termInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const val = termInput.value;
-        if (val) {
-          runCommand(val);
-          termInput.value = '';
-        }
+      } catch {
+        copyText.textContent = email;
       }
     });
-  </script>
-</body>
+
+    const projectCards = [...document.querySelectorAll(".project-card")];
+    document.getElementById("project-count").textContent = projectCards.length;
+    const termInput = document.getElementById("term-input");
+    const termOutput = document.getElementById("terminal-output");
+    const commands = {
+      help: "Available commands:\n  whoami             : Identity and background\n  cat philosophy.txt : Read my engineering philosophy\n  projects           : All personal engineering projects\n  stack              : Technologies used in these projects\n  education          : Academic profile\n  contact            : Email and GitHub\n  clear              : Clear command output",
+      whoami:
+        "Muhamad Akhdan Ramadhan\nComputer Engineering Technology student — IPB University, Bogor, Indonesia.\nI build AI-assisted automation, browser tools, and cloud integrations.",
+      "cat philosophy.txt": document
+        .getElementById("terminal-philosophy")
+        .textContent.trim()
+        .replace(/\s+/g, " "),
+      projects: projectCards
+        .map(
+          (card, index) =>
+            `${index + 1}. ${card.querySelector("h3").textContent}\n   ${card.querySelector(".project-description").textContent}`,
+        )
+        .join("\n\n"),
+      stack:
+        "Languages: JavaScript / Node.js, Python, PowerShell, SQL\nAutomation: Puppeteer, Baileys, Telegram API, MacroDroid\nAI: LLM APIs, structured summaries, draft review\nCloud and data: Cloudflare Workers, D1, SQLite, Docker, n8n\nNetworking: Tailscale, HTTP APIs, webhooks, mitmproxy\nMedia: FFmpeg, video transcoding, audio filters",
+      education:
+        "IPB University (Institut Pertanian Bogor)\nProgram: Computer Engineering Technology\nStatus: Current student\nLocation: Bogor, Indonesia",
+      contact: `Email: ${email}\nGitHub: https://github.com/makhdanramadhan-ui\nCV: M-Akhdan-Ramadhan-CV.pdf`,
+    };
+
+    function runCommand(value) {
+      const command = value.trim().replace(/\s+/g, " ").toLowerCase();
+      if (!command) return;
+      if (command === "clear") {
+        termOutput.replaceChildren();
+        return;
+      }
+      const entry = document.createElement("div");
+      entry.className = "terminal-entry";
+      const prompt = document.createElement("div");
+      prompt.className = "accent";
+      prompt.textContent = `akhdan@lynx-pc:~$ ${command}`;
+      const output = document.createElement("div");
+      output.className = "command-response";
+      output.textContent = Object.hasOwn(commands, command)
+        ? commands[command]
+        : `command not found: ${command}. Type 'help' for available commands.`;
+      entry.append(prompt, output);
+      termOutput.append(entry);
+    }
+
+    document
+      .getElementById("terminal-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        runCommand(termInput.value);
+        termInput.value = "";
+      });
+    for (const button of document.querySelectorAll("[data-command]")) {
+      button.addEventListener("click", () =>
+        runCommand(button.dataset.command),
+      );
+    }
+    </script>
+  </body>
 </html>
