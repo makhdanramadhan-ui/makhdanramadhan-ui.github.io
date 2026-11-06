@@ -19,6 +19,7 @@
 	box-sizing: border-box;
 }
 html {
+	scroll-behavior: smooth;
 	scroll-padding-top: 2rem;
 	scrollbar-color: var(--signal) var(--ground);
 }
@@ -249,11 +250,21 @@ h2 {
 	top: 2.4rem;
 	width: 3rem;
 	border-top: 1px solid #ffac85;
+	transform: scaleX(0.6);
+	transform-origin: center;
+	opacity: 0.5;
+	transition:
+		transform 350ms var(--ease),
+		opacity 350ms var(--ease);
 }
-.domain:nth-of-type(odd)::before {
+.domain[open]::before {
+	transform: scaleX(1);
+	opacity: 1;
+}
+.domain-column:first-of-type .domain::before {
 	right: -3rem;
 }
-.domain:nth-of-type(even)::before {
+.domain-column:last-of-type .domain::before {
 	left: -3rem;
 }
 summary {
@@ -442,6 +453,32 @@ footer {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+	@supports (interpolate-size: allow-keywords) {
+		.domain {
+			interpolate-size: allow-keywords;
+		}
+		.panels-ready .domain::details-content {
+			height: 0;
+			overflow: clip;
+			transition:
+				height 220ms var(--ease),
+				content-visibility 220ms allow-discrete;
+		}
+		.panels-ready .domain[open]::details-content {
+			height: auto;
+			transition-duration: 400ms;
+		}
+		.domain[open] .domain-body > p:first-child {
+			animation: panel-arrival 280ms 70ms var(--ease) both;
+		}
+		.domain[open] .tools strong {
+			animation: panel-arrival 250ms 120ms var(--ease) both;
+		}
+		.domain[open] .tools span {
+			display: block;
+			animation: panel-arrival 250ms 170ms var(--ease) both;
+		}
+	}
 	.intro.is-playing h1 {
 		animation: name-arrival 750ms var(--ease);
 	}
@@ -473,6 +510,16 @@ footer {
 	}
 	.education-section .section-heading.is-playing h2 {
 		animation: heading-arrival 700ms var(--ease);
+	}
+}
+@keyframes panel-arrival {
+	from {
+		opacity: 0;
+		transform: translateY(5px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 @keyframes name-arrival {
@@ -535,10 +582,10 @@ footer {
 	.domain::before {
 		width: 1.5rem;
 	}
-	.domain:nth-of-type(odd)::before {
+	.domain-column:first-of-type .domain::before {
 		right: -1.5rem;
 	}
-	.domain:nth-of-type(even)::before {
+	.domain-column:last-of-type .domain::before {
 		left: -1.5rem;
 	}
 	.education {
@@ -606,7 +653,7 @@ footer {
 	.map-spine {
 		left: -12px;
 	}
-	.domain:nth-of-type(n)::before {
+	.domain-column .domain::before {
 		left: -1.5rem;
 		right: auto;
 	}
@@ -635,6 +682,7 @@ footer {
 	}
 }
 @media (prefers-reduced-motion: reduce) {
+	html,
 	*,
 	*::before,
 	*::after {

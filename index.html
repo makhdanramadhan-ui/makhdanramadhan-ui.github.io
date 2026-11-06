@@ -17,16 +17,17 @@
       <nav aria-label="Main navigation"><a href="#domains">What I know</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
     </header>
     <main id="main" tabindex="-1">
-      <section class="intro wrap" id="about" aria-labelledby="name">
+      <section class="intro wrap" id="about" tabindex="-1" aria-labelledby="name">
         <h1 id="name">Muhamad Akhdan<br>Ramadhan</h1>
         <div class="intro-bottom"><p>I connect software, networks, and hardware.<br>I’m a fifth-semester Computer Engineering Technology student at IPB University. Here’s what I work with, what I’ve studied, and how the pieces fit together.</p><a class="button" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV <span>(PDF, 1 page)</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></a></div>
         <a class="map-invitation" href="#domains"><span>Explore the connections</span><svg viewBox="0 0 160 24" aria-hidden="true"><path class="trace" pathLength="1" d="M2 12H156m-8-8 8 8-8 8"/><path class="packet" pathLength="1" d="M2 12H156"/></svg></a>
       </section>
 
-      <section class="knowledge" id="domains" aria-labelledby="domains-heading"><div class="wrap">
+      <section class="knowledge" id="domains" tabindex="-1" aria-labelledby="domains-heading"><div class="wrap">
         <div class="section-heading"><h2 id="domains-heading">Six domains.<br>One connected way of thinking.</h2><p>Personal practice and coursework, side by side.<br>Open a connection to see the tools and approach.</p></div>
         <div class="system-map">
           <svg class="map-spine" viewBox="0 0 24 100" preserveAspectRatio="none" aria-hidden="true"><path class="trace" pathLength="1" d="M12 0V100"/><path class="packet" pathLength="1" d="M12 0V100"/></svg>
+          <div class="domain-column">
           <details class="domain" open>
             <summary><span class="node" aria-hidden="true"></span><h3>Software &amp; web</h3><span class="domain-overview">Interfaces, APIs, and the data behind them.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="domain-body"><p>I work with web interfaces and backend integrations: moving data through APIs, keeping application state, and handling retries when a request fails. I pay attention to the parts between a screen and a service, not just how the screen looks.</p><p class="tools"><strong>Tools I use</strong>JavaScript / Node.js, Python, HTML, CSS, SQL, SQLite, REST APIs, Git, Cloudflare Workers &amp; D1.</p></div>
@@ -39,6 +40,8 @@
             <summary><span class="node" aria-hidden="true"></span><h3>Computer networks</h3><span class="domain-overview">How devices connect, route traffic, and control access.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="domain-body"><p>My networking studies cover routing, switching, and wireless fundamentals through Cisco coursework. With MikroTik, I’ve practiced configuring network access and account-based authentication: who can connect, and under which account.</p><p class="tools"><strong>Coursework &amp; practice</strong>Cisco networking, routing, switching, wireless networks, MikroTik, access configuration, user authentication.</p></div>
           </details>
+          </div>
+          <div class="domain-column">
           <details class="domain">
             <summary><span class="node" aria-hidden="true"></span><h3>Embedded &amp; hardware</h3><span class="domain-overview">Taking measurements and connecting them to software.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="domain-body"><p>I study and work with microcontrollers and sensors, from reading a physical input to sending data into an IoT interface. I’m learning how firmware, device communication, and the software using those readings need to agree.</p><p class="tools"><strong>Coursework &amp; practice</strong>ESP / ESP32, Arduino, sensors, IoT, ESP-NOW, Firebase, device-to-dashboard data flow.</p></div>
@@ -51,20 +54,39 @@
             <summary><span class="node" aria-hidden="true"></span><h3>Data &amp; computing</h3><span class="domain-overview">Understanding the data, the OS, and the machine.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="domain-body"><p>I’ve learned data processing in RStudio and studied MATLAB, Linux, and computer architecture. These subjects help me look below the application: how data is processed, how an operating system supports it, and what the computer is doing underneath.</p><p class="tools"><strong>Studied in coursework</strong>RStudio, MATLAB, Linux, computer architecture, data processing.</p></div>
           </details>
+          </div>
         </div>
       </div></section>
 
-      <section class="education-section" id="education" aria-labelledby="education-heading"><div class="wrap">
+      <section class="education-section" id="education" tabindex="-1" aria-labelledby="education-heading"><div class="wrap">
         <div class="section-heading"><h2 id="education-heading">Learning across<br>the whole computer.</h2><p>A foundation in software,<br>networks, and physical systems.</p></div>
         <div class="education"><h3>IPB University<br><span>Sekolah Vokasi</span></h3><div><p><strong>Teknologi Rekayasa Komputer</strong><br>Computer Engineering Technology, applied bachelor’s program (D4)<br>Semester 5 / Angkatan 61</p><p>The program spans computer networks, sensor-based IoT, and intelligent systems and automation. <a href="https://sv.ipb.ac.id/teknologi-rekayasa-komputer/">Official program description</a></p></div></div>
         <div class="certificates"><h3>Cisco Networking Academy</h3><p>Completed courses, not a professional CCNA certification.</p><a href="certificates/ccna-introduction-to-networks.pdf"><span>CCNA: Introduction to Networks</span><span>29 Dec 2024 / Certificate PDF</span></a><a href="certificates/ccna-switching-routing-wireless.pdf"><span>CCNA: Switching, Routing, and Wireless Essentials</span><span>17 Dec 2025 / Certificate PDF</span></a></div>
       </div></section>
-      <section class="contact" id="contact" aria-labelledby="contact-heading"><div class="wrap"><h2 id="contact-heading">Let’s compare notes.</h2><p>Software, networks, or hardware: I’m interested in how they connect. Get in touch to exchange ideas or ask about the tools and topics I work with.</p><a class="contact-email" href="mailto:m.akhdanramadhan@apps.ipb.ac.id">m.akhdanramadhan@apps.ipb.ac.id</a><div class="contact-links"><a href="M-Akhdan-Ramadhan-CV.pdf">View CV (PDF)</a><a href="https://github.com/makhdanramadhan-ui">GitHub profile</a><a href="#about">Back to top</a></div></div></section>
+      <section class="contact" id="contact" tabindex="-1" aria-labelledby="contact-heading"><div class="wrap"><h2 id="contact-heading">Let’s compare notes.</h2><p>Software, networks, or hardware: I’m interested in how they connect. Get in touch to exchange ideas or ask about the tools and topics I work with.</p><a class="contact-email" href="mailto:m.akhdanramadhan@apps.ipb.ac.id">m.akhdanramadhan@apps.ipb.ac.id</a><div class="contact-links"><a href="M-Akhdan-Ramadhan-CV.pdf">View CV (PDF)</a><a href="https://github.com/makhdanramadhan-ui">GitHub profile</a><a href="#about">Back to top</a></div></div></section>
     </main>
     <footer class="wrap"><p>© 2026 Muhamad Akhdan Ramadhan</p><p>Keep learning. Understand the connections.</p></footer>
     <script>
       const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
       const scenes = document.querySelectorAll(".intro, .system-map, .education-section .section-heading");
+      for (const tools of document.querySelectorAll(".tools")) {
+        const line = document.createElement("span");
+        while (tools.lastChild && tools.lastChild.nodeName !== "STRONG") {
+          line.prepend(tools.lastChild);
+        }
+        tools.append(line);
+      }
+      for (const domain of document.querySelectorAll(".domain")) {
+        const body = domain.querySelector(".domain-body");
+        const setAccess = (open) => {
+          body.inert = !open;
+          body.setAttribute("aria-hidden", String(!open));
+        };
+        setAccess(domain.open);
+        domain.querySelector("summary").addEventListener("click", () => setAccess(!domain.open));
+        domain.addEventListener("toggle", () => setAccess(domain.open));
+      }
+      document.documentElement.classList.add("panels-ready");
       let observer;
       function configureMotion() {
         observer?.disconnect();
