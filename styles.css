@@ -420,14 +420,62 @@ summary:active {
 	margin-top: 1.5rem;
 	color: #3d2832;
 }
-.contact-email {
-	display: inline-block;
+.contact-rows {
+	display: grid;
+	gap: 0.2rem;
+	width: fit-content;
 	max-width: 100%;
-	overflow-wrap: anywhere;
 	margin-top: 1.4rem;
-	padding-block: 0.5rem;
+}
+.contact-row {
+	display: grid;
+	grid-template-columns: 1.4rem 6.2rem minmax(0, 1fr);
+	align-items: center;
+	column-gap: 0.7rem;
+	min-height: 44px;
+	text-decoration: none;
+}
+.contact-row svg {
+	width: 1.4rem;
+	height: 1.4rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.contact-row .row-label {
+	color: #3d2832;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.contact-row .row-val {
+	overflow-wrap: anywhere;
+	font-size: 1.05rem;
+	font-variant-numeric: tabular-nums;
+	text-decoration: underline;
+	text-underline-offset: 0.25em;
+}
+.contact-row-main {
+	min-height: 52px;
+}
+.contact-row-main .row-val {
 	font: 700 clamp(1.1rem, 2.5vw, 2rem) / 1.5 var(--display);
 	letter-spacing: -0.02em;
+}
+.contact-row:hover .row-val {
+	text-decoration-thickness: 2px;
+}
+@media (max-width: 600px) {
+	.contact-row {
+		grid-template-columns: 1.4rem 5.4rem minmax(0, 1fr);
+		column-gap: 0.5rem;
+	}
+	.contact-row-main .row-val {
+		font-size: 1rem;
+	}
 }
 .contact-links {
 	display: flex;
@@ -1295,6 +1343,15 @@ nav a[aria-current="page"] {
 .intro-copy {
 	max-width: 60ch;
 }
+.role {
+	margin: 1.4rem 0 0;
+	padding-left: 0.9rem;
+	border-left: 3px solid var(--signal);
+	color: var(--signal);
+	font-family: var(--display);
+	font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+	line-height: 1.25;
+}
 .gpa {
 	margin-top: 1rem;
 	color: var(--text);
@@ -1343,7 +1400,7 @@ nav a[aria-current="page"] {
 	.chip,
 	.see-projects,
 	.yt-link,
-	.contact-email,
+	.contact-row,
 	.contact-links a {
 		transition:
 			background-color 180ms var(--ease),
