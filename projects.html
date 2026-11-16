@@ -39,7 +39,7 @@
             <div class="study-text">
               <h3>COSTMOSYS</h3>
               <p class="meta"><b>Coursework</b> · group project · public repositories · pilot stage</p>
-              <p class="lede">Cow Stress Monitoring System. Two ESP32 boards read temperature and humidity in a cow barn, a relay switches the sprinklers, and a web dashboard shows the data. Separately, a YOLO26n model detects standing cows, lying cows and people in CCTV frames.</p>
+              <p class="lede">Cow Stress Monitoring System. Two ESP32 boards read temperature and humidity in a cow barn, a relay switches the sprinkler valve and water pump, and a web dashboard shows the data. Separately, a YOLO26n model detects standing cows, lying cows and people in CCTV frames.</p>
             </div>
             <div class="study-visual">
               <div class="diagram-wrap">
@@ -65,7 +65,7 @@
                 <text class="dim" x="428" y="46" text-anchor="middle">HTTP/TLS</text>
                 <rect class="box" x="236" y="176" width="150" height="72" rx="4"/>
                 <text x="311" y="202" text-anchor="middle">SSR relay</text>
-                <text class="dim" x="311" y="219" text-anchor="middle">sprinklers</text>
+                <text class="dim" x="311" y="219" text-anchor="middle">sprinkler valve + pump</text>
                 <text class="dim" x="311" y="233" text-anchor="middle">controlled on device</text>
                 <path class="wire" d="M311 96V176"/><circle class="dot" cx="311" cy="96" r="3.5"/><circle class="dot" cx="311" cy="176" r="3.5"/>
                 <rect class="box" x="470" y="176" width="162" height="72" rx="4"/>
@@ -122,6 +122,38 @@
                   <h4>Links</h4>
                   <p class="links"><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS">COSTMOSYS repository</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-COSTMOSYS-YOLO26n">YOLO26n training repository</a><a href="https://smartcow-de25f.web.app">Hosted dashboard</a></p>
                   <p class="note">Both READMEs are written in Indonesian.</p>
+                </div>
+              </div>
+              <div class="detail hardware">
+                <h4>Hardware: schematics, wiring, installation</h4>
+                <p>I assembled the schematics and the wiring for both nodes. Each node has five sensor jacks (three DS18B20 and two DHT22) and runs from a 5 V adaptor. The right node also switches the sprinkler solenoid valve and the water pump through an SSR and a two-pole breaker. The photos are from the barn. Click a schematic to open it full size; its labels are in Indonesian.</p>
+                <div class="hw-grid hw-schematics">
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/schematic-left-node.webp"><img src="assets/projects/costmosys/schematic-left-node.webp" width="1600" height="996" loading="lazy" alt="Circuit schematic of the left node: an ESP32 with GPIO4, 14, 18, 19 and 25 each wired through a jack pair to a DS18B20 or DHT22 sensor, powered by an AC-DC adaptor"></a>
+                    <figcaption>Left node, schematic: ESP32 and five sensor jacks. Open full size.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/schematic-right-node.webp"><img src="assets/projects/costmosys/schematic-right-node.webp" width="1600" height="1244" loading="lazy" alt="Circuit schematic of the right node: the same five sensor jacks as the left node, plus GPIO23 driving an SSR-25DA that switches a 220 V AC solenoid valve and water pump, wired in parallel, through a two-pole breaker"></a>
+                    <figcaption>Right node, schematic: the same sensors plus the SSR, breaker, solenoid valve and water pump. Open full size.</figcaption>
+                  </figure>
+                </div>
+                <div class="hw-grid hw-photos">
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/wiring-left-node.webp"><img src="assets/projects/costmosys/wiring-left-node.webp" style="object-position:50% 60%" width="900" height="1150" loading="lazy" alt="Left node at night: a black enclosure on a post with an ESP32 powered over USB, lever connectors, and five brass jacks on top with yellow-taped cables"></a>
+                    <figcaption>Left node, as built.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/wiring-right-node.webp"><img src="assets/projects/costmosys/wiring-right-node.webp" style="object-position:50% 25%" width="900" height="1350" loading="lazy" alt="Right node: an open black enclosure on a post holding an ESP32, an SSR-25DA solid-state relay, a two-pole circuit breaker and lever connectors, with yellow and red wiring"></a>
+                    <figcaption>Right node, as built: ESP32, SSR and breaker in one enclosure.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/installation-pump-valve.webp"><img src="assets/projects/costmosys/installation-pump-valve.webp" style="object-position:50% 15%" width="900" height="1600" loading="lazy" alt="The right node enclosure mounted above a water pump and grey PVC pipework with a blue ball valve, in a cow barn with cattle behind"></a>
+                    <figcaption>Installation: the right node above the barn’s water pump and pipework.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a href="assets/projects/costmosys/installation-enclosure-valve.webp"><img src="assets/projects/costmosys/installation-enclosure-valve.webp" style="object-position:50% 30%" width="900" height="1450" loading="lazy" alt="Close view of the open right node enclosure above a pipe junction with a black solenoid valve and a blue ball valve; cows stand in the barn behind"></a>
+                    <figcaption>Installation: the enclosure and the solenoid valve on the pipe below it.</figcaption>
+                  </figure>
                 </div>
               </div>
             </details>

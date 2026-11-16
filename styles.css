@@ -1143,6 +1143,45 @@ nav a[aria-current="page"] {
 .detail .note {
 	margin-top: 0.8rem;
 }
+.hw-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.4rem 2rem;
+	align-items: start;
+	margin-top: 1rem;
+}
+.hw-grid .figure a {
+	display: block;
+}
+.hw-grid .figure a img {
+	width: 100%;
+}
+.hw-schematics .figure a img {
+	background: #fff;
+}
+.hw-photos .figure a img {
+	aspect-ratio: 3 / 4;
+	height: auto;
+	object-fit: cover;
+}
+.hw-photos {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 1.4rem 1rem;
+}
+@media (max-width: 900px) {
+	.hw-photos {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+@media (max-width: 600px) {
+	.hw-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.hw-photos {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.2rem 0.7rem;
+	}
+}
 ::selection {
 	background: var(--signal);
 	color: var(--ground);
