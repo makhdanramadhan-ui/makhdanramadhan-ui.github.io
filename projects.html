@@ -58,8 +58,7 @@
       <section class="tier tier-alt" data-tier aria-labelledby="t1">
         <div class="wrap">
           <div class="section-heading">
-            <h2 id="t1">Three featured projects.</h2>
-            <p>A monitoring pilot for a cow barn,<br>a multi-agent platform on a small VPS,<br>and a churn model with a web app.</p>
+            <h2 id="t1">Selected Projects</h2>
           </div>
 
           <article class="study" id="costmosys" data-areas="embedded software ai data">
@@ -421,6 +420,52 @@
               </div>
             </details>
           </article>
+
+          <article class="study" id="wishnote" data-areas="software">
+            <div class="study-text">
+              <h3>WishNote</h3>
+              <p class="meta"><b>Coursework</b> · Semester 3, Web Programming · group project · full-stack development</p>
+              <p class="lede">A Laravel app for leaving notes on themed boards. On the Christmas tree board, visitors pick a spot, choose an ornament, and attach a message. The other layouts are a bulletin board and a mailbox.</p>
+            </div>
+            <div class="study-visual">
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/wishnote/dashboard.webp" data-title="WishNote — Board dashboard">
+                  <img src="assets/projects/wishnote/dashboard.webp" width="1365" height="768" loading="lazy" alt="WishNote dashboard with three sample boards and a button to create a new board">
+                </a>
+                <figcaption>Dashboard with sample boards from the local build.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/wishnote/tree-board.webp" data-title="WishNote — Christmas tree board">
+                  <img src="assets/projects/wishnote/tree-board.webp" width="1365" height="768" loading="lazy" alt="Christmas tree message board with a button to add a note">
+                </a>
+                <figcaption>The Christmas tree board before visitors add their own ornaments.</figcaption>
+              </figure>
+            </div>
+            <details class="more study-more">
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
+              <div class="detail detail-grid">
+                <div>
+                  <h4>My role</h4>
+                  <p>On this group project, I worked on both the PHP/Laravel backend and the frontend. I built the Blade screens and connected the board interface to the backend.</p>
+                  <h4>Board creation</h4>
+                  <p>After signing in, users give a board a title and description, pick a layout, and choose a public or private setting. The dashboard lists the signed-in user’s boards and shows the message count for each.</p>
+                  <h4>Placing a note</h4>
+                  <p>On the tree, visitors click where the ornament should go, choose from five designs, and write a message. The name is optional. The app stores the ornament’s x/y coordinates with the note so it can redraw it in the same spot when the board is reopened.</p>
+                </div>
+                <div>
+                  <h4>How it’s built</h4>
+                  <p>Laravel handles sign-in, board creation, and requests from the board interface. Blade renders the dashboard and board layouts, JavaScript handles placement, and Axios sends changes to Laravel. SQLite stores the boards and messages.</p>
+                  <h4>Known limitations</h4>
+                  <p>The friend list is a static view, and privacy and authorization checks are incomplete. The screenshots use sample data from the local coursework build.</p>
+                  <h4>Stack</h4>
+                  <p class="stack">PHP, Laravel, Blade, JavaScript, Axios, Bootstrap, Tailwind CSS, SQLite.</p>
+                  <h4>Source</h4>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/app01" target="_blank" rel="noopener">Early source on GitHub</a></p>
+                  <p>The public repo is an earlier snapshot than the local build shown here.</p>
+                </div>
+              </div>
+            </details>
+          </article>
         </div>
       </section>
 
@@ -655,36 +700,6 @@
           <div class="section-heading">
             <h2 id="t3">Earlier coursework</h2>
           </div>
-
-          <details class="entry" id="wishnote" data-areas="software">
-            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">WishNote</span><span class="domain-overview">Semester 3 web programming project: a Laravel app for creating themed message boards.</span><span class="toggle" aria-hidden="true"></span></summary>
-            <div class="entry-body detail">
-              <h3>What I built</h3>
-              <p>WishNote lets users create a message board as a Christmas tree, bulletin board, or mailbox. Each board has a title, a short description, and a public or private setting. The signed-in dashboard lists the user’s boards and shows how many messages each has.</p>
-              <h3>How the tree works</h3>
-              <p>Click a spot on the tree, pick one of five ornaments, and write a note. The name is optional. WishNote stores the note and its x/y coordinates so the ornament can be drawn in the same place when the board is reopened.</p>
-              <h3>How it’s built</h3>
-              <p>Laravel handles sign-in and board management. Blade renders the dashboard and each board layout. SQLite stores boards and messages, and the interactive board uses Axios to send edits to Laravel.</p>
-              <p class="note">Coursework prototype. The friend list is a static view, and privacy and authorization checks are incomplete. The GitHub repo is an earlier snapshot; the screenshots show the local backup.</p>
-              <p><a href="https://github.com/makhdanramadhan-ui/app01" target="_blank" rel="noopener">Early source on GitHub</a></p>
-              <h3>Stack</h3>
-              <p class="stack">Laravel (PHP), Blade, Bootstrap, Tailwind CSS, Axios, SQLite.</p>
-              <div class="hw-grid">
-                <figure class="figure">
-                  <a class="figure-trigger" href="assets/projects/wishnote/dashboard.webp" data-title="WishNote — Board dashboard">
-                    <img src="assets/projects/wishnote/dashboard.webp" width="1365" height="768" loading="lazy" alt="WishNote dashboard with three sample boards and a button to create a new board">
-                  </a>
-                  <figcaption>Dashboard with sample boards.</figcaption>
-                </figure>
-                <figure class="figure">
-                  <a class="figure-trigger" href="assets/projects/wishnote/tree-board.webp" data-title="WishNote — Christmas tree board">
-                    <img src="assets/projects/wishnote/tree-board.webp" width="1365" height="768" loading="lazy" alt="Christmas tree message board with a button to add a note">
-                  </a>
-                  <figcaption>Christmas tree board, ready for visitors to add notes.</figcaption>
-                </figure>
-              </div>
-            </div>
-          </details>
 
           <details class="entry" id="packet-tracer" data-areas="networks">
             <summary><span class="node" aria-hidden="true"></span><span class="summary-title">Packet Tracer troubleshooting</span><span class="domain-overview">Individual coursework in Semester 4: troubleshooting two simulated networks.</span><span class="toggle" aria-hidden="true"></span></summary>
