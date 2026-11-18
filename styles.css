@@ -1350,8 +1350,22 @@ footer {
   object-fit: cover;
 }
 
-.proto-visual .figure.portrait {
-  max-inline-size: 11rem;
+.proto-visual.scafi-gallery {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.scafi-dashboard {
+  grid-column: span 2;
+}
+
+.scafi-enclosure {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.scafi-gallery .figure:not(.scafi-dashboard) img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
 }
 
 .clips {
@@ -1662,6 +1676,13 @@ dialog.lightbox::backdrop {
   .hw-grid,
   .clip-shots {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .proto-visual.scafi-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .scafi-enclosure {
+    grid-column: 1;
+    grid-row: 3;
   }
   .hw-photos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
