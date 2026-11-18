@@ -469,7 +469,7 @@
                 </a>
                 <figcaption>The enclosure, DHT22 taped on top.</figcaption>
               </figure>
-              <figure class="figure">
+              <figure class="figure portrait">
                 <a class="figure-trigger" href="assets/projects/scafi/enclosure-interior.webp" data-title="SCAFI — Wiring inside the enclosure">
                   <img src="assets/projects/scafi/enclosure-interior.webp" width="303" height="446" loading="lazy" alt="Open SCAFI enclosure showing the breadboard and wiring">
                 </a>
@@ -495,7 +495,7 @@
                   <h4>Problem</h4>
                   <p>The prototype was designed for shared housing. Unlike a physical key, a registered card or web account can be tied to an access log.</p>
                   <h4>My role</h4>
-                  <p>I built the prototype.</p>
+                  <p>I configured the MikroTik router, drew the circuit schematic, assembled the prototype, and built the DoorLink web app.</p>
                   <h4>Web route</h4>
                   <ol class="flow"><li>Connect to the boarding-house Wi-Fi</li><li>MikroTik limits the web page to that network</li><li>Backend checks the user</li><li>ESP32 opens the door</li></ol>
                   <h4>Card route</h4>
@@ -657,13 +657,32 @@
           </div>
 
           <details class="entry" id="wishnote" data-areas="software">
-            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">WishNote</span><span class="domain-overview">Coursework, Semester 3, Web Programming. My project: a Laravel app where people pin notes on a shared board.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">WishNote</span><span class="domain-overview">Semester 3 web programming project: a Laravel app for creating themed message boards.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
-              <p>Users register, then create a board by choosing a type (Christmas tree, bulletin board or mailbox) and whether it is public or private. A dashboard filters boards by all, mine and friends. Only a board’s owner can delete it.</p>
-              <p>On the tree board you click anywhere on the tree to place an ornament and write a message. The name is optional, so anonymous notes work. There are five ornament designs, each message can be public or private, and messages can be liked. Positions are stored as x/y coordinates.</p>
-              <p class="note">It is a course prototype: authorization on some API routes and server-side privacy checks are unfinished, and the friend list is a static view. I have no screenshots to show.</p>
+              <h3>What I built</h3>
+              <p>WishNote lets users create a message board as a Christmas tree, bulletin board, or mailbox. Each board has a title, a short description, and a public or private setting. The signed-in dashboard lists the user’s boards and shows how many messages each has.</p>
+              <h3>How the tree works</h3>
+              <p>Click a spot on the tree, pick one of five ornaments, and write a note. The name is optional. WishNote stores the note and its x/y coordinates so the ornament can be drawn in the same place when the board is reopened.</p>
+              <h3>How it’s built</h3>
+              <p>Laravel handles sign-in and board management. Blade renders the dashboard and each board layout. SQLite stores boards and messages, and the interactive board uses Axios to send edits to Laravel.</p>
+              <p class="note">Coursework prototype. The friend list is a static view, and privacy and authorization checks are incomplete. The GitHub repo is an earlier snapshot; the screenshots show the local backup.</p>
+              <p><a href="https://github.com/makhdanramadhan-ui/app01" target="_blank" rel="noopener">Early source on GitHub</a></p>
               <h3>Stack</h3>
-              <p class="stack">Laravel (PHP), Blade, Bootstrap 5, Axios, SQLite.</p>
+              <p class="stack">Laravel (PHP), Blade, Bootstrap, Tailwind CSS, Axios, SQLite.</p>
+              <div class="hw-grid">
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/wishnote/dashboard.webp" data-title="WishNote — Board dashboard">
+                    <img src="assets/projects/wishnote/dashboard.webp" width="1365" height="768" loading="lazy" alt="WishNote dashboard with three sample boards and a button to create a new board">
+                  </a>
+                  <figcaption>Dashboard with sample boards.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/wishnote/tree-board.webp" data-title="WishNote — Christmas tree board">
+                    <img src="assets/projects/wishnote/tree-board.webp" width="1365" height="768" loading="lazy" alt="Christmas tree message board with a button to add a note">
+                  </a>
+                  <figcaption>Christmas tree board, ready for visitors to add notes.</figcaption>
+                </figure>
+              </div>
             </div>
           </details>
 

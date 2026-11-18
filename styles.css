@@ -1350,6 +1350,10 @@ footer {
   object-fit: cover;
 }
 
+.proto-visual .figure.portrait {
+  max-inline-size: 11rem;
+}
+
 .clips {
   display: block;
 }
