@@ -3,37 +3,64 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#121c33">
-    <meta name="description" content="Applied AI and IoT projects by Muhamad Akhdan Ramadhan: a multi-agent automation platform, the COSTMOSYS cow-barn monitoring pilot, IoT and networking coursework, and PLC simulations. Each entry says whether it was personal or coursework.">
+    <meta name="theme-color" content="#0c111b">
+    <meta name="description" content="Applied AI and IoT projects by Muhamad Akhdan Ramadhan: the COSTMOSYS cow-barn monitoring pilot, a multi-agent automation platform with control dashboard demo, a calibrated churn model, IoT and networking coursework, and PLC simulations. Each entry says whether it was personal or coursework.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="styles.css">
-    <script src="motion.js" defer></script>
     <link rel="preload" href="assets/manrope-bold.ttf" as="font" type="font/ttf" crossorigin>
-    <title>Projects | Muhamad Akhdan Ramadhan</title>
+    <link rel="preload" href="assets/fonts/public-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
     <script>document.documentElement.classList.add("js");</script>
+    <script src="motion.js" defer></script>
+    <title>Projects | Muhamad Akhdan Ramadhan</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header wrap">
-      <a class="home-link" href="index.html">Muhamad Akhdan Ramadhan</a>
-      <nav aria-label="Main navigation"><a href="index.html#skills">What I know</a><a href="index.html#education">Education</a><a href="index.html#contact">Contact</a><a href="projects.html" aria-current="page">Projects</a></nav>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="home-link" href="index.html">Muhamad Akhdan Ramadhan</a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <button
+            class="menu-button"
+            type="button"
+            popovertarget="site-menu"
+            popovertargetaction="toggle"
+            aria-controls="site-menu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <span>Menu</span>
+          </button>
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#education">Education</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="projects.html" aria-current="page">Projects</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
+
     <main id="main" tabindex="-1">
-      <section class="projects-hero wrap" aria-labelledby="page-title">
-        <h1 id="page-title">Projects</h1>
-        <div class="intro-bottom">
-          <div>
-            <p>What I’ve built, in coursework and on my own. Every entry says whether it was a personal project or a group assignment, and describes only what I can show. What I can’t document, I leave out.</p>
-            <p class="honesty">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
+      <section class="projects-hero" aria-labelledby="page-title">
+        <div class="wrap">
+          <h1 id="page-title">Projects</h1>
+          <div class="intro-bottom">
+            <div>
+              <p>Personal projects and university coursework in IoT, AI automation, web development, and data.</p>
+              <p class="honesty">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
+            </div>
           </div>
+          <div class="filters" role="group" aria-label="Filter projects by skill area" id="filters"></div>
+          <p class="empty" id="empty">No projects in this skill area yet.</p>
         </div>
-        <div class="filters" role="group" aria-label="Filter projects by skill area" id="filters"></div>
-        <p class="empty" id="empty">No projects in this skill area yet.</p>
       </section>
 
-      <section class="tier tier-plum" data-tier aria-labelledby="t1">
+      <section class="tier tier-alt" data-tier aria-labelledby="t1">
         <div class="wrap">
-          <div class="section-heading"><h2 id="t1">Three featured projects.</h2><p>A multi-agent platform on a small VPS, <br>a monitoring pilot for a cow barn, <br>and a churn model with a web app.</p></div>
+          <div class="section-heading">
+            <h2 id="t1">Three featured projects.</h2>
+            <p>A monitoring pilot for a cow barn,<br>a multi-agent platform on a small VPS,<br>and a churn model with a web app.</p>
+          </div>
 
           <article class="study" id="costmosys" data-areas="embedded software ai data">
             <div class="study-text">
@@ -43,55 +70,57 @@
             </div>
             <div class="study-visual">
               <div class="diagram-wrap">
-              <svg class="diagram" viewBox="0 0 640 276" role="img" aria-labelledby="d1t d1d">
-                <title id="d1t">COSTMOSYS data flow</title>
-                <desc id="d1d">The left ESP32 sends sensor readings by ESP-NOW to the right ESP32. The right ESP32 merges them with its own sensors, runs the control policy, drives the relay and talks to Firebase Realtime Database. The web dashboard reads telemetry and sends configuration and commands through Firebase. The CCTV model runs on a computer and is not connected to the dashboard.</desc>
-                <rect class="box" x="8" y="24" width="128" height="72" rx="4"/>
-                <text x="72" y="50" text-anchor="middle">Left ESP32</text>
-                <text class="dim" x="72" y="67" text-anchor="middle">sensors</text>
-                <text class="dim" x="72" y="81" text-anchor="middle">sends readings</text>
-                <rect class="box" x="236" y="24" width="150" height="72" rx="4"/>
-                <text x="311" y="50" text-anchor="middle">Right ESP32</text>
-                <text class="dim" x="311" y="67" text-anchor="middle">merges readings,</text>
-                <text class="dim" x="311" y="81" text-anchor="middle">control policy</text>
-                <rect class="box" x="470" y="24" width="162" height="72" rx="4"/>
-                <text x="551" y="50" text-anchor="middle">Firebase</text>
-                <text class="dim" x="551" y="67" text-anchor="middle">Realtime Database</text>
-                <text class="dim" x="551" y="81" text-anchor="middle">and Auth</text>
-                <path class="wire" d="M136 60H236"/><circle class="dot" cx="136" cy="60" r="3.5"/><circle class="dot" cx="236" cy="60" r="3.5"/>
-                <text class="dim" x="186" y="46" text-anchor="middle">ESP-NOW</text>
-                <text class="dim" x="186" y="82" text-anchor="middle">ACK, retry</text>
-                <path class="wire" d="M386 60H470"/><circle class="dot" cx="386" cy="60" r="3.5"/><circle class="dot" cx="470" cy="60" r="3.5"/>
-                <text class="dim" x="428" y="46" text-anchor="middle">HTTP/TLS</text>
-                <rect class="box" x="236" y="176" width="150" height="72" rx="4"/>
-                <text x="311" y="202" text-anchor="middle">SSR relay</text>
-                <text class="dim" x="311" y="219" text-anchor="middle">sprinkler valve + pump</text>
-                <text class="dim" x="311" y="233" text-anchor="middle">controlled on device</text>
-                <path class="wire" d="M311 96V176"/><circle class="dot" cx="311" cy="96" r="3.5"/><circle class="dot" cx="311" cy="176" r="3.5"/>
-                <rect class="box" x="470" y="176" width="162" height="72" rx="4"/>
-                <text x="551" y="202" text-anchor="middle">Web dashboard</text>
-                <text class="dim" x="551" y="219" text-anchor="middle">telemetry out,</text>
-                <text class="dim" x="551" y="233" text-anchor="middle">config and commands in</text>
-                <path class="wire" d="M551 96V176"/><circle class="dot" cx="551" cy="96" r="3.5"/><circle class="dot" cx="551" cy="176" r="3.5"/>
-                <rect class="box" x="8" y="176" width="190" height="72" rx="4" stroke-dasharray="3 4"/>
-                <text x="103" y="202" text-anchor="middle">CCTV model, YOLO26n</text>
-                <text class="dim" x="103" y="219" text-anchor="middle">runs on a computer,</text>
-                <text class="dim" x="103" y="233" text-anchor="middle">not linked to the dashboard</text>
-              </svg>
+                <svg class="diagram" viewBox="0 0 640 276" role="img" aria-labelledby="d1t d1d">
+                  <title id="d1t">COSTMOSYS data flow</title>
+                  <desc id="d1d">The left ESP32 sends sensor readings by ESP-NOW to the right ESP32. The right ESP32 merges them with its own sensors, runs the control policy, drives the relay and talks to Firebase Realtime Database. The web dashboard reads telemetry and sends configuration and commands through Firebase. The CCTV model runs on a computer and is not connected to the dashboard.</desc>
+                  <rect class="box" x="8" y="24" width="128" height="72" rx="4"/>
+                  <text x="72" y="50" text-anchor="middle">Left ESP32</text>
+                  <text class="dim" x="72" y="67" text-anchor="middle">sensors</text>
+                  <text class="dim" x="72" y="81" text-anchor="middle">sends readings</text>
+                  <rect class="box" x="236" y="24" width="150" height="72" rx="4"/>
+                  <text x="311" y="50" text-anchor="middle">Right ESP32</text>
+                  <text class="dim" x="311" y="67" text-anchor="middle">merges readings,</text>
+                  <text class="dim" x="311" y="81" text-anchor="middle">control policy</text>
+                  <rect class="box" x="470" y="24" width="162" height="72" rx="4"/>
+                  <text x="551" y="50" text-anchor="middle">Firebase</text>
+                  <text class="dim" x="551" y="67" text-anchor="middle">Realtime Database</text>
+                  <text class="dim" x="551" y="81" text-anchor="middle">and Auth</text>
+                  <path class="wire" d="M136 60H236"/><circle class="dot" cx="136" cy="60" r="3.5"/><circle class="dot" cx="236" cy="60" r="3.5"/>
+                  <text class="dim" x="186" y="46" text-anchor="middle">ESP-NOW</text>
+                  <text class="dim" x="186" y="82" text-anchor="middle">ACK, retry</text>
+                  <path class="wire" d="M386 60H470"/><circle class="dot" cx="386" cy="60" r="3.5"/><circle class="dot" cx="470" cy="60" r="3.5"/>
+                  <text class="dim" x="428" y="46" text-anchor="middle">HTTP/TLS</text>
+                  <rect class="box" x="236" y="176" width="150" height="72" rx="4"/>
+                  <text x="311" y="202" text-anchor="middle">SSR relay</text>
+                  <text class="dim" x="311" y="219" text-anchor="middle">sprinkler valve + pump</text>
+                  <text class="dim" x="311" y="233" text-anchor="middle">controlled on device</text>
+                  <path class="wire" d="M311 96V176"/><circle class="dot" cx="311" cy="96" r="3.5"/><circle class="dot" cx="311" cy="176" r="3.5"/>
+                  <rect class="box" x="470" y="176" width="162" height="72" rx="4"/>
+                  <text x="551" y="202" text-anchor="middle">Web dashboard</text>
+                  <text class="dim" x="551" y="219" text-anchor="middle">telemetry out,</text>
+                  <text class="dim" x="551" y="233" text-anchor="middle">config and commands in</text>
+                  <path class="wire" d="M551 96V176"/><circle class="dot" cx="551" cy="96" r="3.5"/><circle class="dot" cx="551" cy="176" r="3.5"/>
+                  <rect class="box" x="8" y="176" width="190" height="72" rx="4" stroke-dasharray="3 4"/>
+                  <text x="103" y="202" text-anchor="middle">CCTV model, YOLO26n</text>
+                  <text class="dim" x="103" y="219" text-anchor="middle">runs on a computer,</text>
+                  <text class="dim" x="103" y="233" text-anchor="middle">not linked to the dashboard</text>
+                </svg>
               </div>
               <figure class="figure">
-                <img src="assets/projects/costmosys/detections.webp" width="1400" height="788" alt="CCTV frame of a cow barn with boxes labelled cow_standing and cow_lying and confidence scores such as 0.90 and 0.85">
+                <a class="figure-trigger" href="assets/projects/costmosys/detections.webp" data-title="COSTMOSYS — YOLO26n detection">
+                  <img src="assets/projects/costmosys/detections.webp" width="1400" height="788" alt="CCTV frame of a cow barn with boxes labelled cow_standing and cow_lying and confidence scores such as 0.90 and 0.85">
+                </a>
                 <figcaption>A test-session CCTV frame with YOLO26n predictions, from the ML repository.</figcaption>
               </figure>
             </div>
             <details class="more study-more">
-              <summary><span class="toggle" aria-hidden="true"></span>Case study: decisions, results, limits</summary>
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
               <div class="detail detail-grid">
                 <div>
                   <h4>Problem</h4>
-                  <p>Barn temperature and humidity need to be watched and the sprinklers run without someone standing at the controls. After a configuration arrives, the right ESP32 keeps running it locally if the internet drops.</p>
+                  <p>The barn needs temperature and humidity monitoring and automatic sprinkler control. Once configured, the right ESP32 can run the sprinkler logic without an internet connection.</p>
                   <h4>My role</h4>
-                  <p>University coursework, done as a group. I trained the YOLO26n model, assembled the schematic and wiring, and built the IoT part. AI tools assist the implementation; I direct it and audit the results.</p>
+                  <p>For this group project, I trained the YOLO26n model, put together the schematic and wiring, and built the IoT system. I used AI tools to help implement it and reviewed their changes.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Every sensor channel carries validity and sample age. Stale data is never shown as current, and an offline relay is not shown as OFF.</li>
@@ -105,12 +134,12 @@
                   <h4>Results</h4>
                   <p>Two ESP32 boards share six DS18B20 and four DHT22 sensors. The model was fine-tuned from COCO <code>yolo26n.pt</code> for 40 epochs at 640 px, CPU only, in about 1 h 31 min.</p>
                   <table class="data">
-                    <caption class="note" style="text-align:left;caption-side:top;padding-bottom:0.4rem">Detector scores, split by recording session</caption>
+                    <caption>Detector scores, split by recording session</caption>
                     <thead><tr><th scope="col">Split</th><th scope="col">Images</th><th scope="col">mAP50</th><th scope="col">mAP50-95</th></tr></thead>
                     <tbody><tr><th scope="row">Validation</th><td>152</td><td>0.845</td><td>0.520</td></tr><tr><th scope="row">Test</th><td>248</td><td>0.858</td><td>0.551</td></tr></tbody>
                   </table>
                   <p style="margin-top:0.8rem">The data came from 55 CCTV recordings (about 25.5 h). From 3,742 candidate frames, filtering by lighting, contrast, sharpness and time spacing left 999 images; 599 went to training. The firmware and dashboard have unit tests, and the Database Rules are tested on the Firebase emulator against a separate demo project, not production data.</p>
-                  <h4>Limits, as the README states them</h4>
+                  <h4>Known limitations</h4>
                   <ul>
                     <li>It is still a pilot. Physical-device tests, sensor accuracy, radio range and installation safety need on-site checks.</li>
                     <li>Labels are automatic (Roboflow) and not fully human-verified, so the scores measure agreement with those labels at one location and one camera type, not operational accuracy.</li>
@@ -120,38 +149,50 @@
                   <h4>Stack</h4>
                   <p class="stack">ESP32 (Arduino-ESP32 2.0.17), DS18B20, DHT22, SSR, ESP-NOW, Firebase Realtime Database and Auth, plain HTML/CSS/JS, YOLO26n, Ultralytics, PyTorch, OpenCV, Roboflow.</p>
                   <h4>Links</h4>
-                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS">COSTMOSYS repository</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-COSTMOSYS-YOLO26n">YOLO26n training repository</a><a href="https://smartcow-de25f.web.app">Hosted dashboard</a></p>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">COSTMOSYS repository</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-COSTMOSYS-YOLO26n" target="_blank" rel="noopener">YOLO26n training repository</a><a href="https://smartcow-de25f.web.app" target="_blank" rel="noopener">Hosted dashboard</a></p>
                   <p class="note">Both READMEs are written in Indonesian.</p>
                 </div>
               </div>
               <div class="detail hardware">
                 <h4>Hardware: schematics, wiring, installation</h4>
-                <p>I assembled the schematics and the wiring for both nodes. Each node has five sensor jacks (three DS18B20 and two DHT22) and runs from a 5 V adaptor. The right node also switches the sprinkler solenoid valve and the water pump through an SSR and a two-pole breaker. The photos are from the barn. Click a schematic to open it full size; its labels are in Indonesian.</p>
+                <p>I assembled the schematics and the wiring for both nodes. Each node has five sensor jacks (three DS18B20 and two DHT22) and runs from a 5 V adaptor. The right node also switches the sprinkler solenoid valve and the water pump through an SSR and a two-pole breaker. Click a schematic or photo to inspect it full size; schematic labels are in Indonesian.</p>
                 <div class="hw-grid hw-schematics">
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/schematic-left-node.webp"><img src="assets/projects/costmosys/schematic-left-node.webp" width="1600" height="996" loading="lazy" alt="Circuit schematic of the left node: an ESP32 with GPIO4, 14, 18, 19 and 25 each wired through a jack pair to a DS18B20 or DHT22 sensor, powered by an AC-DC adaptor"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/schematic-left-node.webp" data-title="COSTMOSYS — Left node schematic">
+                      <img src="assets/projects/costmosys/schematic-left-node.webp" width="1600" height="996" loading="lazy" alt="Circuit schematic of the left node: an ESP32 with GPIO4, 14, 18, 19 and 25 each wired through a jack pair to a DS18B20 or DHT22 sensor, powered by an AC-DC adaptor">
+                    </a>
                     <figcaption>Left node, schematic: ESP32 and five sensor jacks. Open full size.</figcaption>
                   </figure>
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/schematic-right-node.webp"><img src="assets/projects/costmosys/schematic-right-node.webp" width="1600" height="1244" loading="lazy" alt="Circuit schematic of the right node: the same five sensor jacks as the left node, plus GPIO23 driving an SSR-25DA that switches a 220 V AC solenoid valve and water pump, wired in parallel, through a two-pole breaker"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/schematic-right-node.webp" data-title="COSTMOSYS — Right node schematic">
+                      <img src="assets/projects/costmosys/schematic-right-node.webp" width="1600" height="1244" loading="lazy" alt="Circuit schematic of the right node: the same five sensor jacks as the left node, plus GPIO23 driving an SSR-25DA that switches a 220 V AC solenoid valve and water pump, wired in parallel, through a two-pole breaker">
+                    </a>
                     <figcaption>Right node, schematic: the same sensors plus the SSR, breaker, solenoid valve and water pump. Open full size.</figcaption>
                   </figure>
                 </div>
                 <div class="hw-grid hw-photos">
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/wiring-left-node.webp"><img src="assets/projects/costmosys/wiring-left-node.webp" style="object-position:50% 60%" width="900" height="1150" loading="lazy" alt="Left node at night: a black enclosure on a post with an ESP32 powered over USB, lever connectors, and five brass jacks on top with yellow-taped cables"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/wiring-left-node.webp" data-title="COSTMOSYS — Left node as built">
+                      <img src="assets/projects/costmosys/wiring-left-node.webp" style="object-position:50% 60%" width="900" height="1150" loading="lazy" alt="Left node at night: a black enclosure on a post with an ESP32 powered over USB, lever connectors, and five brass jacks on top with yellow-taped cables">
+                    </a>
                     <figcaption>Left node, as built.</figcaption>
                   </figure>
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/wiring-right-node.webp"><img src="assets/projects/costmosys/wiring-right-node.webp" style="object-position:50% 25%" width="900" height="1350" loading="lazy" alt="Right node: an open black enclosure on a post holding an ESP32, an SSR-25DA solid-state relay, a two-pole circuit breaker and lever connectors, with yellow and red wiring"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/wiring-right-node.webp" data-title="COSTMOSYS — Right node as built">
+                      <img src="assets/projects/costmosys/wiring-right-node.webp" style="object-position:50% 25%" width="900" height="1350" loading="lazy" alt="Right node: an open black enclosure on a post holding an ESP32, an SSR-25DA solid-state relay, a two-pole circuit breaker and lever connectors, with yellow and red wiring">
+                    </a>
                     <figcaption>Right node, as built: ESP32, SSR and breaker in one enclosure.</figcaption>
                   </figure>
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/installation-pump-valve.webp"><img src="assets/projects/costmosys/installation-pump-valve.webp" style="object-position:50% 15%" width="900" height="1600" loading="lazy" alt="The right node enclosure mounted above a water pump and grey PVC pipework with a blue ball valve, in a cow barn with cattle behind"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/installation-pump-valve.webp" data-title="COSTMOSYS — Barn pump installation">
+                      <img src="assets/projects/costmosys/installation-pump-valve.webp" style="object-position:50% 15%" width="900" height="1600" loading="lazy" alt="The right node enclosure mounted above a water pump and grey PVC pipework with a blue ball valve, in a cow barn with cattle behind">
+                    </a>
                     <figcaption>Installation: the right node above the barn’s water pump and pipework.</figcaption>
                   </figure>
                   <figure class="figure">
-                    <a href="assets/projects/costmosys/installation-enclosure-valve.webp"><img src="assets/projects/costmosys/installation-enclosure-valve.webp" style="object-position:50% 30%" width="900" height="1450" loading="lazy" alt="Close view of the open right node enclosure above a pipe junction with a black solenoid valve and a blue ball valve; cows stand in the barn behind"></a>
+                    <a class="figure-trigger" href="assets/projects/costmosys/installation-enclosure-valve.webp" data-title="COSTMOSYS — Solenoid valve installation">
+                      <img src="assets/projects/costmosys/installation-enclosure-valve.webp" style="object-position:50% 30%" width="900" height="1450" loading="lazy" alt="Close view of the open right node enclosure above a pipe junction with a black solenoid valve and a blue ball valve; cows stand in the barn behind">
+                    </a>
                     <figcaption>Installation: the enclosure and the solenoid valve on the pipe below it.</figcaption>
                   </figure>
                 </div>
@@ -162,93 +203,94 @@
           <article class="study" id="agent-platform" data-areas="ai software">
             <div class="study-text">
               <h3>Multi-agent automation platform</h3>
-              <p class="meta"><b>Personal project</b> · private repositories, so no code links</p>
-              <p class="lede">Eight Node.js agents run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram is where I send commands and receive alerts.</p>
+              <p class="meta"><b>Personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">control UI demo (synthetic data)</a></p>
+              <p class="lede">Eight Node.js agents run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram along with a React and TypeScript web control UI (LyNx Agent Control) handle commands, alerts, and history review.</p>
             </div>
             <div class="study-visual">
               <div class="diagram-wrap">
-              <svg class="diagram" viewBox="0 0 640 300" role="img" aria-labelledby="d2t d2d">
-                <title id="d2t">Multi-agent platform layout</title>
-                <desc id="d2d">Telegram connects to the master tracker. Inside one Ubuntu VPS the tracker connects to five agents: worker, researcher, trading and DEX, content, and InternshipAgent.</desc>
-                <rect class="box" x="20" y="8" width="150" height="48" rx="4"/>
-                <text x="95" y="29" text-anchor="middle">Telegram</text>
-                <text class="dim" x="95" y="44" text-anchor="middle">control and alerts</text>
-                <rect class="box" x="4" y="84" width="632" height="212" rx="4" stroke-dasharray="3 4" opacity="0.6"/>
-                <text class="dim" x="112" y="104">Ubuntu VPS, 2 vCPU / 2 GB, systemd</text>
-                <rect class="box" x="187" y="120" width="260" height="54" rx="4"/>
-                <text x="317" y="142" text-anchor="middle">Master tracker / watchdog</text>
-                <text class="dim" x="317" y="160" text-anchor="middle">health checks, guarded auto-fix, rollback</text>
-                <path class="wire" d="M95 56V147H187"/><circle class="dot" cx="95" cy="56" r="3.5"/><circle class="dot" cx="187" cy="147" r="3.5"/>
-                <path class="wire" d="M317 174V198M69 198H565M69 198V218M193 198V218M317 198V218M441 198V218M565 198V218"/>
-                <circle class="dot" cx="317" cy="174" r="3.5"/>
-                <rect class="box" x="10" y="218" width="118" height="68" rx="4"/>
-                <text x="69" y="240" text-anchor="middle">Worker</text>
-                <text class="dim" x="69" y="258" text-anchor="middle">coding jobs</text>
-                <text class="dim" x="69" y="274" text-anchor="middle">model fallback</text>
-                <rect class="box" x="134" y="218" width="118" height="68" rx="4"/>
-                <text x="193" y="240" text-anchor="middle">Researcher</text>
-                <text class="dim" x="193" y="258" text-anchor="middle">scheduled research</text>
-                <text class="dim" x="193" y="274" text-anchor="middle">idempotent scan IDs</text>
-                <rect class="box" x="258" y="218" width="118" height="68" rx="4"/>
-                <text x="317" y="240" text-anchor="middle">Trading, DEX</text>
-                <text class="dim" x="317" y="258" text-anchor="middle">max entries</text>
-                <text class="dim" x="317" y="274" text-anchor="middle">risk caps</text>
-                <rect class="box" x="382" y="218" width="118" height="68" rx="4"/>
-                <text x="441" y="240" text-anchor="middle">Content</text>
-                <text class="dim" x="441" y="258" text-anchor="middle">campaign, affiliate</text>
-                <text class="dim" x="441" y="274" text-anchor="middle">clip and render</text>
-                <rect class="box" x="506" y="218" width="118" height="68" rx="4"/>
-                <text x="565" y="240" text-anchor="middle">InternshipAgent</text>
-                <text class="dim" x="565" y="258" text-anchor="middle">job boards</text>
-                <text class="dim" x="565" y="274" text-anchor="middle">Telegram digest</text>
-              </svg>
+                <svg class="diagram" viewBox="0 0 640 300" role="img" aria-labelledby="d2t d2d">
+                  <title id="d2t">Multi-agent platform layout</title>
+                  <desc id="d2d">Telegram and the control dashboard connect to the master tracker. Inside one Ubuntu VPS the tracker connects to five agent groups: worker, researcher, trading and DEX, content, and InternshipAgent.</desc>
+                  <rect class="box" x="20" y="8" width="164" height="48" rx="4"/>
+                  <text x="102" y="29" text-anchor="middle">Telegram + Control UI</text>
+                  <text class="dim" x="102" y="44" text-anchor="middle">commands, history, alerts</text>
+                  <rect class="box" x="4" y="84" width="632" height="212" rx="4" stroke-dasharray="3 4" opacity="0.65"/>
+                  <text class="dim" x="16" y="104">Ubuntu VPS, 2 vCPU / 2 GB, systemd</text>
+                  <rect class="box" x="187" y="120" width="260" height="54" rx="4"/>
+                  <text x="317" y="142" text-anchor="middle">Master tracker / watchdog</text>
+                  <text class="dim" x="317" y="160" text-anchor="middle">health checks, guarded auto-fix, rollback</text>
+                  <path class="wire" d="M102 56V147H187"/><circle class="dot" cx="102" cy="56" r="3.5"/><circle class="dot" cx="187" cy="147" r="3.5"/>
+                  <path class="wire" d="M317 174V198M69 198H565M69 198V218M193 198V218M317 198V218M441 198V218M565 198V218"/>
+                  <circle class="dot" cx="317" cy="174" r="3.5"/>
+                  <rect class="box" x="10" y="218" width="118" height="68" rx="4"/>
+                  <text x="69" y="240" text-anchor="middle">Worker</text>
+                  <text class="dim" x="69" y="258" text-anchor="middle">coding jobs</text>
+                  <text class="dim" x="69" y="274" text-anchor="middle">model fallback</text>
+                  <rect class="box" x="134" y="218" width="118" height="68" rx="4"/>
+                  <text x="193" y="240" text-anchor="middle">Researcher</text>
+                  <text class="dim" x="193" y="258" text-anchor="middle">scheduled research</text>
+                  <text class="dim" x="193" y="274" text-anchor="middle">idempotent scan IDs</text>
+                  <rect class="box" x="258" y="218" width="118" height="68" rx="4"/>
+                  <text x="317" y="240" text-anchor="middle">Trading, DEX</text>
+                  <text class="dim" x="317" y="258" text-anchor="middle">max entries</text>
+                  <text class="dim" x="317" y="274" text-anchor="middle">risk caps</text>
+                  <rect class="box" x="382" y="218" width="118" height="68" rx="4"/>
+                  <text x="441" y="240" text-anchor="middle">Content</text>
+                  <text class="dim" x="441" y="258" text-anchor="middle">campaign, affiliate</text>
+                  <text class="dim" x="441" y="274" text-anchor="middle">clip and render</text>
+                  <rect class="box" x="506" y="218" width="118" height="68" rx="4"/>
+                  <text x="565" y="240" text-anchor="middle">InternshipAgent</text>
+                  <text class="dim" x="565" y="258" text-anchor="middle">job boards</text>
+                  <text class="dim" x="565" y="274" text-anchor="middle">Telegram digest</text>
+                </svg>
               </div>
               <div class="diagram-wrap">
-              <svg class="diagram" viewBox="0 0 640 156" role="img" aria-labelledby="d3t d3d">
-                <title id="d3t">How I build with the platform</title>
-                <desc id="d3d">The owner sets the goal. An orchestrator plans and delegates to specialised sub-agents. The sub-agents implement on the VPS. The orchestrator audits the evidence, and failed audits go back to the sub-agents in revision rounds, with a circuit breaker. The owner approves the deploy.</desc>
-                <rect class="box" x="2" y="22" width="108" height="72" rx="4"/>
-                <text x="56" y="48" text-anchor="middle">Owner</text>
-                <text class="dim" x="56" y="66" text-anchor="middle">sets the goal</text>
-                <rect class="box" x="134" y="22" width="108" height="72" rx="4"/>
-                <text x="188" y="48" text-anchor="middle">Orchestrator</text>
-                <text class="dim" x="188" y="66" text-anchor="middle">plans, delegates</text>
-                <rect class="box" x="266" y="22" width="108" height="72" rx="4"/>
-                <text x="320" y="48" text-anchor="middle">Sub-agents</text>
-                <text class="dim" x="320" y="66" text-anchor="middle">implement</text>
-                <text class="dim" x="320" y="82" text-anchor="middle">on the VPS</text>
-                <rect class="box" x="398" y="22" width="108" height="72" rx="4"/>
-                <text x="452" y="48" text-anchor="middle">Audit</text>
-                <text class="dim" x="452" y="66" text-anchor="middle">test totals,</text>
-                <text class="dim" x="452" y="82" text-anchor="middle">exit codes, logs</text>
-                <rect class="box" x="530" y="22" width="108" height="72" rx="4"/>
-                <text x="584" y="48" text-anchor="middle">Owner</text>
-                <text class="dim" x="584" y="66" text-anchor="middle">approves deploy</text>
-                <path class="wire" d="M110 58H134M242 58H266M374 58H398M506 58H530"/>
-                <circle class="dot" cx="134" cy="58" r="3.5"/><circle class="dot" cx="266" cy="58" r="3.5"/><circle class="dot" cx="398" cy="58" r="3.5"/><circle class="dot" cx="530" cy="58" r="3.5"/>
-                <path class="wire" d="M452 94V124H320V94"/><circle class="dot" cx="320" cy="94" r="3.5"/>
-                <text class="dim" x="386" y="146" text-anchor="middle">revision rounds, circuit breaker</text>
-              </svg>
+                <svg class="diagram" viewBox="0 0 640 156" role="img" aria-labelledby="d3t d3d">
+                  <title id="d3t">How I build with the platform</title>
+                  <desc id="d3d">The owner sets the goal. An orchestrator plans and delegates to specialised sub-agents. The sub-agents implement on the VPS. The orchestrator audits the evidence, and failed audits go back to the sub-agents in revision rounds, with a circuit breaker. The owner approves the deploy.</desc>
+                  <rect class="box" x="2" y="22" width="108" height="72" rx="4"/>
+                  <text x="56" y="48" text-anchor="middle">Owner</text>
+                  <text class="dim" x="56" y="66" text-anchor="middle">sets the goal</text>
+                  <rect class="box" x="134" y="22" width="108" height="72" rx="4"/>
+                  <text x="188" y="48" text-anchor="middle">Orchestrator</text>
+                  <text class="dim" x="188" y="66" text-anchor="middle">plans, delegates</text>
+                  <rect class="box" x="266" y="22" width="108" height="72" rx="4"/>
+                  <text x="320" y="48" text-anchor="middle">Sub-agents</text>
+                  <text class="dim" x="320" y="66" text-anchor="middle">implement</text>
+                  <text class="dim" x="320" y="82" text-anchor="middle">on the VPS</text>
+                  <rect class="box" x="398" y="22" width="108" height="72" rx="4"/>
+                  <text x="452" y="48" text-anchor="middle">Audit</text>
+                  <text class="dim" x="452" y="66" text-anchor="middle">test totals,</text>
+                  <text class="dim" x="452" y="82" text-anchor="middle">exit codes, logs</text>
+                  <rect class="box" x="530" y="22" width="108" height="72" rx="4"/>
+                  <text x="584" y="48" text-anchor="middle">Owner</text>
+                  <text class="dim" x="584" y="66" text-anchor="middle">approves deploy</text>
+                  <path class="wire" d="M110 58H134M242 58H266M374 58H398M506 58H530"/>
+                  <circle class="dot" cx="134" cy="58" r="3.5"/><circle class="dot" cx="266" cy="58" r="3.5"/><circle class="dot" cx="398" cy="58" r="3.5"/><circle class="dot" cx="530" cy="58" r="3.5"/>
+                  <path class="wire" d="M452 94V124H320V94"/><circle class="dot" cx="320" cy="94" r="3.5"/>
+                  <text class="dim" x="386" y="146" text-anchor="middle">revision rounds, circuit breaker</text>
+                </svg>
               </div>
-              <p class="diagram-note">How I build: the sub-agents are workers, a researcher, and frontend and backend agents. Nothing ships until I approve it.</p>
+              <p class="diagram-note">The orchestrator assigns work to specialised agents. I approve changes before deployment.</p>
             </div>
             <details class="more study-more">
-              <summary><span class="toggle" aria-hidden="true"></span>Case study: decisions, results, limits</summary>
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
               <div class="detail detail-grid">
                 <div>
                   <h4>Goal</h4>
                   <p>Keep several automation agents running on a small server without checking each one by hand, and stop them from spending model calls without limit.</p>
                   <h4>My role</h4>
-                  <p>I define the goals. An orchestrator AI plans the work and delegates it to specialised sub-agents (workers, a researcher, frontend and backend). It audits the evidence, meaning exit codes, test totals and logs, and runs revision rounds with a circuit breaker. I approve before anything ships. AI tools assist the implementation; I direct it, audit it and operate the systems.</p>
+                  <p>I set the goals, review the results, and operate the platform. The AI orchestrator assigns work to specialised agents, checks exit codes, test counts, and logs, and requests revisions when needed. A circuit breaker limits retries, and I approve changes before deployment.</p>
                   <h4>What runs</h4>
                   <ul>
-                    <li>Master tracker / watchdog: health checks, bug detection and guarded auto-fix.</li>
+                    <li>Master tracker / watchdog: deterministic 60 s checks, bug detection and guarded auto-fix.</li>
                     <li>Worker: executes coding jobs, with model routing and fallback through 9Router.</li>
-                    <li>Researcher: scheduled market and content research, pushed to consumer agents.</li>
+                    <li>Researcher: cross-agent market and content research, pushed to consumer agents.</li>
                     <li>Trading (spot and futures) and an on-chain DEX agent, both with hard risk rails.</li>
                     <li>Campaign content: a video clipping and render pipeline with local quality gates and an audit queue.</li>
                     <li>Affiliate content agent.</li>
-                    <li>Internship job-board agent: scrapes public job boards, filters by field, Jabodetabek location and period, removes duplicates and sends a Telegram digest. It uses no LLM and is still in progress.</li>
+                    <li>Internship job-board agent: scrapes public job boards, filters by field, Jabodetabek location and period, removes duplicates and sends a Telegram digest without LLMs.</li>
+                    <li>LyNx Agent Control: React, TypeScript, and Express web interface with session/CSRF auth, service controls, and timeline-filtered history across Spot/Futures closed PnL, research notes, and worker audits.</li>
                     <li>Supporting service: 9Router, the model-routing gateway the agents call.</li>
                   </ul>
                 </div>
@@ -256,22 +298,42 @@
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Auto-fix is guarded: tests run before deploy, and there is a rollback.</li>
-                    <li>Daily caps on model calls prevent token burn.</li>
+                    <li>Daily model-call caps limit usage. The system checks for idle work without calling a model.</li>
                     <li>One nightly storage cleanup, run only by the tracker.</li>
                     <li>Research notifications carry idempotent scan IDs.</li>
                     <li>The trading agents have hard limits: a maximum number of entries and risk caps.</li>
-                    <li>Telegram is the control and notification channel.</li>
+                    <li>Telegram and the private web dashboard serve as control and audit channels; the public demo swaps live feeds for synthetic data.</li>
                   </ul>
                   <h4>Results</h4>
-                  <p>Test counts I report from <code>node --test</code> runs. The repositories are private, so you can’t check them here.</p>
+                  <p>Test counts come from <code>node --test</code>. The backend repos are private; the public demo uses simulated data.</p>
                   <table class="data">
-                    <caption class="note" style="text-align:left;caption-side:top;padding-bottom:0.4rem">Tests per service group</caption>
+                    <caption>Tests per service group</caption>
                     <thead><tr><th scope="col">Service</th><th scope="col">Tests</th></tr></thead>
-                    <tbody><tr><th scope="row">Tracker</th><td>about 300</td></tr><tr><th scope="row">Trading</th><td>493</td></tr><tr><th scope="row">DEX</th><td>188</td></tr><tr><th scope="row">Researcher</th><td>183</td></tr><tr><th scope="row">Content</th><td>649</td></tr></tbody>
+                    <tbody><tr><th scope="row">Tracker</th><td>about 300</td></tr><tr><th scope="row">Trading</th><td>493</td></tr><tr><th scope="row">DEX</th><td>188</td></tr><tr><th scope="row">Researcher</th><td>183</td></tr><tr><th scope="row">Content</th><td>649</td></tr><tr><th scope="row">Control dashboard server</th><td>37</td></tr></tbody>
                   </table>
                   <p class="note" style="margin-top:0.8rem">I don’t publish financial or performance figures for this platform.</p>
                   <h4>Stack</h4>
-                  <p class="stack">Node.js, Ubuntu, systemd, 9Router, LLM APIs, Telegram, <code>node --test</code>.</p>
+                  <p class="stack">Node.js, React, TypeScript, Express, SQLite, Ubuntu, systemd, 9Router, LLM APIs, Telegram, <code>node --test</code>.</p>
+                  <h4>Links</h4>
+                  <p class="links"><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Control UI demo (synthetic data)</a></p>
+                </div>
+              </div>
+              <div class="detail hardware">
+                <h4>Control interface snapshots (demo mode)</h4>
+                <p>Two captures from the local simulated demo build (`lynx-agent-control-demo`), showing fleet alignment and closed Spot/Futures history filters without live infrastructure data.</p>
+                <div class="hw-grid">
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/lynx-control/ringkasan.webp" data-title="LyNx Agent Control — Fleet overview (demo)">
+                      <img src="assets/projects/lynx-control/ringkasan.webp" width="1280" height="800" loading="lazy" alt="LyNx Agent Control overview page showing VPS metrics, 6-hour sparklines, and aligned agent control cards in demo mode">
+                    </a>
+                    <figcaption>Fleet overview and agent status controls (demo mode).</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/lynx-control/riwayat.webp" data-title="LyNx Agent Control — Closed PnL history (demo)">
+                      <img src="assets/projects/lynx-control/riwayat.webp" width="1280" height="800" loading="lazy" alt="LyNx Agent Control TradingAgent history tab with timeline preset selector, Spot and Futures split, and closed PnL breakdown in demo mode">
+                    </a>
+                    <figcaption>Spot/Futures closed position history and timeline selector (demo mode).</figcaption>
+                  </figure>
                 </div>
               </div>
             </details>
@@ -285,10 +347,12 @@
             </div>
             <div class="study-visual">
               <figure class="figure">
-                <img src="assets/projects/churn/app.webp" width="1280" height="960" loading="lazy" alt="Streamlit app Prediksi Customer Churn Telco: metric cards for ROC-AUC 0,8324, recall 0,7353, F1 0,6166 and threshold 0,32, a customer form, and a gauge reading 78,56 percent churn probability with the decision CHURN">
+                <a class="figure-trigger" href="assets/projects/churn/app.webp" data-title="Customer churn prediction — Streamlit app">
+                  <img src="assets/projects/churn/app.webp" width="1280" height="960" loading="lazy" alt="Streamlit app Prediksi Customer Churn Telco: metric cards for ROC-AUC 0,8324, recall 0,7353, F1 0,6166 and threshold 0,32, a customer form, and a gauge reading 78,56 percent churn probability with the decision CHURN">
+                </a>
                 <figcaption>The Streamlit app, run locally from the repository with its default example customer. The interface is in Indonesian.</figcaption>
               </figure>
-              <figure class="figure">
+              <figure class="figure figure-chart">
                 <svg class="chart" viewBox="0 0 640 250" role="img" aria-labelledby="c1t c1d">
                   <title id="c1t">Out-of-fold F1 by decision threshold</title>
                   <desc id="c1d">F1 score on out-of-fold training predictions for thresholds from 0.10 to 0.60. It rises to a maximum of 0.6338 at 0.32 and falls to 0.5106 at 0.60.</desc>
@@ -312,13 +376,13 @@
               </figure>
             </div>
             <details class="more study-more">
-              <summary><span class="toggle" aria-hidden="true"></span>Case study: data, model choice, threshold, limits</summary>
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
               <div class="detail detail-grid">
                 <div>
                   <h4>Problem</h4>
-                  <p>Find the customers likely to leave, with probabilities that mean what they say, so that a retention team can decide whom to contact. The data is the public IBM Telco Customer Churn set: 7,043 rows and 21 columns. 11 rows with a blank <code>TotalCharges</code> were dropped, leaving 7,032 rows, of which 26.6% churned. The split is stratified 80/20: 5,625 rows for training and 1,407 for the holdout.</p>
+                  <p>The app estimates churn risk so a retention team can decide whom to contact. The public IBM Telco Customer Churn dataset has 7,043 rows and 21 columns. Dropping 11 rows with a blank <code>TotalCharges</code> left 7,032 rows, of which 26.6% churned. The stratified 80/20 split gives 5,625 training rows and 1,407 holdout rows.</p>
                   <h4>My role</h4>
-                  <p>We were three members. I selected the model, trained it, built the web app and deployed it to Streamlit. The public repository is mine, and all 59 of its commits are under my account.</p>
+                  <p>In our three-person team, I selected and trained the model, built the web app, and deployed it to Streamlit. The public repository is under my account.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>The model takes 18 input features. <code>TotalCharges</code> is left out to keep the form short and because it correlates strongly with tenure (r = 0.827 on the training data).</li>
@@ -332,17 +396,17 @@
                 <div>
                   <h4>Results on the holdout (1,407 customers)</h4>
                   <table class="data">
-                    <caption class="note" style="text-align:left;caption-side:top;padding-bottom:0.4rem">Candidates at the default 0.50 threshold, before calibration</caption>
+                    <caption>Candidates at the default 0.50 threshold, before calibration</caption>
                     <thead><tr><th scope="col">Model</th><th scope="col">CV F1</th><th scope="col">Test F1</th><th scope="col">ROC AUC</th></tr></thead>
                     <tbody><tr><th scope="row">Logistic regression</th><td>0.6304</td><td>0.6043</td><td>0.8321</td></tr><tr><th scope="row">Random forest</th><td>0.6260</td><td>0.6096</td><td>0.8235</td></tr><tr><th scope="row">Decision tree</th><td>0.6147</td><td>0.6163</td><td>0.8305</td></tr></tbody>
                   </table>
                   <table class="data" style="margin-top:1.2rem">
-                    <caption class="note" style="text-align:left;caption-side:top;padding-bottom:0.4rem">Calibrated model, two thresholds</caption>
+                    <caption>Calibrated model, two thresholds</caption>
                     <thead><tr><th scope="col">Threshold</th><th scope="col">Precision</th><th scope="col">Recall</th><th scope="col">F1</th><th scope="col">Missed churners</th><th scope="col">False alarms</th></tr></thead>
                     <tbody><tr><th scope="row">0.50</th><td>0.6472</td><td>0.5642</td><td>0.6029</td><td>163</td><td>115</td></tr><tr><th scope="row">0.32 (chosen)</th><td>0.5309</td><td>0.7353</td><td>0.6166</td><td>99</td><td>243</td></tr></tbody>
                   </table>
                   <p style="margin-top:0.8rem">Moving to 0.32 raises recall from 56.4% to 73.5% and cuts missed churners from 163 to 99, at the price of 243 false alarms instead of 115. ROC AUC is 0.8324. Calibration lowers the Brier score from 0.1741 to 0.1414. In the three risk bands the mean predicted probability stays close to the observed churn rate: 0.107 against 0.111 (low, 889 customers), 0.461 against 0.426 (mid, 303) and 0.687 against 0.679 (high, 215). Seven unit and UI tests cover the app.</p>
-                  <h4>Limits, as the README states them</h4>
+                  <h4>Known limitations</h4>
                   <ul>
                     <li>One public dataset from a single point in time. Real churn rates and feature distributions can differ, so it would need recalibration or retraining.</li>
                     <li>The correlations are associations, not causes.</li>
@@ -351,7 +415,7 @@
                   <h4>Stack</h4>
                   <p class="stack">Python, pandas, scikit-learn 1.9.1, Streamlit, matplotlib, joblib, <code>unittest</code> with Streamlit <code>AppTest</code>.</p>
                   <h4>Links</h4>
-                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project">Repository</a></p>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project" target="_blank" rel="noopener">Repository</a></p>
                   <p class="note">The README and the app are written in Indonesian.</p>
                 </div>
               </div>
@@ -362,7 +426,10 @@
 
       <section class="tier" data-tier aria-labelledby="t2">
         <div class="wrap">
-          <div class="section-heading"><h2 id="t2">Prototypes with hardware, from coursework.</h2><p>Three Semester 4 group projects. <br>Group size and my part are stated on each.</p></div>
+          <div class="section-heading">
+            <h2 id="t2">Hardware prototypes</h2>
+            <p>Three group projects from Semester 4.</p>
+          </div>
 
           <article class="proto" id="scafi" data-areas="embedded software">
             <div class="proto-text">
@@ -372,11 +439,9 @@
               <details class="more">
                 <summary><span class="toggle" aria-hidden="true"></span>How it works</summary>
                 <div class="detail">
-                  <h4>My role</h4>
-                  <p>I’m one of four members. My files hold the group’s firmware, and the split of tasks between members isn’t documented, so I say only that I contributed.</p>
                   <h4>Signal path</h4>
                   <ol class="flow"><li>DHT22 and ultrasonic sensor</li><li>ESP firmware</li><li>Firebase Realtime Database</li><li>Web dashboard</li></ol>
-                  <p class="flow-note">The firmware also sends Telegram messages directly. The dashboard source isn’t in my archive, so I don’t describe its code.</p>
+                  <p class="flow-note">The firmware also sends Telegram alerts directly.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Fire alert at temperature of 40 °C or more: a buzzer beeps every 150 ms, driven without blocking the loop.</li>
@@ -385,7 +450,7 @@
                     <li>Each alert is saved to Firebase with an NTP-synced WIB timestamp and also sent to Telegram. A routine report goes to Telegram every 5 minutes.</li>
                   </ul>
                   <h4>Results</h4>
-                  <p>The enclosure and the dashboard exist as a prototype (photos). No detection accuracy or response time was documented, so I publish none.</p>
+                  <p>The photos show the prototype enclosure and dashboard. No figures are available for detection accuracy or response time.</p>
                   <h4>Stack</h4>
                   <p class="stack">ESP board, DHT22, ultrasonic sensor (NewPing), buzzers, Firebase Realtime Database, Telegram Bot API, NTP.</p>
                 </div>
@@ -393,11 +458,15 @@
             </div>
             <div class="proto-visual">
               <figure class="figure">
-                <img src="assets/projects/scafi/dashboard.webp" width="1400" height="625" alt="Dark dashboard titled Laboratorium Aman with a temperature gauge at 31.1 degrees, humidity at 68.8 percent, an intruder detection reading of 63 cm, and a temperature chart">
+                <a class="figure-trigger" href="assets/projects/scafi/dashboard.webp" data-title="SCAFI — Group dashboard">
+                  <img src="assets/projects/scafi/dashboard.webp" width="1400" height="625" loading="lazy" alt="Dark dashboard titled Laboratorium Aman with a temperature gauge at 31.1 degrees, humidity at 68.8 percent, an intruder detection reading of 63 cm, and a temperature chart">
+                </a>
                 <figcaption>The group’s dashboard, captured while the device showed Offline.</figcaption>
               </figure>
               <figure class="figure half">
-                <img src="assets/projects/scafi/enclosure.webp" width="562" height="1000" alt="Closed black plastic enclosure with a DHT22 sensor taped on top and a yellow clip on the side">
+                <a class="figure-trigger" href="assets/projects/scafi/enclosure.webp" data-title="SCAFI — Prototype enclosure">
+                  <img src="assets/projects/scafi/enclosure.webp" width="562" height="1000" loading="lazy" alt="Closed black plastic enclosure with a DHT22 sensor taped on top and a yellow clip on the side">
+                </a>
                 <figcaption>The enclosure, DHT22 taped on top.</figcaption>
               </figure>
             </div>
@@ -412,21 +481,21 @@
                 <summary><span class="toggle" aria-hidden="true"></span>How it works</summary>
                 <div class="detail">
                   <h4>Problem</h4>
-                  <p>Physical keys get lost or copied and leave no record of who came in. The proposal targets boarding houses, dormitories, rental rooms and campuses.</p>
+                  <p>The prototype was designed for shared housing. Unlike a physical key, a registered card or web account can be tied to an access log.</p>
                   <h4>My role</h4>
-                  <p>The proposal assigns me prototype making and final refinement. That is the planned split, not a record of who did what in the end.</p>
+                  <p>I built the prototype.</p>
                   <h4>Web route</h4>
                   <ol class="flow"><li>Connect to the boarding-house Wi-Fi</li><li>MikroTik limits the web page to that network</li><li>Backend checks the user</li><li>ESP32 opens the door</li></ol>
                   <h4>Card route</h4>
                   <ol class="flow"><li>RC522 reads the card</li><li>ESP32 checks it against registered cards</li><li>Door opens</li></ol>
-                  <h4>Design, as in the proposal</h4>
+                  <h4>Proposed design</h4>
                   <ul>
                     <li>A local whitelist on the ESP32 keeps card access working without internet, with offline logs cached and synced later.</li>
                     <li>Residents get hotspot and door access, guests get hotspot only, and an admin can monitor.</li>
                     <li>A database logs every access. The planned budget was Rp 243,700.</li>
                   </ul>
                   <h4>Results</h4>
-                  <p>I built the prototype (photos), and the door opens by registered card or through the Wi-Fi-restricted web page. I have no recorded test results, so I publish no timings or reliability figures.</p>
+                  <p>The prototype opens with a registered card or from a web page on the boarding-house Wi-Fi. No timing or reliability figures are available.</p>
                   <h4>Stack</h4>
                   <p class="stack">ESP32, RC522 RFID reader, relay, servo or solenoid, MikroTik hotspot, backend and dashboard.</p>
                 </div>
@@ -434,11 +503,15 @@
             </div>
             <div class="proto-visual">
               <figure class="figure">
-                <img src="assets/projects/doorlink/wiring.webp" width="1200" height="900" alt="Wiring diagram titled DoorLink Mini House Prototype: ESP32 connected to an RC522 reader, a servo, two LEDs, a buzzer and a USB power adapter">
+                <a class="figure-trigger" href="assets/projects/doorlink/wiring.webp" data-title="DoorLink — Wiring diagram">
+                  <img src="assets/projects/doorlink/wiring.webp" width="1200" height="900" loading="lazy" alt="Wiring diagram titled DoorLink Mini House Prototype: ESP32 connected to an RC522 reader, a servo, two LEDs, a buzzer and a USB power adapter">
+                </a>
                 <figcaption>Wiring diagram from the project documentation.</figcaption>
               </figure>
               <figure class="figure half">
-                <img src="assets/projects/doorlink/breadboard.webp" width="827" height="1000" alt="Breadboard prototype with an ESP32, an RC522 reader, a buzzer and jumper wires on a desk">
+                <a class="figure-trigger" href="assets/projects/doorlink/breadboard.webp" data-title="DoorLink — Breadboard prototype">
+                  <img src="assets/projects/doorlink/breadboard.webp" width="827" height="1000" loading="lazy" alt="Breadboard prototype with an ESP32, an RC522 reader, a buzzer and jumper wires on a desk">
+                </a>
                 <figcaption>The breadboard prototype.</figcaption>
               </figure>
             </div>
@@ -448,12 +521,12 @@
             <div class="proto-text">
               <h3>VitaLoop</h3>
               <p class="meta"><b>Coursework</b> · Semester 4, Cloud Technology · group of 3</p>
-              <p class="lede">A wristband that reads heart rate and blood oxygen (SpO2) with a MAX30102 sensor and sends the values over MQTT to ThingsBoard, which runs on Ubuntu in an AWS EC2 instance. I process and analyse the sensor data in RStudio. A coursework prototype, not a medical device.</p>
+              <p class="lede">A wristband prototype that streams heart-rate and blood-oxygen (SpO2) readings from a MAX30102 sensor to ThingsBoard over MQTT. It was built for coursework, not medical use.</p>
               <details class="more">
                 <summary><span class="toggle" aria-hidden="true"></span>How it works</summary>
                 <div class="detail">
                   <h4>My role</h4>
-                  <p>I’m one of three members. The documents don’t itemise who did what, so I say only that I contributed.</p>
+                  <p>I assembled the wristband, connected it to ThingsBoard running on Ubuntu in an AWS EC2 instance, and processed and analysed the sensor data in RStudio.</p>
                   <h4>Signal path</h4>
                   <ol class="flow"><li>MAX30102 and microcontroller</li><li>MQTT telemetry</li><li>ThingsBoard on EC2</li><li>RStudio analysis</li></ol>
                   <p class="flow-note">Hardware list from the pitch deck: ESP32-C3 SuperMini, MAX30102, TP4056 charger, 0.96-inch OLED, 1S Li-Po.</p>
@@ -465,7 +538,7 @@
                     <li>ThingsBoard sits behind an Nginx reverse proxy with a self-signed certificate.</li>
                   </ul>
                   <h4>Results</h4>
-                  <p>The server side runs on Ubuntu 22.04 (t2.medium) and the telemetry topic was tested with <code>mosquitto_pub</code>. I use RStudio to process and analyse the sensor data. The wristband was built (photos). No measured accuracy is documented, so I publish none.</p>
+                  <p>The telemetry topic was tested with <code>mosquitto_pub</code>. ThingsBoard ran on Ubuntu 22.04 on an EC2 t2.medium instance. No sensor accuracy figures are available.</p>
                   <h4>Stack</h4>
                   <p class="stack">MAX30102, ESP32-C3 SuperMini, OLED, TP4056, MQTT, AWS EC2, Ubuntu 22.04, ThingsBoard 4.3.1, PostgreSQL 16, Nginx, RStudio.</p>
                 </div>
@@ -473,11 +546,15 @@
             </div>
             <div class="proto-visual">
               <figure class="figure">
-                <img src="assets/projects/vitaloop/wristband.webp" width="452" height="389" alt="White 3D-printed wristband enclosure with a small screen and a VITALOOP logo, wires coming out of the top">
+                <a class="figure-trigger" href="assets/projects/vitaloop/wristband.webp" data-title="VitaLoop — Wristband enclosure">
+                  <img src="assets/projects/vitaloop/wristband.webp" width="452" height="389" loading="lazy" alt="White 3D-printed wristband enclosure with a small screen and a VITALOOP logo, wires coming out of the top">
+                </a>
                 <figcaption>The wristband enclosure.</figcaption>
               </figure>
               <figure class="figure half">
-                <img src="assets/projects/vitaloop/schematic.webp" width="370" height="300" alt="Circuit schematic: MAX30102 sensor, ESP32-C3 SuperMini, OLED display and TP4056 charger module">
+                <a class="figure-trigger" href="assets/projects/vitaloop/schematic.webp" data-title="VitaLoop — Circuit schematic">
+                  <img src="assets/projects/vitaloop/schematic.webp" width="370" height="300" loading="lazy" alt="Circuit schematic: MAX30102 sensor, ESP32-C3 SuperMini, OLED display and TP4056 charger module">
+                </a>
                 <figcaption>Circuit schematic.</figcaption>
               </figure>
             </div>
@@ -485,34 +562,58 @@
         </div>
       </section>
 
-      <section class="tier tier-plum" data-tier aria-labelledby="t-ind">
+      <section class="tier tier-alt" data-tier aria-labelledby="t-ind">
         <div class="wrap">
-          <div class="section-heading"><h2 id="t-ind">Industrial automation, in simulation.</h2><p>Two PLC assignments from Semester 4. <br>Frames from the group’s run videos.</p></div>
+          <div class="section-heading">
+            <h2 id="t-ind">PLC simulations</h2>
+            <p>Two Semester 4 assignments in CX-Programmer and Factory I/O.</p>
+          </div>
           <div class="clips">
             <article class="clip" id="plc-tank" data-areas="industrial">
               <div class="clip-text">
                 <h3>Water-tank control</h3>
                 <p class="meta"><b>Coursework</b> · Semester 4, PLC course · group project</p>
-                <p>A group assignment (Tugas 6): control logic for a water tank, written in CX-Programmer and run against a Factory I/O simulation. I contributed to the group’s work, and the task split isn’t documented. The ladder uses KEEP (latch) instructions for the start/stop and auto-mode rungs.</p>
+                <p>For Tugas 6, our group ran water-tank control logic in Factory I/O. The ladder uses KEEP instructions to latch the start/stop and auto-mode states.</p>
                 <p class="stack">CX-Programmer, Factory I/O.</p>
-                <a class="yt-link" href="https://www.youtube.com/watch?v=fr9WfGdHkas">Watch the run on YouTube<svg viewBox="0 0 40 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
+                <a class="yt-link" href="https://www.youtube.com/watch?v=fr9WfGdHkas" target="_blank" rel="noopener">Watch the run on YouTube<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
               </div>
               <div class="clip-shots">
-                <figure><img src="assets/projects/plc/tank-ladder.webp" width="717" height="538" loading="lazy" alt="CX-Programmer in monitor mode: project tangki_air with ladder rungs using KEEP instructions, one highlighted green"><figcaption>CX-Programmer, project tangki_air in monitor mode.</figcaption></figure>
-                <figure><img src="assets/projects/plc/tank-scene.webp" width="717" height="538" loading="lazy" alt="Factory I/O scene: a tank filled with blue water beside a grey control panel with green and red push buttons and amber lamps"><figcaption>Factory I/O: the water tank and its control panel.</figcaption></figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/plc/tank-ladder.webp" data-title="Water-tank control — CX-Programmer">
+                    <img src="assets/projects/plc/tank-ladder.webp" width="717" height="538" loading="lazy" alt="CX-Programmer in monitor mode: project tangki_air with ladder rungs using KEEP instructions, one highlighted green">
+                  </a>
+                  <figcaption>CX-Programmer, project tangki_air in monitor mode.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/plc/tank-scene.webp" data-title="Water-tank control — Factory I/O">
+                    <img src="assets/projects/plc/tank-scene.webp" width="717" height="538" loading="lazy" alt="Factory I/O scene: a tank filled with blue water beside a grey control panel with green and red push buttons and amber lamps">
+                  </a>
+                  <figcaption>Factory I/O: the water tank and its control panel.</figcaption>
+                </figure>
               </div>
             </article>
+
             <article class="clip" id="plc-conveyor" data-areas="industrial">
               <div class="clip-text">
                 <h3>Conveyor control</h3>
                 <p class="meta"><b>Coursework</b> · Semester 4, PLC course · group project</p>
-                <p>A group assignment (Tugas 7): control logic for a conveyor line, written in CX-Programmer and run against a Factory I/O simulation. I contributed to the group’s work, and the task split isn’t documented. The ladder has START and STOP rungs and a timer, and it compiled with 0 errors and 0 warnings.</p>
+                <p>For Tugas 7, our group simulated a conveyor line in Factory I/O. The ladder has START and STOP rungs and a timer. It compiled with 0 errors and 0 warnings.</p>
                 <p class="stack">CX-Programmer, Factory I/O.</p>
-                <a class="yt-link" href="https://www.youtube.com/watch?v=G-StfIa9DR0">Watch the run on YouTube<svg viewBox="0 0 40 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
+                <a class="yt-link" href="https://www.youtube.com/watch?v=G-StfIa9DR0" target="_blank" rel="noopener">Watch the run on YouTube<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
               </div>
               <div class="clip-shots">
-                <figure><img src="assets/projects/plc/conveyor-ladder.webp" width="716" height="537" loading="lazy" alt="CX-Programmer in monitor mode: project CONVEYOR with rungs labelled PB START, PB STOP, STARTBASE and EMITERB, a timer, and a compile output reading 0 errors, 0 warnings"><figcaption>CX-Programmer, project CONVEYOR in monitor mode.</figcaption></figure>
-                <figure><img src="assets/projects/plc/conveyor-scene.webp" width="716" height="537" loading="lazy" alt="Factory I/O scene: an orange robot arm and conveyors inside a fenced cell, behind the simulator’s list of inputs and outputs for Bases and Lids"><figcaption>Factory I/O: a robot arm and conveyors, with the I/O list for Bases and Lids.</figcaption></figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/plc/conveyor-ladder.webp" data-title="Conveyor control — CX-Programmer">
+                    <img src="assets/projects/plc/conveyor-ladder.webp" width="716" height="537" loading="lazy" alt="CX-Programmer in monitor mode: project CONVEYOR with rungs labelled PB START, PB STOP, STARTBASE and EMITERB, a timer, and a compile output reading 0 errors, 0 warnings">
+                  </a>
+                  <figcaption>CX-Programmer, project CONVEYOR in monitor mode.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/plc/conveyor-scene.webp" data-title="Conveyor control — Factory I/O">
+                    <img src="assets/projects/plc/conveyor-scene.webp" width="716" height="537" loading="lazy" alt="Factory I/O scene: an orange robot arm and conveyors inside a fenced cell, behind the simulator’s list of inputs and outputs for Bases and Lids">
+                  </a>
+                  <figcaption>Factory I/O: a robot arm and conveyors, with the I/O list for Bases and Lids.</figcaption>
+                </figure>
               </div>
             </article>
           </div>
@@ -521,125 +622,70 @@
 
       <section class="tier" data-tier aria-labelledby="t3">
         <div class="wrap">
-          <div class="section-heading"><h2 id="t3">Smaller and earlier work.</h2><p>Shorter write-ups. <br>Where I have no documentation, I say so.</p></div>
+          <div class="section-heading">
+            <h2 id="t3">Earlier coursework</h2>
+          </div>
 
           <details class="entry" id="wishnote" data-areas="software">
-            <summary><span class="node" aria-hidden="true"></span><h3>WishNote</h3><span class="domain-overview">Coursework, Semester 3, Web Programming. My project: a Laravel app where people pin notes on a shared board.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">WishNote</span><span class="domain-overview">Coursework, Semester 3, Web Programming. My project: a Laravel app where people pin notes on a shared board.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
               <p>Users register, then create a board by choosing a type (Christmas tree, bulletin board or mailbox) and whether it is public or private. A dashboard filters boards by all, mine and friends. Only a board’s owner can delete it.</p>
               <p>On the tree board you click anywhere on the tree to place an ornament and write a message. The name is optional, so anonymous notes work. There are five ornament designs, each message can be public or private, and messages can be liked. Positions are stored as x/y coordinates.</p>
               <p class="note">It is a course prototype: authorization on some API routes and server-side privacy checks are unfinished, and the friend list is a static view. I have no screenshots to show.</p>
-              <h4>Stack</h4>
+              <h3>Stack</h3>
               <p class="stack">Laravel (PHP), Blade, Bootstrap 5, Axios, SQLite.</p>
             </div>
           </details>
 
           <details class="entry" id="packet-tracer" data-areas="networks">
-            <summary><span class="node" aria-hidden="true"></span><h3>Packet Tracer troubleshooting</h3><span class="domain-overview">Coursework, Semester 4, Wireless Technology, individual. A diagnostic exercise, not a build.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">Packet Tracer troubleshooting</span><span class="domain-overview">Individual coursework in Semester 4: troubleshooting two simulated networks.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
               <p>The worksheet asks for faults to be found in two simulated networks. In the home network: a wrong DNS server in the router’s DHCP settings, a client set to a static address that should use DHCP, and a router WAN interface set to static instead of DHCP. In the enterprise wireless-controller network: WLAN VLAN 20 not enabled, a wrong client username, and VLAN 10 using 802.1x instead of PSK.</p>
-              <h4>Stack</h4>
+              <h3>Stack</h3>
               <p class="stack">Cisco Packet Tracer, DHCP, DNS, VLANs, wireless LAN controller.</p>
             </div>
           </details>
 
           <details class="entry" id="docker-thingsboard" data-areas="data">
-            <summary><span class="node" aria-hidden="true"></span><h3>ThingsBoard in Docker Compose</h3><span class="domain-overview">Coursework, Semester 2, Computer Architecture and OS, individual. Practicum report, April 2025.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">ThingsBoard in Docker Compose</span><span class="domain-overview">Coursework, Semester 2, Computer Architecture and OS, individual. Practicum report, April 2025.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
               <p>On an Ubuntu 24.04 machine (4 CPUs, 4 GB) I installed Docker Engine 28.0.4 and Compose v2.34.0 and ran <code>hello-world</code>. Then I wrote a <code>docker-compose.yml</code> with <code>postgres:13</code> and <code>thingsboard/tb-postgres:3.6.4</code>, mapping host port 8080 to the container’s 9090. ThingsBoard CE started and I reached its dashboard.</p>
-              <h4>Stack</h4>
+              <h3>Stack</h3>
               <p class="stack">Docker, Docker Compose, PostgreSQL 13, ThingsBoard CE 3.6.4, Ubuntu 24.04.</p>
             </div>
           </details>
 
           <details class="entry" id="rc-car" data-areas="embedded">
-            <summary><span class="node" aria-hidden="true"></span><h3>Remote-controlled car</h3><span class="domain-overview">Semester 1 coursework, no documentation kept.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">Remote-controlled car</span><span class="domain-overview">Semester 1 coursework.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
-              <p>A car driven by an IC, controlled through a transmitter and receiver pair. I built it in my first semester. I kept no documentation, so there are no photos or schematics here and I don’t describe the circuit beyond that.</p>
+              <p>I built a remote-controlled car in my first semester using an IC and a transmitter/receiver pair. No photos or schematics are available.</p>
             </div>
           </details>
         </div>
       </section>
     </main>
-    <footer class="wrap"><p>© 2026 Muhamad Akhdan Ramadhan</p><p>Keep learning. Understand the connections.</p></footer>
-    <script>
-      const areas = [["all", "All"], ["software", "Software & web"], ["ai", "AI systems & automation"], ["networks", "Computer networks"], ["embedded", "Embedded & hardware"], ["industrial", "Industrial automation"], ["data", "Data & computing"]];
-      const items = [...document.querySelectorAll("[data-areas]")];
-      const tiers = [...document.querySelectorAll("[data-tier]")];
-      const bar = document.getElementById("filters");
-      const empty = document.getElementById("empty");
-      const status = document.createElement("p");
-      status.className = "filter-status";
-      status.setAttribute("role", "status");
-      const chips = new Map();
-      function render(area, push) {
-        let shown = 0;
-        for (const item of items) {
-          const match = area === "all" || item.dataset.areas.split(" ").includes(area);
-          item.hidden = !match;
-          if (match) shown += 1;
-        }
-        for (const tier of tiers) tier.hidden = !tier.querySelector("[data-areas]:not([hidden])");
-        for (const [key, chip] of chips) chip.setAttribute("aria-pressed", String(key === area));
-        const label = areas.find(([key]) => key === area)[1];
-        status.textContent = area === "all" ? `Showing all ${items.length} projects` : `Showing ${shown} of ${items.length} projects in ${label}`;
-        empty.classList.toggle("show", shown === 0);
-        if (push) {
-          const url = new URL(location.href);
-          if (area === "all") url.searchParams.delete("area"); else url.searchParams.set("area", area);
-          history.replaceState(null, "", url);
-        }
-      }
-      const calm = matchMedia("(prefers-reduced-motion: reduce)");
-      let switching = 0;
-      async function apply(area, push) {
-        const id = ++switching;
-        if (calm.matches) {
-          render(area, push);
-          return;
-        }
-        const leaving = tiers.filter((tier) => !tier.hidden);
-        await Promise.all(leaving.map((tier) => tier.animate({ opacity: [1, 0] }, { duration: 140, easing: "ease-out", fill: "forwards" }).finished.catch(() => {})));
-        if (id !== switching) return;
-        render(area, push);
-        for (const tier of tiers) for (const animation of tier.getAnimations()) animation.cancel();
-        for (const tier of tiers.filter((t) => !t.hidden)) {
-          tier.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 260, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
-        }
-      }
-      for (const [key, label] of areas) {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "chip";
-        chip.textContent = label;
-        chip.addEventListener("click", () => apply(key, true));
-        chips.set(key, chip);
-        bar.append(chip);
-      }
-      bar.append(status);
-      const wanted = new URLSearchParams(location.search).get("area");
-      render(areas.some(([key]) => key === wanted) ? wanted : "all", false);
-      const wraps = [...document.querySelectorAll(".diagram-wrap")];
-      function markScrollable() {
-        for (const wrap of wraps) {
-          const scrolls = wrap.scrollWidth > wrap.clientWidth + 1;
-          if (scrolls) {
-            wrap.tabIndex = 0;
-            wrap.setAttribute("role", "group");
-            wrap.setAttribute("aria-label", "Diagram, scrolls sideways");
-          } else {
-            wrap.removeAttribute("tabindex");
-            wrap.removeAttribute("role");
-            wrap.removeAttribute("aria-label");
-          }
-        }
-      }
-      markScrollable();
-      addEventListener("resize", markScrollable);
-      if (location.hash) {
-        const target = document.getElementById(location.hash.slice(1));
-        if (target?.tagName === "DETAILS") target.open = true;
-      }
-    </script>
+
+    <dialog id="lightbox" class="lightbox" closedby="any" aria-labelledby="lightbox-title">
+      <form class="lightbox-form" method="dialog">
+        <div class="lightbox-bar">
+          <span id="lightbox-title" class="lightbox-title">Figure Viewer</span>
+          <button id="lightbox-close" class="lightbox-close" type="button" autofocus>Close (Esc)</button>
+        </div>
+        <div class="lightbox-stage">
+          <img id="lightbox-img" src="data:," alt="">
+        </div>
+        <div class="lightbox-foot">
+          <span id="lightbox-caption"></span>
+          <a id="lightbox-raw" href="#" target="_blank" rel="noopener">Open original image ↗</a>
+        </div>
+      </form>
+    </dialog>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <p>© 2026 Muhamad Akhdan Ramadhan</p>
+        <p>Keep learning. Understand the connections.</p>
+      </div>
+    </footer>
   </body>
 </html>
