@@ -212,6 +212,11 @@ svg {
   text-decoration: none;
 }
 
+.home-link:is(:hover, :focus-visible) {
+  color: var(--signal-hover);
+  text-decoration: underline;
+}
+
 .site-nav {
   display: flex;
   align-items: center;
