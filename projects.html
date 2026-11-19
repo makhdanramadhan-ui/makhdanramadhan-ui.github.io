@@ -592,7 +592,7 @@
                   <h4>Problem</h4>
                   <p>The prototype was designed for shared housing. Unlike a physical key, a registered card or web account can be tied to an access log.</p>
                   <h4>Personal contribution</h4>
-                  <p>Group project (four people). I configured the MikroTik router, drew the circuit schematic, assembled the prototype, and built the DoorLink web app.</p>
+                  <p>Group project (four people). I wrote the DoorLink code (FastAPI backend and web dashboard), configured the MikroTik router, drew the circuit schematic, and assembled the prototype.</p>
                   <h4>Web route</h4>
                   <ol class="flow"><li>Connect to the boarding-house Wi-Fi</li><li>MikroTik limits the web page to that network</li><li>Backend checks the user</li><li>ESP32 opens the door</li></ol>
                   <h4>Card route</h4>
@@ -606,11 +606,49 @@
                   <h4>Results</h4>
                   <p>The prototype opens with a registered card or from a web page on the boarding-house Wi-Fi. No timing or reliability figures are available.</p>
                   <h4>Stack</h4>
-                  <p class="stack">ESP32, RC522 RFID reader, relay, servo or solenoid, MikroTik hotspot, backend and dashboard.</p>
+                  <p class="stack">ESP32, RC522 RFID reader, relay or servo, FastAPI, SQLModel (SQLite), Jinja2, Bootstrap 5, MikroTik RouterOS API integration (MASTER hotspot, RADIUS CHR/User Manager).</p>
+                  <h4>Links</h4>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/doorlink" target="_blank" rel="noopener">Repository</a></p>
                 </div>
               </details>
             </div>
             <div class="proto-visual">
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/admin-dashboard-desktop.webp" data-title="DoorLink — Admin dashboard">
+                  <img src="assets/projects/doorlink/admin-dashboard-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink admin dashboard in Indonesian showing sample summary cards, charts, and recent activity from a local run">
+                </a>
+                <figcaption>Admin dashboard screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/open-your-room-desktop.webp" data-title="DoorLink — Open Your Room">
+                  <img src="assets/projects/doorlink/open-your-room-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink guest Open Your Room page in Indonesian with a room number field and an open-door button, shown with sample data from a local run">
+                </a>
+                <figcaption>Guest “Open Your Room” screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/admin-users-desktop.webp" data-title="DoorLink — User management">
+                  <img src="assets/projects/doorlink/admin-users-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink user management page in Indonesian listing sample users, roles, and actions from a local run">
+                </a>
+                <figcaption>User management screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/admin-logs-desktop.webp" data-title="DoorLink — Access logs">
+                  <img src="assets/projects/doorlink/admin-logs-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink access logs page in Indonesian showing sample access entries with dates, users, methods, and statuses from a local run">
+                </a>
+                <figcaption>Access logs screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/admin-door-desktop.webp" data-title="DoorLink — Door access">
+                  <img src="assets/projects/doorlink/admin-door-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink admin door access page in Indonesian with door controls and status information, shown with sample data from a local run">
+                </a>
+                <figcaption>Door access screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/doorlink/login-desktop.webp" data-title="DoorLink — Login">
+                  <img src="assets/projects/doorlink/login-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink login page in Indonesian with username and password fields, shown from a local run">
+                </a>
+                <figcaption>Login screenshot from a local run, using sample data (dates and users are sample). Dashboard UI text is in Indonesian.</figcaption>
+              </figure>
               <figure class="figure">
                 <a class="figure-trigger" href="assets/projects/doorlink/wiring.webp" data-title="DoorLink — Wiring diagram">
                   <img src="assets/projects/doorlink/wiring.webp" width="1200" height="900" loading="lazy" alt="Wiring diagram titled DoorLink Mini House Prototype: ESP32 connected to an RC522 reader, a servo, two LEDs, a buzzer and a USB power adapter">
