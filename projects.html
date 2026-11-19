@@ -143,7 +143,7 @@
                   <h4>Problem</h4>
                   <p>The barn needs temperature and humidity monitoring and automatic sprinkler control. Once configured, the right ESP32 can run the sprinkler logic without an internet connection.</p>
                   <h4>Personal contribution</h4>
-                  <p>Group project. I trained the YOLO26n model, put together the schematic and wiring, and built the IoT system. I used AI coding tools for parts of the implementation and reviewed every change.</p>
+                  <p>Group project. I trained the YOLO26n model, designed the schematic and wiring, built the ESP32 monitoring system, and developed the web dashboard, with Firebase handling telemetry and hosting. I used AI coding tools for parts of the implementation and reviewed every change.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Every sensor channel carries validity and sample age. Stale data is never shown as current, and an offline relay is not shown as OFF.</li>
@@ -227,7 +227,7 @@
             <div class="study-text">
               <h3>Multi-agent automation platform</h3>
               <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">control UI demo (synthetic data)</a></p>
-              <p class="lede">Eight Node.js agents run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram along with a React and TypeScript web control UI (LyNx Agent Control) handle commands, alerts, and history review.</p>
+              <p class="lede">Eight Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram along with a React and TypeScript web control UI (LyNx Agent Control) handle commands, alerts, and history review.</p>
             </div>
             <div class="study-visual">
               <div class="diagram-wrap">
@@ -592,7 +592,7 @@
                   <h4>Problem</h4>
                   <p>The prototype was designed for shared housing. Unlike a physical key, a registered card or web account can be tied to an access log.</p>
                   <h4>Personal contribution</h4>
-                  <p>Group project (four people). I wrote the DoorLink code (FastAPI backend and web dashboard), configured the MikroTik router, drew the circuit schematic, and assembled the prototype.</p>
+                  <p>Group project (four people). I developed the FastAPI backend and web dashboard, configured the MikroTik router, designed the circuit schematic, and assembled the prototype.</p>
                   <h4>Web route</h4>
                   <ol class="flow"><li>Connect to the boarding-house Wi-Fi</li><li>MikroTik limits the web page to that network</li><li>Backend checks the user</li><li>ESP32 opens the door</li></ol>
                   <h4>Card route</h4>
