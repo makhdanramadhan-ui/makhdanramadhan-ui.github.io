@@ -1,6 +1,6 @@
 (() => {
   if (!Object.hasOwn(HTMLElement.prototype, "popover")) {
-    import("https://unpkg.com/@oddbird/popover-polyfill@latest/dist/popover.min.js").catch(() => {});
+    import("./assets/vendor/popover-polyfill.min.js").catch(() => {});
   }
 
   // Responsive site header: inline links on wide screens, popover drawer when collapsed
@@ -189,9 +189,13 @@
     const items = [...document.querySelectorAll("[data-areas]")];
     const tiers = [...document.querySelectorAll("[data-tier]")];
     const empty = document.getElementById("empty");
-    const status = document.createElement("p");
-    status.className = "filter-status";
-    status.setAttribute("role", "status");
+    let statusEl = filterBar.querySelector(".filter-status");
+    if (!statusEl) {
+      statusEl = document.createElement("p");
+      statusEl.className = "filter-status";
+      filterBar.append(statusEl);
+    }
+    statusEl.setAttribute("role", "status");
     const chips = new Map();
 
     const render = (area, push) => {
@@ -204,7 +208,7 @@
       for (const tier of tiers) tier.hidden = !tier.querySelector("[data-areas]:not([hidden])");
       for (const [key, chip] of chips) chip.setAttribute("aria-pressed", String(key === area));
       const label = areas.find(([key]) => key === area)?.[1] || "All";
-      status.textContent =
+      statusEl.textContent =
         area === "all"
           ? `Showing all ${items.length} projects`
           : `Showing ${shown} of ${items.length} projects in ${label}`;
@@ -225,16 +229,22 @@
       }
     };
 
-    for (const [key, label] of areas) {
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "chip";
-      chip.textContent = label;
-      chip.addEventListener("click", () => apply(key));
-      chips.set(key, chip);
-      filterBar.append(chip);
+    const existing = [...filterBar.querySelectorAll("[data-filter]")];
+    if (existing.length) {
+      for (const chip of existing) chips.set(chip.getAttribute("data-filter"), chip);
+    } else {
+      for (const [key, label] of areas) {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip";
+        chip.textContent = label;
+        chip.setAttribute("data-filter", key);
+        chip.setAttribute("aria-pressed", "false");
+        chips.set(key, chip);
+        filterBar.insertBefore(chip, statusEl);
+      }
     }
-    filterBar.append(status);
+    for (const [key, chip] of chips) chip.addEventListener("click", () => apply(key));
 
     const wanted = new URLSearchParams(location.search).get("area");
     render(areas.some(([key]) => key === wanted) ? wanted : "all", false);

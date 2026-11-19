@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Manrope";
-  src: url("assets/manrope-bold.ttf") format("truetype");
+  src: url("assets/fonts/manrope-700.woff2") format("woff2");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -850,11 +850,94 @@ footer {
 .footer-inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
   padding-block: 1.65rem;
   font-size: 0.84rem;
   color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--signal);
+  font-weight: 500;
+}
+
+/* Selected work (home) */
+.selected-work {
+  padding: 4.25rem 2.5rem 4.5rem;
+  background: var(--ground);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: 1.3rem 1.25rem 1.2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.work-card:hover {
+  border-color: var(--signal);
+  background: var(--card-hover);
+}
+
+.work-card h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.work-card h3 a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.work-card h3 a:hover {
+  color: var(--signal-hover);
+  text-decoration: underline;
+}
+
+.work-card .lede {
+  margin-top: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.work-card .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.work-card .links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--signal);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 /* Projects Catalog */
@@ -1613,6 +1696,9 @@ dialog.lightbox::backdrop {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.75rem;
   }
+  .work-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .proto:nth-of-type(even) .proto-visual {
     order: 0;
   }
@@ -1638,6 +1724,7 @@ dialog.lightbox::backdrop {
   .knowledge,
   .education-section,
   .contact,
+  .selected-work,
   .projects-hero,
   .tier {
     padding: 2.75rem 1rem;

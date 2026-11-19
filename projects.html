@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c111b">
-    <meta name="description" content="Applied AI and IoT projects by Muhamad Akhdan Ramadhan: the COSTMOSYS cow-barn monitoring pilot, a multi-agent automation platform with control dashboard demo, a calibrated churn model, IoT and networking coursework, and PLC simulations. Each entry says whether it was personal or coursework.">
-    <link rel="icon" href="data:,">
-    <link rel="preload" href="assets/manrope-bold.ttf" as="font" type="font/ttf" crossorigin>
+    <meta name="description" content="Software, applied AI, and IoT projects by Muhamad Akhdan Ramadhan: COSTMOSYS, a multi-agent automation platform, a calibrated churn model, IoT and networking coursework, and PLC simulations. Open to job opportunities and collaborations.">
+    <link rel="canonical" href="https://makhdanramadhan-ui.github.io/projects.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Muhamad Akhdan Ramadhan">
+    <meta property="og:title" content="Projects | Muhamad Akhdan Ramadhan">
+    <meta property="og:description" content="Software, applied AI, and IoT projects: COSTMOSYS, a multi-agent automation platform, a calibrated churn model, and coursework builds. Open to job opportunities and collaborations.">
+    <meta property="og:url" content="https://makhdanramadhan-ui.github.io/projects.html">
+    <meta property="og:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Muhamad Akhdan Ramadhan portfolio preview showing an applied AI and IoT project">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projects | Muhamad Akhdan Ramadhan">
+    <meta name="twitter:description" content="Software, applied AI, and IoT projects by Muhamad Akhdan Ramadhan. Open to job opportunities and collaborations.">
+    <meta name="twitter:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="assets/fonts/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/public-sans-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script>document.documentElement.classList.add("js");</script>
@@ -46,11 +61,20 @@
           <h1 id="page-title">Projects</h1>
           <div class="intro-bottom">
             <div>
-              <p>Personal projects and university coursework in IoT, AI automation, web development, and data.</p>
+              <p>Personal projects and university coursework in software, applied AI, IoT, networks, and automation. I work with agentic, multi-agent workflows to plan, build, and review work.</p>
               <p class="honesty">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
             </div>
           </div>
-          <div class="filters" role="group" aria-label="Filter projects by skill area" id="filters"></div>
+          <div class="filters" role="group" aria-label="Filter projects by skill area" id="filters">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="software" aria-pressed="false">Software &amp; web</button>
+            <button type="button" class="chip" data-filter="ai" aria-pressed="false">AI systems &amp; automation</button>
+            <button type="button" class="chip" data-filter="networks" aria-pressed="false">Computer networks</button>
+            <button type="button" class="chip" data-filter="embedded" aria-pressed="false">Embedded &amp; hardware</button>
+            <button type="button" class="chip" data-filter="industrial" aria-pressed="false">Industrial automation</button>
+            <button type="button" class="chip" data-filter="data" aria-pressed="false">Data &amp; computing</button>
+            <p class="filter-status" role="status">Showing all projects</p>
+          </div>
           <p class="empty" id="empty">No projects in this skill area yet.</p>
         </div>
       </section>
@@ -118,8 +142,8 @@
                 <div>
                   <h4>Problem</h4>
                   <p>The barn needs temperature and humidity monitoring and automatic sprinkler control. Once configured, the right ESP32 can run the sprinkler logic without an internet connection.</p>
-                  <h4>My role</h4>
-                  <p>For this group project, I trained the YOLO26n model, put together the schematic and wiring, and built the IoT system. I used AI tools to help implement it and reviewed their changes.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Group project. I trained the YOLO26n model, put together the schematic and wiring, and built the IoT system. I used AI coding tools for parts of the implementation and reviewed every change.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Every sensor channel carries validity and sample age. Stale data is never shown as current, and an offline relay is not shown as OFF.</li>
@@ -148,7 +172,7 @@
                   <h4>Stack</h4>
                   <p class="stack">ESP32 (Arduino-ESP32 2.0.17), DS18B20, DHT22, SSR, ESP-NOW, Firebase Realtime Database and Auth, plain HTML/CSS/JS, YOLO26n, Ultralytics, PyTorch, OpenCV, Roboflow.</p>
                   <h4>Links</h4>
-                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">COSTMOSYS repository</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-COSTMOSYS-YOLO26n" target="_blank" rel="noopener">YOLO26n training repository</a><a href="https://smartcow-de25f.web.app" target="_blank" rel="noopener">Hosted dashboard</a></p>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">COSTMOSYS repository</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-COSTMOSYS-YOLO26n" target="_blank" rel="noopener">YOLO26n training repository</a><a href="https://smartcow-de25f.web.app" target="_blank" rel="noopener">Hosted dashboard (login required)</a></p>
                   <p class="note">Both READMEs are written in Indonesian.</p>
                 </div>
               </div>
@@ -202,7 +226,7 @@
           <article class="study" id="agent-platform" data-areas="ai software">
             <div class="study-text">
               <h3>Multi-agent automation platform</h3>
-              <p class="meta"><b>Personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">control UI demo (synthetic data)</a></p>
+              <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">control UI demo (synthetic data)</a></p>
               <p class="lede">Eight Node.js agents run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram along with a React and TypeScript web control UI (LyNx Agent Control) handle commands, alerts, and history review.</p>
             </div>
             <div class="study-visual">
@@ -270,7 +294,7 @@
                   <text class="dim" x="386" y="146" text-anchor="middle">revision rounds, circuit breaker</text>
                 </svg>
               </div>
-              <p class="diagram-note">The orchestrator assigns work to specialised agents. I approve changes before deployment.</p>
+              <p class="diagram-note">I designed the system, set up the VPS, and built the dashboard. I review changes and approve deployment.</p>
             </div>
             <details class="more study-more">
               <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
@@ -278,8 +302,8 @@
                 <div>
                   <h4>Goal</h4>
                   <p>Keep several automation agents running on a small server without checking each one by hand, and stop them from spending model calls without limit.</p>
-                  <h4>My role</h4>
-                  <p>I set the goals, review the results, and operate the platform. The AI orchestrator assigns work to specialised agents, checks exit codes, test counts, and logs, and requests revisions when needed. A circuit breaker limits retries, and I approve changes before deployment.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Solo project. I designed the system, set up the VPS, and built the dashboard. I use AI coding agents for parts of the implementation and review every change before deployment. The orchestrator assigns work to specialised agents and checks exit codes, test counts, and logs; I approve changes before deployment.</p>
                   <h4>What runs</h4>
                   <ul>
                     <li>Master tracker / watchdog: deterministic 60 s checks, bug detection and guarded auto-fix.</li>
@@ -380,8 +404,8 @@
                 <div>
                   <h4>Problem</h4>
                   <p>The app estimates churn risk so a retention team can decide whom to contact. The public IBM Telco Customer Churn dataset has 7,043 rows and 21 columns. Dropping 11 rows with a blank <code>TotalCharges</code> left 7,032 rows, of which 26.6% churned. The stratified 80/20 split gives 5,625 training rows and 1,407 holdout rows.</p>
-                  <h4>My role</h4>
-                  <p>In our three-person team, I selected and trained the model, built the web app, and deployed it to Streamlit. The public repository is under my account.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Group project (three people). I selected and trained the model, built the web app, and deployed it to Streamlit. The public repository is under my account.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>The model takes 18 input features. <code>TotalCharges</code> is left out to keep the form short and because it correlates strongly with tenure (r = 0.827 on the training data).</li>
@@ -471,8 +495,8 @@
               <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
               <div class="detail detail-grid">
                 <div>
-                  <h4>My role</h4>
-                  <p>On this group project, I worked on both the PHP/Laravel backend and the frontend. I built the Blade screens and connected the board interface to the backend.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Group project. I worked on both the PHP/Laravel backend and the frontend. I built the Blade screens and connected the board interface to the backend.</p>
                   <h4>Board creation</h4>
                   <p>After signing in, users give a board a title and description, pick a layout, and choose a public or private setting. The dashboard lists the signed-in user’s boards and shows the message count for each.</p>
                   <h4>Placing a note</h4>
@@ -510,6 +534,8 @@
               <details class="more">
                 <summary><span class="toggle" aria-hidden="true"></span>How it works</summary>
                 <div class="detail">
+                  <h4>Personal contribution</h4>
+                  <p>Group project (four people). I drew and assembled the schematic, fitted the electronics into the enclosure, and built the web dashboard.</p>
                   <h4>Signal path</h4>
                   <ol class="flow"><li>DHT22 and ultrasonic sensor</li><li>ESP firmware</li><li>Firebase Realtime Database</li><li>Web dashboard</li></ol>
                   <p class="flow-note">The firmware also sends Telegram alerts directly.</p>
@@ -565,8 +591,8 @@
                 <div class="detail">
                   <h4>Problem</h4>
                   <p>The prototype was designed for shared housing. Unlike a physical key, a registered card or web account can be tied to an access log.</p>
-                  <h4>My role</h4>
-                  <p>I configured the MikroTik router, drew the circuit schematic, assembled the prototype, and built the DoorLink web app.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Group project (four people). I configured the MikroTik router, drew the circuit schematic, assembled the prototype, and built the DoorLink web app.</p>
                   <h4>Web route</h4>
                   <ol class="flow"><li>Connect to the boarding-house Wi-Fi</li><li>MikroTik limits the web page to that network</li><li>Backend checks the user</li><li>ESP32 opens the door</li></ol>
                   <h4>Card route</h4>
@@ -620,8 +646,8 @@
               <details class="more">
                 <summary><span class="toggle" aria-hidden="true"></span>How it works</summary>
                 <div class="detail">
-                  <h4>My role</h4>
-                  <p>I assembled the wristband, connected it to ThingsBoard running on Ubuntu in an AWS EC2 instance, and processed and analysed the sensor data in RStudio.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Group project (three people). I assembled the wristband, connected it to ThingsBoard running on Ubuntu in an AWS EC2 instance, and processed and analysed the sensor data in RStudio.</p>
                   <h4>Signal path</h4>
                   <ol class="flow"><li>MAX30102 and microcontroller</li><li>MQTT telemetry</li><li>ThingsBoard on EC2</li><li>RStudio analysis</li></ol>
                   <p class="flow-note">Hardware list from the pitch deck: ESP32-C3 SuperMini, MAX30102, TP4056 charger, 0.96-inch OLED, 1S Li-Po.</p>
@@ -674,7 +700,7 @@
               <div class="clip-text">
                 <h3>Water-tank control</h3>
                 <p class="meta"><b>Coursework</b> · Semester 4, PLC course · group project</p>
-                <p>For Tugas 6, our group ran water-tank control logic in Factory I/O. The ladder uses KEEP instructions to latch the start/stop and auto-mode states.</p>
+                <p>For Tugas 6, our group ran water-tank control logic in Factory I/O. The ladder uses KEEP instructions to latch the start/stop and auto-mode states. I wrote the ladder logic and built the Factory I/O 3D scene.</p>
                 <p class="stack">CX-Programmer, Factory I/O.</p>
                 <a class="yt-link" href="https://www.youtube.com/watch?v=fr9WfGdHkas" target="_blank" rel="noopener">Watch the run on YouTube<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
               </div>
@@ -698,7 +724,7 @@
               <div class="clip-text">
                 <h3>Conveyor control</h3>
                 <p class="meta"><b>Coursework</b> · Semester 4, PLC course · group project</p>
-                <p>For Tugas 7, our group simulated a conveyor line in Factory I/O. The ladder has START and STOP rungs and a timer. It compiled with 0 errors and 0 warnings.</p>
+                <p>For Tugas 7, our group simulated a conveyor line in Factory I/O. The ladder has START and STOP rungs and a timer. It compiled with 0 errors and 0 warnings. I wrote the ladder logic and built the Factory I/O 3D scene.</p>
                 <p class="stack">CX-Programmer, Factory I/O.</p>
                 <a class="yt-link" href="https://www.youtube.com/watch?v=G-StfIa9DR0" target="_blank" rel="noopener">Watch the run on YouTube<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
               </div>
@@ -746,9 +772,21 @@
           </details>
 
           <details class="entry" id="rc-car" data-areas="embedded">
-            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">Remote-controlled car</span><span class="domain-overview">Semester 1 coursework.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">Remote-controlled car</span><span class="domain-overview">Semester 1 coursework · no documentation available.</span><span class="toggle" aria-hidden="true"></span></summary>
             <div class="entry-body detail">
-              <p>I built a remote-controlled car in my first semester using an IC and a transmitter/receiver pair. No photos or schematics are available.</p>
+              <p>Semester 1 coursework. I built a remote-controlled car using an IC and a transmitter/receiver pair. No photos, video, or schematics are available.</p>
+            </div>
+          </details>
+
+          <details class="entry" id="sevent-x-job-platform" data-areas="software">
+            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">SEVENT X Job Platform</span><span class="domain-overview">Personal project · In progress.</span><span class="toggle" aria-hidden="true"></span></summary>
+            <div class="entry-body detail">
+              <p><b>In progress.</b> A job-search website developed for the SEVENT X Software Development competition (SDG 8: Decent Work and Economic Growth). Planned features include aggregation of job listings from external sources with authorized access and links to the original source, job recommendations based on skills, experience, and preferences, importing or creating a CV with simple templates, and saving favorite listings while users apply through the original source.</p>
+              <p>The README states that backend and database migrations are available, while the product frontend, job pipeline, recommendations, and CV import/export are not yet implemented. LinkedIn access is not available and would require an authorized path.</p>
+              <h4>Stack</h4>
+              <p class="stack">Next.js, TypeScript, Supabase (website, authentication, database); Python planned for job data collection.</p>
+              <h4>Links</h4>
+              <p class="links"><a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
             </div>
           </details>
         </div>
@@ -773,8 +811,13 @@
 
     <footer>
       <div class="wrap footer-inner">
-        <p>© 2026 Muhamad Akhdan Ramadhan</p>
-        <p>Keep learning. Understand the connections.</p>
+        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
+        <div class="footer-links">
+          <a href="M-Akhdan-Ramadhan-CV.pdf">CV</a>
+          <a href="mailto:akhdanrama@gmail.com">Email</a>
+          <a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a>
+        </div>
       </div>
     </footer>
   </body>

@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c111b">
-    <meta name="description" content="Muhamad Akhdan Ramadhan — Computer Engineering student at IPB University focused on applied AI and IoT. Software, AI automation, networks, embedded hardware, industrial automation, and data. Open to job opportunities and collaborations.">
-    <link rel="icon" href="data:,">
-    <link rel="preload" href="assets/manrope-bold.ttf" as="font" type="font/ttf" crossorigin>
+    <meta name="description" content="Muhamad Akhdan Ramadhan — Computer Engineering Technology student at IPB University building software, applied AI, and IoT projects. Open to job opportunities and collaborations.">
+    <link rel="canonical" href="https://makhdanramadhan-ui.github.io/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Muhamad Akhdan Ramadhan">
+    <meta property="og:title" content="Muhamad Akhdan Ramadhan | Software, Applied AI &amp; IoT">
+    <meta property="og:description" content="Portfolio of software, applied AI, and IoT projects: COSTMOSYS, a multi-agent automation platform, and a calibrated churn model. Open to job opportunities and collaborations.">
+    <meta property="og:url" content="https://makhdanramadhan-ui.github.io/">
+    <meta property="og:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Muhamad Akhdan Ramadhan portfolio preview showing an applied AI and IoT project">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Muhamad Akhdan Ramadhan | Software, Applied AI &amp; IoT">
+    <meta name="twitter:description" content="Portfolio of software, applied AI, and IoT projects. Open to job opportunities and collaborations.">
+    <meta name="twitter:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="assets/fonts/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/public-sans-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script>document.documentElement.classList.add("js");</script>
     <script src="motion.js" defer></script>
-    <title>Muhamad Akhdan Ramadhan | Computer Engineering Student · Applied AI &amp; IoT</title>
+    <title>Muhamad Akhdan Ramadhan | Software, Applied AI &amp; IoT</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -43,16 +58,21 @@
     <main id="main" tabindex="-1">
       <section class="intro wrap" id="about" tabindex="-1" aria-labelledby="name">
         <h1 id="name">Muhamad Akhdan<br>Ramadhan</h1>
-        <p class="role">Computer Engineering Student · Applied AI &amp; IoT</p>
+        <p class="role">Computer Engineering Technology · Software, Applied AI &amp; IoT</p>
         <div class="intro-bottom">
           <div class="intro-copy">
-            <p>I’m a fifth-semester Computer Engineering Technology student at IPB University. I enjoy learning how software and hardware work together, and I pick up new tools quickly when I can put them to work on a project.</p>
-            <p class="gpa">GPA 3.61 / 4.00 (semesters 1–5)</p>
+            <p>I study Computer Engineering Technology at IPB University and build projects across software, applied AI, and IoT. I work with agentic, multi-agent workflows to plan, build, and review work.</p>
+            <p>Built a two-node cow-barn monitoring pilot, an eight-agent automation platform with a control dashboard, and a calibrated customer-churn model.</p>
+            <p class="gpa">GPA 3.61 / 4.00 (semesters 1–4)</p>
           </div>
           <div class="hero-actions">
             <a class="button" href="M-Akhdan-Ramadhan-CV.pdf" download>
               Download CV <span>(PDF, 1 page)</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
+            </a>
+            <a class="button button-secondary" href="#contact">
+              Contact
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-5-5 5 5-5 5"/></svg>
             </a>
             <a class="button button-secondary" href="projects.html">
               Projects
@@ -60,13 +80,42 @@
             </a>
           </div>
         </div>
-        <a class="map-invitation" href="#skills">
-          <span>Explore my skills</span>
+        <a class="map-invitation" href="#selected-work">
+          <span>Selected work</span>
           <svg viewBox="0 0 160 24" aria-hidden="true">
             <path class="trace" pathLength="1" d="M2 12H156m-8-8 8 8-8 8"/>
             <path class="packet" pathLength="1" d="M2 12H156"/>
           </svg>
         </a>
+      </section>
+
+      <section class="selected-work" id="selected-work" tabindex="-1" aria-labelledby="selected-work-heading">
+        <div class="wrap">
+          <div class="section-heading">
+            <h2 id="selected-work-heading">Selected work</h2>
+            <p>Three projects across IoT, automation, and machine learning.</p>
+          </div>
+          <div class="work-grid">
+            <article class="work-card">
+              <p class="meta"><b>Coursework</b> · IoT and computer vision</p>
+              <h3><a href="projects.html#costmosys">COSTMOSYS</a></h3>
+              <p class="lede">Two-node barn monitoring pilot with sensor telemetry, sprinkler control, and a separate YOLO26n CCTV detection model.</p>
+              <p class="links"><a href="projects.html#costmosys">Case study</a><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">Repository</a></p>
+            </article>
+            <article class="work-card">
+              <p class="meta"><b>Solo personal project</b> · Automation</p>
+              <h3><a href="projects.html#agent-platform">Multi-agent automation platform</a></h3>
+              <p class="lede">Eight Node.js agents on a VPS with a master tracker, Telegram controls, and LyNx Agent Control for service and history review.</p>
+              <p class="links"><a href="projects.html#agent-platform">Case study</a><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Demo</a></p>
+            </article>
+            <article class="work-card">
+              <p class="meta"><b>Coursework</b> · Machine learning</p>
+              <h3><a href="projects.html#churn">Customer churn prediction</a></h3>
+              <p class="lede">Calibrated logistic regression on the IBM Telco dataset served in a Streamlit app for single and batch predictions.</p>
+              <p class="links"><a href="projects.html#churn">Case study</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project" target="_blank" rel="noopener">Repository</a></p>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="knowledge" id="skills" tabindex="-1" aria-labelledby="skills-heading">
@@ -92,7 +141,7 @@
                 </summary>
                 <div class="domain-body">
                   <p>I connect web interfaces to backend APIs, manage application state, and handle failed requests and retries.</p>
-                  <p class="tools"><strong>Tools I use</strong>JavaScript / TypeScript, Node.js, React, Express, Python, HTML, CSS, SQL, SQLite, REST APIs, Git, Cloudflare Workers &amp; D1.</p>
+                  <p class="tools"><strong>Tools I use</strong>JavaScript / TypeScript, Node.js, React, Express, Python, PHP, Laravel, HTML, CSS, SQL, SQLite, REST APIs, Git.</p>
                   <a class="see-projects" href="projects.html?area=software">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
                 </div>
               </details>
@@ -105,7 +154,7 @@
                   <span class="toggle" aria-hidden="true"></span>
                 </summary>
                 <div class="domain-body">
-                  <p>I run agents as Linux services, route model requests, and queue jobs. If a review can’t run, the output waits. I monitor the services and keep a rollback path for fixes.</p>
+                  <p>I run agents as Linux services, route model requests, and queue jobs. If a review can’t run, the output waits. I monitor the services and keep a rollback path for fixes. I work with agentic, multi-agent workflows to plan, build, and review work.</p>
                   <p class="tools"><strong>Tools I use</strong>LLM APIs, 9Router, Linux, systemd, Node.js, Python, Telegram controls, Docker Compose, n8n.</p>
                   <p class="honesty">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
                   <a class="see-projects" href="projects.html?area=ai">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
@@ -183,8 +232,8 @@
           <div class="education">
             <h3>IPB University<span>Sekolah Vokasi</span></h3>
             <div>
-              <p><strong>Teknologi Rekayasa Komputer</strong><br>Computer Engineering Technology, applied bachelor’s program (D4)<br>Semester 5 / Angkatan 61</p>
-              <p class="gpa">GPA 3.61 / 4.00 (semesters 1–5)</p>
+              <p><strong>Teknologi Rekayasa Komputer</strong><br>Computer Engineering Technology, applied bachelor’s program (D4)<br>Semester 5 (2026) / Angkatan 61</p>
+              <p class="gpa">GPA 3.61 / 4.00 (semesters 1–4)</p>
               <p>The program spans computer networks, sensor-based IoT, and intelligent systems and automation. <a href="https://sv.ipb.ac.id/teknologi-rekayasa-komputer/" target="_blank" rel="noopener">Official program description</a></p>
             </div>
           </div>
@@ -220,7 +269,7 @@
             </a>
           </div>
           <div class="contact-links">
-            <a href="M-Akhdan-Ramadhan-CV.pdf">View CV (PDF)</a>
+            <a href="M-Akhdan-Ramadhan-CV.pdf">Download CV (PDF)</a>
             <a href="projects.html">Projects</a>
             <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub profile</a>
             <a href="#about">Back to top</a>
@@ -231,7 +280,13 @@
 
     <footer>
       <div class="wrap footer-inner">
-        <p>© 2026 Muhamad Akhdan Ramadhan</p>
+        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
+        <div class="footer-links">
+          <a href="M-Akhdan-Ramadhan-CV.pdf">CV</a>
+          <a href="mailto:akhdanrama@gmail.com">Email</a>
+          <a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a>
+        </div>
       </div>
     </footer>
   </body>

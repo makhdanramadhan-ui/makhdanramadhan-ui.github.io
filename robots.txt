@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://makhdanramadhan-ui.github.io/sitemap.xml
