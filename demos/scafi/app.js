@@ -88,6 +88,8 @@
   let hoverIndex = -1;
 
   function cloneSeed() {
+    const lastChartT = SEED.chart[SEED.chart.length - 1].t;
+    const chartOffset = SEED.clockStart - lastChartT;
     return {
       clockMs: SEED.clockStart,
       temp: SEED.temp,
@@ -98,7 +100,7 @@
       fireAlertLatched: false,
       intrusionAlertLatched: false,
       simEnabled: true,
-      chart: SEED.chart.map((p) => ({ t: p.t, v: p.v })),
+      chart: SEED.chart.map((p) => ({ t: p.t + chartOffset, v: p.v })),
       history: SEED.history.map((e) => ({ ...e }))
     };
   }
@@ -264,9 +266,9 @@
     dom.intrusionState.textContent = state.intrusionActive ? 'Aktif' : 'Tidak aktif';
     dom.intrusionState.className = `control-state ${state.intrusionActive ? 'active-intrusion' : ''}`;
 
-    dom.chartCurrent.textContent = `${temp.toFixed(1)} °C`;
-    const avg = state.chart.length ? state.chart.reduce((a, p) => a + p.v, 0) / state.chart.length : temp;
-    dom.chartAvg.textContent = `Avg: ${avg.toFixed(1)}`;
+    dom.chartCurrent.textContent = `Suhu saat ini: ${temp.toFixed(1)} °C`;
+    const maLast = state.chart.length ? movingAverageAt(state.chart, state.chart.length - 1, 5) : temp;
+    dom.chartAvg.textContent = `Rata-rata bergerak: ${maLast.toFixed(1)} °C`;
 
     drawChart();
   }
@@ -338,6 +340,7 @@
     }
     state.clockMs += dtMs;
     stepSimulation(dtMs / 1000);
+    pushChartPoint();
     updateUI();
   }
 
@@ -376,6 +379,16 @@
     }
     drawChart();
   }
+  function movingAverageAt(points, index, windowSize) {
+    let sum = 0;
+    let count = 0;
+    const start = Math.max(0, index - windowSize + 1);
+    for (let i = start; i <= index; i += 1) {
+      sum += points[i].v;
+      count += 1;
+    }
+    return count ? sum / count : 0;
+  }
 
   function drawChart() {
     const canvas = dom.chart;
@@ -388,14 +401,15 @@
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, w, h);
 
-    const pad = { top: 16, right: 54, bottom: 34, left: 52 };
+    const pad = { top: 16, right: 62, bottom: 34, left: 52 };
     const iw = w - pad.left - pad.right;
     const ih = h - pad.top - pad.bottom;
     const points = state.chart.slice(-30);
     if (points.length < 2) { ctx.restore(); return; }
+    const maValues = points.map((_, i) => movingAverageAt(points, i, 5));
 
-    let minV = Math.min(...points.map((p) => p.v));
-    let maxV = Math.max(...points.map((p) => p.v));
+    let minV = Math.min(...points.map((p) => p.v), ...maValues);
+    let maxV = Math.max(...points.map((p) => p.v), ...maValues);
     if (maxV - minV < 0.2) {
       const mid = (maxV + minV) / 2;
       minV = mid - 0.1;
@@ -415,7 +429,7 @@
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
     const gridLines = 5;
-    for (let i = 0; i <= gridLines; i++) {
+    for (let i = 0; i <= gridLines; i += 1) {
       const v = minV + ((maxV - minV) * i) / gridLines;
       const y = yFor(v);
       ctx.beginPath();
@@ -428,7 +442,7 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     const labelEvery = Math.max(1, Math.floor(points.length / 6));
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i += 1) {
       if (i % labelEvery !== 0 && i !== points.length - 1) continue;
       const x = xFor(i);
       ctx.fillText(formatTimeShort(points[i].t), x, pad.top + ih + 8);
@@ -441,46 +455,72 @@
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    ctx.lineTo(xFor(points.length - 1), pad.top + ih);
-    ctx.lineTo(xFor(0), pad.top + ih);
-    ctx.closePath();
-    const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ih);
-    grad.addColorStop(0, 'rgba(239,68,68,0.20)');
-    grad.addColorStop(1, 'rgba(239,68,68,0.01)');
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    ctx.beginPath();
-    points.forEach((p, i) => {
-      const x = xFor(i);
-      const y = yFor(p.v);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.strokeStyle = '#ef4444';
-    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = 'rgba(251,113,133,0.75)';
+    ctx.lineWidth = 1.6;
+    ctx.setLineDash([4, 4]);
     ctx.stroke();
+    ctx.setLineDash([]);
 
     points.forEach((p, i) => {
       const x = xFor(i);
       const y = yFor(p.v);
       ctx.beginPath();
-      ctx.arc(x, y, i === hoverIndex ? 4.5 : 3, 0, Math.PI * 2);
-      ctx.fillStyle = '#ef4444';
+      ctx.arc(x, y, i === hoverIndex ? 4 : 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251,113,133,0.9)';
       ctx.fill();
       ctx.strokeStyle = '#111827';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    ctx.beginPath();
+    maValues.forEach((v, i) => {
+      const x = xFor(i);
+      const y = yFor(v);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.lineTo(xFor(points.length - 1), pad.top + ih);
+    ctx.lineTo(xFor(0), pad.top + ih);
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ih);
+    grad.addColorStop(0, 'rgba(249,115,22,0.20)');
+    grad.addColorStop(1, 'rgba(249,115,22,0.01)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    ctx.beginPath();
+    maValues.forEach((v, i) => {
+      const x = xFor(i);
+      const y = yFor(v);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = '#f97316';
+    ctx.lineWidth = 2.4;
+    ctx.stroke();
+
+    maValues.forEach((v, i) => {
+      const x = xFor(i);
+      const y = yFor(v);
+      ctx.beginPath();
+      ctx.arc(x, y, i === hoverIndex ? 4.5 : 2.8, 0, Math.PI * 2);
+      ctx.fillStyle = '#f97316';
+      ctx.fill();
+      ctx.strokeStyle = '#111827';
+      ctx.lineWidth = 1.2;
       ctx.stroke();
     });
 
     const last = points[points.length - 1];
-    const lx = xFor(points.length - 1);
-    const ly = yFor(last.v);
-    ctx.fillStyle = '#ef5b5b';
-    ctx.font = 'bold 12px "Segoe UI", system-ui, sans-serif';
+    const lastMa = maValues[maValues.length - 1];
+    ctx.font = 'bold 11px "Segoe UI", system-ui, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${last.v.toFixed(1)} °C`, lx + 6, ly);
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText(`${last.v.toFixed(1)}°`, xFor(points.length - 1) + 6, yFor(last.v) - 7);
+    ctx.fillStyle = '#fb923c';
+    ctx.fillText(`${lastMa.toFixed(1)}°`, xFor(points.length - 1) + 6, yFor(lastMa) + 7);
 
     ctx.restore();
   }
@@ -489,7 +529,7 @@
     const rect = dom.chart.getBoundingClientRect();
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    const pad = { top: 16, right: 54, bottom: 34, left: 52 };
+    const pad = { top: 16, right: 62, bottom: 34, left: 52 };
     const iw = rect.width - pad.left - pad.right;
     const points = state.chart.slice(-30);
     if (points.length < 2) return -1;
@@ -508,19 +548,32 @@
     const points = state.chart.slice(-30);
     const p = points[index];
     if (!p) return;
+    const ma = movingAverageAt(points, index, 5);
     hoverIndex = index;
     dom.chartTooltip.innerHTML = '';
     const t = document.createElement('div');
     t.className = 'tt-time';
     t.textContent = formatTimeShort(p.t);
-    const row = document.createElement('div');
-    row.className = 'tt-row';
-    const dot = document.createElement('span');
-    dot.className = 'tt-dot';
-    const label = document.createElement('span');
-    label.textContent = `Suhu (°C): ${p.v.toFixed(1)}`;
-    row.append(dot, label);
-    dom.chartTooltip.append(t, row);
+
+    const rowCurrent = document.createElement('div');
+    rowCurrent.className = 'tt-row';
+    const dotCurrent = document.createElement('span');
+    dotCurrent.className = 'tt-dot';
+    dotCurrent.style.background = '#fb7185';
+    const labelCurrent = document.createElement('span');
+    labelCurrent.textContent = `Suhu saat ini: ${p.v.toFixed(1)} °C`;
+    rowCurrent.append(dotCurrent, labelCurrent);
+
+    const rowMa = document.createElement('div');
+    rowMa.className = 'tt-row';
+    const dotMa = document.createElement('span');
+    dotMa.className = 'tt-dot';
+    dotMa.style.background = '#f97316';
+    const labelMa = document.createElement('span');
+    labelMa.textContent = `Rata-rata bergerak: ${ma.toFixed(1)} °C`;
+    rowMa.append(dotMa, labelMa);
+
+    dom.chartTooltip.append(t, rowCurrent, rowMa);
     dom.chartTooltip.classList.add('visible');
 
     const wrapRect = dom.chart.parentElement.getBoundingClientRect();

@@ -127,18 +127,18 @@
             </span>
             <h2 class="panel-title">RATA-RATA BERGERAK SUHU (°C)</h2>
           </div>
-          <div class="chart-legend">
-            <span class="legend-swatch"></span>
-            <span>Suhu (°C)</span>
+          <div class="chart-legend" aria-label="Legenda grafik">
+            <span class="legend-item"><span class="legend-swatch legend-current"></span><span>Suhu saat ini</span></span>
+            <span class="legend-item"><span class="legend-swatch legend-ma"></span><span>Rata-rata bergerak</span></span>
           </div>
         </div>
         <div class="chart-wrap">
-          <canvas id="tempChart" aria-label="Grafik rata-rata bergerak suhu" role="img"></canvas>
+          <canvas id="tempChart" aria-label="Grafik suhu saat ini dan rata-rata bergerak" role="img"></canvas>
           <div class="chart-tooltip" id="chartTooltip" aria-hidden="true"></div>
         </div>
         <div class="chart-readout">
-          <span class="chart-readout-current" id="chartCurrent">31.1 °C</span>
-          <span class="chart-readout-avg" id="chartAvg">Avg: 31.1</span>
+          <span class="chart-readout-current" id="chartCurrent">Suhu saat ini: 31.1 °C</span>
+          <span class="chart-readout-avg" id="chartAvg">Rata-rata bergerak: 31.1 °C</span>
         </div>
       </section>
 

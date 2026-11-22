@@ -1,8 +1,14 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "wishnotes-demo-v1";
-  const CASE_STUDY_HREF = "../../projects.html#wishnote";
+  const STORAGE_KEY = "wishnotes-demo-v2";
+  const ORNAMENTS = [
+    { value: "Bola", label: "Bola" },
+    { value: "CandyCane", label: "Permen tongkat" },
+    { value: "Kado", label: "Kado" },
+    { value: "KaosKaki", label: "Kaus kaki" },
+    { value: "Lolipop", label: "Lolipop" },
+  ];
 
   const SEED = () => ({
     session: { loggedIn: true, user: { name: "Demo User", initials: "DU" } },
@@ -46,7 +52,7 @@
         title: "Ucapan Natal",
         description: "Papan ucapan untuk teman dan keluarga.",
         type: "tree",
-        visibility: "public",
+        visibility: "private",
         owner: "Demo User",
         ownerInitials: "DU",
         messages: [
@@ -54,7 +60,7 @@
             id: "m3",
             author: "Rani",
             body: "Selamat Natal! Semoga liburannya menyenangkan.",
-            ornament: "ball-stripe",
+            ornament: "Bola",
             x: 50,
             y: 50,
             ts: Date.now() - 1000 * 60 * 10,
@@ -73,7 +79,7 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return SEED();
       const parsed = JSON.parse(raw);
-      if (!parsed || !Array.isArray(parsed.boards)) return SEED();
+      if (!parsed || !Array.isArray(parsed.boards) || !parsed.session || !parsed.session.user) return SEED();
       return parsed;
     } catch {
       return SEED();
@@ -110,17 +116,6 @@
       .replace(/'/g, "&#39;");
   }
 
-  function fmtTimeAgo(ts) {
-    const diff = Math.max(0, Date.now() - ts);
-    const min = Math.floor(diff / 60000);
-    if (min < 1) return "baru saja";
-    if (min < 60) return min + " minutes ago";
-    const hr = Math.floor(min / 60);
-    if (hr < 24) return hr + " hours ago";
-    const day = Math.floor(hr / 24);
-    return day + " days ago";
-  }
-
   function typeLabel(type) {
     if (type === "bulletin") return "Mading";
     if (type === "mailbox") return "Kotak surat";
@@ -140,22 +135,8 @@
 
   const main = document.getElementById("main");
   const topbar = document.getElementById("topbar");
-  const topbarRight = document.getElementById("topbar-right");
 
   function setTopbar(mode) {
-    if (mode === "admin") {
-      topbar.innerHTML = `
-        <a class="brand" href="#" data-view="dashboard" aria-label="Wishnotes beranda">
-          <span class="brand-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8L12 2z" fill="currentColor"/></svg></span>
-          <span class="brand-name">Admin Panel</span>
-        </a>
-        <div class="topbar-right">
-          <span class="user-name admin-user-name">Admin</span>
-          <span class="avatar avatar-sm avatar-purple">AD</span>
-          <span class="caret" aria-hidden="true">▾</span>
-        </div>`;
-      return;
-    }
     if (mode === "board") {
       topbar.innerHTML = `
         <a class="brand" href="#" data-view="dashboard" aria-label="WishNotes beranda">
@@ -166,7 +147,6 @@
         </div>`;
       return;
     }
-    // dashboard/default
     topbar.innerHTML = `
       <a class="brand" href="#" data-view="dashboard" aria-label="Wishnotes beranda">
         <span class="brand-icon" aria-hidden="true">
@@ -184,24 +164,28 @@
       </div>`;
   }
 
+  function syncHash(view) {
+    const want = view.name === "board" && view.boardId ? "#board=" + encodeURIComponent(view.boardId) : "";
+    if (location.hash !== want) {
+      history.replaceState(null, "", want || location.pathname + location.search);
+    }
+  }
+
   function navigate(view) {
     currentView = view;
+    syncHash(view);
     render();
     window.scrollTo({ top: 0, behavior: "instant" });
   }
 
   function render() {
     if (!state.session.loggedIn) {
-      setTopbar("hidden");
       topbar.style.display = "none";
       renderLogin();
       return;
     }
     topbar.style.display = "";
-    if (currentView.name === "admin") {
-      setTopbar("admin");
-      renderAdmin();
-    } else if (currentView.name === "board") {
+    if (currentView.name === "board") {
       setTopbar("board");
       renderBoard(currentView.boardId);
     } else {
@@ -213,39 +197,20 @@
   function renderLogin() {
     main.innerHTML = `
       <div class="login-page">
-        <div class="login-card" role="region" aria-label="Masuk ke Wishnotes">
+        <div class="login-card" role="region" aria-label="Masuk ke demo Wishnotes">
           <div class="login-brand">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7h-2.2A2.9 2.9 0 0 0 18 6a3 3 0 0 0-5.2-2A3 3 0 0 0 7 4a3 3 0 0 0-.2 3H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1Zm-8-3a1 1 0 0 1 1 1c0 .4-.1.7-.4 1H11V5a1 1 0 0 1 1-1ZM9 5a1 1 0 0 1 1-1 1 1 0 0 1 1 1v2H9.4A1.5 1.5 0 0 1 9 6V5Zm2 14H7v-8h4v8Zm6 0h-4v-8h4v8Zm2-10H5V9h14v0Z" fill="currentColor"/></svg>
             <span>Wishnotes</span>
           </div>
           <p class="login-tagline">Kirim doa &amp; harapanmu di sini!</p>
-          <form class="login-form" id="login-form" novalidate>
-            <div class="field">
-              <label class="sr-only" for="login-email">Email</label>
-              <input id="login-email" type="email" placeholder="Email" autocomplete="username" inputmode="email">
-            </div>
-            <div class="field">
-              <label class="sr-only" for="login-pass">Kata sandi</label>
-              <input id="login-pass" type="password" placeholder="Kata sandi" autocomplete="current-password">
-            </div>
-            <button class="btn-gradient" type="submit">Masuk Sekarang</button>
-            <div class="login-divider"><span>ATAU</span></div>
-            <button class="btn-outline-purple" type="button" id="login-create">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <span>Buat Akun Baru</span>
-            </button>
-            <p class="login-demo-note"><strong>Demo portofolio:</strong> ini adalah simulasi lokal tanpa akun nyata. Klik masuk untuk menjelajah sebagai <strong>Demo User</strong>.</p>
-          </form>
+          <div class="login-form">
+            <p class="login-demo-note"><strong>Demo portofolio:</strong> simulasi lokal tanpa akun nyata, tanpa kredensial, dan tanpa jaringan. Data disimpan hanya di browser ini.</p>
+            <button class="btn-gradient" type="button" id="login-demo">Masuk ke demo</button>
+          </div>
         </div>
       </div>`;
 
-    document.getElementById("login-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      state.session.loggedIn = true;
-      saveState();
-      navigate({ name: "dashboard" });
-    });
-    document.getElementById("login-create").addEventListener("click", () => {
+    document.getElementById("login-demo").addEventListener("click", () => {
       state.session.loggedIn = true;
       saveState();
       navigate({ name: "dashboard" });
@@ -479,19 +444,26 @@
       return;
     }
 
+    const shareBlock = board.visibility === "public"
+      ? `
+        <label class="share-link-field">Tautan untuk dibagikan
+          <input type="text" readonly value="${esc(location.origin + location.pathname + "#board=" + board.id)}" onclick="this.select()" aria-label="Tautan papan">
+        </label>`
+      : `<p class="hero-privacy">Privat · hanya pemilik yang dapat membuka papan ini.</p>`;
+
     const hero = `
       <section class="board-hero" aria-labelledby="board-title">
         <h1 id="board-title">${esc(board.title)}</h1>
         <p class="hero-sub">${esc(board.description)}</p>
-        <p class="hero-privacy">${board.visibility === "private" ? "Privat · hanya pemilik yang dapat membuka papan ini." : "Publik · siapa pun dengan tautan dapat melihat papan ini."}</p>
+        ${shareBlock}
       </section>`;
 
     const deleteBlock = `
       <details class="delete-disclosure">
         <summary>Hapus papan</summary>
         <div class="delete-body">
-          <p>Menghapus papan akan menghapus semua pesan di dalamnya dari demo lokal browser ini.</p>
-          <button type="button" class="btn-danger" data-action="delete-current-board" data-id="${esc(board.id)}">Hapus papan ini</button>
+          <p>Papan dan semua pesannya akan dihapus dari demo lokal browser ini.</p>
+          <button type="button" class="btn-danger" data-action="delete-current-board" data-id="${esc(board.id)}">Hapus papan dan pesan</button>
         </div>
       </details>`;
 
@@ -566,11 +538,11 @@
           <form id="compose-form" data-board-id="${esc(board.id)}" novalidate>
             <div class="field">
               <label for="msg-name">Nama (opsional)</label>
-              <input id="msg-name" type="text" maxlength="40" autocomplete="off" inputmode="text">
+              <input id="msg-name" type="text" maxlength="60" autocomplete="off">
             </div>
             <div class="field">
               <label for="msg-body">Pesan</label>
-              <textarea id="msg-body" maxlength="280" required></textarea>
+              <textarea id="msg-body" maxlength="1000" required></textarea>
             </div>
             <button type="submit" class="btn-primary">Kirim pesan</button>
             <div class="form-status" id="compose-status" aria-live="polite"></div>
@@ -579,23 +551,30 @@
       </section>`;
   }
 
+  function normalizeOrnament(value) {
+    const allowed = ORNAMENTS.map((o) => o.value);
+    return allowed.includes(value) ? value : "Bola";
+  }
+
   function renderTreeBoard(board) {
     const msgs = board.messages.slice().sort((a, b) => a.ts - b.ts);
-    const ornamentsHtml = msgs.map((m) => ornamentHtml(m)).join("");
+    const ornamentsHtml = msgs.map((m, i) => ornamentHtml(m, i + 1)).join("");
     const list = msgs.length
       ? msgs.map((m) => `
-          <article class="message-card">
+          <article class="message-card" id="message-${esc(m.id)}">
             <p class="msg-author">${esc(m.author || "Anonim")}</p>
             <p class="msg-body">${esc(m.body)}</p>
           </article>`).join("")
       : `<div class="empty-state">Belum ada ucapan di pohon ini. Tambahkan pesan pertama.</div>`;
 
+    const options = ORNAMENTS.map((o) => `<option value="${o.value}"${o.value === "Bola" ? " selected" : ""}>${esc(o.label)}</option>`).join("");
+
     return `
       <div class="detail-grid">
         <section class="tree-surface" aria-labelledby="tree-title">
           <div class="tree-surface-header"><h2 id="tree-title">Pohon Natal</h2></div>
-          <div class="tree-canvas-wrap clickable" id="tree-canvas" aria-label="Pohon Natal. Klik untuk memilih posisi ornamen." role="img">
-            ${treeSvg()}
+          <div class="tree-canvas-wrap clickable" id="tree-canvas" aria-label="Pohon Natal. Klik untuk memilih posisi ornamen.">
+            <img src="./images/pohonNatal/pohonNatalTerang.png" alt="Pohon Natal" class="tree-img">
             <div class="ornaments-layer" id="ornaments-layer">${ornamentsHtml}</div>
           </div>
           <div class="message-list" id="message-list" aria-label="Pesan di papan ini">${list}</div>
@@ -607,31 +586,25 @@
             <form id="compose-form" data-board-id="${esc(board.id)}" novalidate>
               <div class="field">
                 <label for="msg-name">Nama (opsional)</label>
-                <input id="msg-name" type="text" maxlength="40" autocomplete="off">
+                <input id="msg-name" type="text" maxlength="60" autocomplete="off">
               </div>
               <div class="field">
                 <label for="msg-body">Pesan</label>
-                <textarea id="msg-body" maxlength="280" required></textarea>
+                <textarea id="msg-body" maxlength="1000" required></textarea>
               </div>
               <div class="field">
                 <label for="msg-ornament">Ornamen</label>
-                <select id="msg-ornament">
-                  <option value="ball-pink">Bola pink</option>
-                  <option value="ball-blue">Bola biru</option>
-                  <option value="ball-purple">Bola ungu</option>
-                  <option value="ball-gold">Bola emas</option>
-                  <option value="ball-stripe" selected>Bola</option>
-                </select>
+                <select id="msg-ornament">${options}</select>
               </div>
               <p class="field-hint" id="coord-hint">Klik pohon untuk memilih posisi atau masukkan koordinat (0–100%).</p>
               <div class="coord-row">
                 <div class="field">
                   <label for="msg-x">Horizontal</label>
-                  <input id="msg-x" type="number" min="5" max="95" value="50" inputmode="numeric">
+                  <input id="msg-x" type="number" min="0" max="100" step="0.01" value="50" inputmode="decimal">
                 </div>
                 <div class="field">
                   <label for="msg-y">Vertikal</label>
-                  <input id="msg-y" type="number" min="5" max="95" value="50" inputmode="numeric">
+                  <input id="msg-y" type="number" min="0" max="100" step="0.01" value="50" inputmode="decimal">
                 </div>
               </div>
               <button type="submit" class="btn-primary">Kirim pesan</button>
@@ -642,56 +615,22 @@
       </div>`;
   }
 
-  function ornamentHtml(m) {
-    const cls = ["ball-pink", "ball-blue", "ball-purple", "ball-gold", "ball-stripe"].includes(m.ornament) ? m.ornament : "ball-pink";
-    const x = clampNum(m.x, 5, 95, 50);
-    const y = clampNum(m.y, 5, 95, 50);
-    const label = (m.author || "Anonim") + ": " + (m.body || "");
-    return `<button type="button" class="ornament ${cls}" style="left:${x}%;top:${y}%;" aria-label="${esc(label)}">
-      <span class="ornament-cap" aria-hidden="true"></span>
-      <span class="ornament-tooltip"><strong>${esc(m.author || "Anonim")}</strong>${esc(m.body || "")}</span>
-    </button>`;
+  function ornamentHtml(m, index) {
+    const ornament = normalizeOrnament(m.ornament);
+    const x = clampNum(m.x, 0, 100, 50);
+    const y = clampNum(m.y, 0, 100, 50);
+    const label = "Baca pesan " + index;
+    const body = String(m.body || "");
+    const author = String(m.author || "Anonim");
+    return `<a href="#message-${esc(m.id)}" class="ornament ornament-img" style="left:${x}%;top:${y}%;" aria-label="${esc(label)}" title="${esc(author + ": " + body)}">
+      <img src="./images/pohonNatal/ornamen${ornament}.png" alt="">
+    </a>`;
   }
 
   function clampNum(v, min, max, fallback) {
     const n = Number(v);
     if (!Number.isFinite(n)) return fallback;
-    return Math.min(max, Math.max(min, Math.round(n)));
-  }
-
-  function treeSvg() {
-    return `<svg class="tree-svg" viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="tg1" x1="200" y1="70" x2="200" y2="390" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stop-color="#6FBF73"/>
-          <stop offset="1" stop-color="#3E8E52"/>
-        </linearGradient>
-      </defs>
-      <!-- star -->
-      <polygon points="200,18 212,48 244,48 218,66 228,96 200,78 172,96 182,66 156,48 188,48" fill="#F4C542" stroke="#7A3B2E" stroke-width="4" stroke-linejoin="round"/>
-      <!-- tiers -->
-      <path d="M200 58 C228 58 248 82 270 100 C292 118 310 120 318 136 C292 132 268 140 244 148 C220 156 210 160 200 160 C190 160 180 156 156 148 C132 140 108 132 82 136 C90 120 108 118 130 100 C152 82 172 58 200 58 Z" fill="url(#tg1)" stroke="#7A3B2E" stroke-width="5" stroke-linejoin="round"/>
-      <path d="M200 130 C234 130 258 154 284 176 C308 196 330 200 340 218 C310 214 282 224 252 234 C224 244 212 248 200 248 C188 248 176 244 148 234 C118 224 90 214 60 218 C70 200 92 196 116 176 C142 154 166 130 200 130 Z" fill="url(#tg1)" stroke="#7A3B2E" stroke-width="5" stroke-linejoin="round"/>
-      <path d="M200 210 C240 210 268 238 296 262 C322 284 346 290 358 310 C324 306 292 316 258 328 C228 338 214 344 200 344 C186 344 172 338 142 328 C108 316 76 306 42 310 C54 290 78 284 104 262 C132 238 160 210 200 210 Z" fill="url(#tg1)" stroke="#7A3B2E" stroke-width="5" stroke-linejoin="round"/>
-      <path d="M200 300 C244 300 276 330 308 356 C336 380 362 386 374 408 C336 404 300 414 262 426 C230 436 214 442 200 442 C186 442 170 436 138 426 C100 414 64 404 26 408 C38 386 64 380 92 356 C124 330 156 300 200 300 Z" fill="url(#tg1)" stroke="#7A3B2E" stroke-width="5" stroke-linejoin="round"/>
-      <!-- garlands -->
-      <path d="M108 132 C140 150 170 150 200 142 C230 134 260 134 292 148" stroke="#F3E7C3" stroke-width="5" stroke-linecap="round"/>
-      <path d="M86 214 C126 234 162 236 200 224 C238 212 274 214 314 232" stroke="#F3E7C3" stroke-width="5" stroke-linecap="round"/>
-      <path d="M68 304 C112 326 156 330 200 316 C244 302 288 304 332 324" stroke="#F3E7C3" stroke-width="5" stroke-linecap="round"/>
-      <path d="M52 398 C100 420 150 424 200 410 C250 396 300 398 348 418" stroke="#F3E7C3" stroke-width="5" stroke-linecap="round"/>
-      <!-- decorative baubles -->
-      ${decoBauble(145,118,'#F06B8A')}${decoBauble(200,108,'#7EC8E3')}${decoBauble(255,120,'#B07CE0')}
-      ${decoBauble(130,198,'#7EC8E3')}${decoBauble(175,184,'#F06B8A')}${decoBauble(232,190,'#B07CE0')}${decoBauble(272,200,'#F06B8A')}
-      ${decoBauble(112,286,'#F06B8A')}${decoBauble(160,272,'#B07CE0')}${decoBauble(210,290,'#7EC8E3')}${decoBauble(255,274,'#F06B8A')}${decoBauble(295,288,'#B07CE0')}
-      ${decoBauble(95,382,'#B07CE0')}${decoBauble(145,368,'#7EC8E3')}${decoBauble(200,386,'#F06B8A')}${decoBauble(250,370,'#B07CE0')}${decoBauble(305,384,'#7EC8E3')}
-      <!-- trunk -->
-      <rect x="176" y="408" width="48" height="34" rx="5" fill="#A06A42" stroke="#7A3B2E" stroke-width="5"/>
-      <path d="M188 410 v30 M200 410 v30 M212 410 v30" stroke="#7A3B2E" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
-    </svg>`;
-  }
-
-  function decoBauble(cx, cy, fill) {
-    return `<g><line x1="${cx}" y1="${cy - 10}" x2="${cx}" y2="${cy - 5}" stroke="#7A3B2E" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="8" fill="${fill}" stroke="#7A3B2E" stroke-width="2.5"/><circle cx="${cx - 2.5}" cy="${cy - 2.5}" r="2.2" fill="rgba(255,255,255,0.55)"/></g>`;
+    return Math.min(max, Math.max(min, n));
   }
 
   function bindBoardEvents(board) {
@@ -705,13 +644,15 @@
       treeCanvas.addEventListener("click", (e) => {
         if (e.target.closest(".ornament")) return;
         const rect = treeCanvas.getBoundingClientRect();
-        const x = clampNum(((e.clientX - rect.left) / rect.width) * 100, 5, 95, 50);
-        const y = clampNum(((e.clientY - rect.top) / rect.height) * 100, 5, 95, 50);
+        const x = clampNum(((e.clientX - rect.left) / rect.width) * 100, 0, 100, 50);
+        const y = clampNum(((e.clientY - rect.top) / rect.height) * 100, 0, 100, 50);
+        const xStr = Number(x.toFixed(2)).toString();
+        const yStr = Number(y.toFixed(2)).toString();
         const xInput = document.getElementById("msg-x");
         const yInput = document.getElementById("msg-y");
-        if (xInput) xInput.value = String(x);
-        if (yInput) yInput.value = String(y);
-        showStatus("compose-status", `Posisi dipilih: ${x}% horizontal, ${y}% vertikal.`, "success");
+        if (xInput) xInput.value = xStr;
+        if (yInput) yInput.value = yStr;
+        showStatus("compose-status", `Posisi dipilih: ${xStr}% horizontal, ${yStr}% vertikal.`, "success");
       });
     }
 
@@ -769,9 +710,9 @@
     };
 
     if (board.type === "tree") {
-      const ornament = (document.getElementById("msg-ornament") || {}).value || "ball-pink";
-      const x = clampNum((document.getElementById("msg-x") || {}).value, 5, 95, 50);
-      const y = clampNum((document.getElementById("msg-y") || {}).value, 5, 95, 50);
+      const ornament = normalizeOrnament((document.getElementById("msg-ornament") || {}).value);
+      const x = clampNum((document.getElementById("msg-x") || {}).value, 0, 100, 50);
+      const y = clampNum((document.getElementById("msg-y") || {}).value, 0, 100, 50);
       message.ornament = ornament;
       message.x = x;
       message.y = y;
@@ -797,20 +738,16 @@
       e.preventDefault();
       state.session.loggedIn = false;
       saveState();
-      navigate({ name: "login" });
+      navigate({ name: "dashboard" });
       return;
     }
 
     const viewLink = e.target.closest("[data-view]");
     if (viewLink) {
       const view = viewLink.getAttribute("data-view");
-      if (view === "dashboard" || view === "admin" || view === "login") {
+      if (view === "dashboard") {
         e.preventDefault();
-        if (view === "login") {
-          state.session.loggedIn = false;
-          saveState();
-        }
-        navigate({ name: view === "login" ? "dashboard" : view });
+        navigate({ name: "dashboard" });
       }
     }
   });
@@ -819,102 +756,34 @@
     if (e.key === "Escape") closeCreateModal();
   });
 
-  function renderAdmin() {
-    const totalNotes = state.boards.reduce((sum, b) => sum + b.messages.length, 0);
-    const privateCount = state.boards.filter((b) => b.visibility === "private").length;
-    const recent = state.boards.slice(0, 3).map((b, i) => {
-      const vis = b.visibility === "private" ? "private" : "public";
-      const badgeClass = vis === "private" ? "private" : "public";
-      const time = fmtTimeAgo(Date.now() - (10 + i) * 60000);
-      const actionBtn = vis === "private"
-        ? `<button class="btn-peek" type="button" data-action="open-board-admin" data-id="${esc(b.id)}">Intip (Admin)</button>`
-        : `<button class="btn-view" type="button" data-action="open-board-admin" data-id="${esc(b.id)}">Lihat</button>`;
-      return `
-        <article class="activity-card ${badgeClass}">
-          <div class="activity-top">
-            <span class="badge-status ${badgeClass}">${vis}</span>
-            <span class="activity-time"><span aria-hidden="true">🕒</span> ${esc(time)}</span>
-          </div>
-          <h3>${esc(b.title)}</h3>
-          <p class="activity-desc">"${esc(b.description)}"</p>
-          <div class="activity-divider"></div>
-          <div class="activity-footer">
-            <span class="activity-author"><span class="avatar avatar-gray" aria-hidden="true">PD</span> Pengguna Demo</span>
-            ${actionBtn}
-          </div>
-        </article>`;
-    }).join("");
-
-    main.innerHTML = `
-      <div class="admin-layout">
-        <aside class="admin-sidebar" aria-label="Navigasi admin">
-          <nav class="admin-nav">
-            <button class="admin-nav-item active" type="button" data-view="admin">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M7 16V9m5 7V5m5 11v-7"/></svg>
-              <span>Dashboard</span>
-            </button>
-            <button class="admin-nav-item" type="button" data-view="dashboard">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-              <span>Kelola Catatan</span>
-            </button>
-            <button class="admin-nav-item" type="button" data-view="dashboard">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              <span>Kelola Pengguna</span>
-            </button>
-          </nav>
-        </aside>
-        <div class="admin-main">
-          <section class="admin-welcome" aria-labelledby="admin-welcome-title">
-            <h1 id="admin-welcome-title">Selamat Datang di Admin Center!</h1>
-            <p>Pantau seluruh aktivitas dan harapan pengguna Wishnotes di sini.</p>
-            <div class="admin-welcome-icon" aria-hidden="true">⚙️</div>
-          </section>
-
-          <section class="stats-grid" aria-label="Statistik">
-            <article class="stat-card blue">
-              <p class="stat-label">Total Catatan</p>
-              <p class="stat-value">${totalNotes}</p>
-              <p class="stat-sub">Lihat Semua Data</p>
-              <div class="stat-watermark" aria-hidden="true">📋</div>
-            </article>
-            <article class="stat-card purple">
-              <p class="stat-label">User Aktif</p>
-              <p class="stat-value">2</p>
-              <p class="stat-sub">Sedang Login</p>
-              <div class="stat-watermark" aria-hidden="true">👥</div>
-            </article>
-            <article class="stat-card peach">
-              <p class="stat-label">Catatan Private</p>
-              <p class="stat-value">${privateCount}</p>
-              <p class="stat-sub">Total Pribadi</p>
-              <div class="stat-watermark" aria-hidden="true">🔒</div>
-            </article>
-          </section>
-
-          <section aria-labelledby="activity-title">
-            <h2 class="admin-section-title" id="activity-title">Aktivitas Terbaru</h2>
-            <div class="activity-grid">${recent || '<div class="empty-state empty-state-plain">Belum ada aktivitas.</div>'}</div>
-          </section>
-        </div>
-      </div>`;
-
-    main.querySelectorAll("[data-action='open-board-admin']").forEach((btn) => {
-      btn.addEventListener("click", () => navigate({ name: "board", boardId: btn.getAttribute("data-id") }));
-    });
-  }
-
   // Global reset (static banner button)
-  const resetGlobal = document.getElementById('reset-demo-global');
+  const resetGlobal = document.getElementById("reset-demo-global");
   if (resetGlobal) {
-    resetGlobal.addEventListener('click', () => {
-      if (window.confirm('Reset semua data demo ke kondisi awal?')) {
+    resetGlobal.addEventListener("click", () => {
+      if (window.confirm("Reset semua data demo ke kondisi awal?")) {
         resetState();
-        filter = 'all';
-        navigate({ name: 'dashboard' });
+        filter = "all";
+        navigate({ name: "dashboard" });
       }
     });
   }
 
   // Init
+  const hashMatch = location.hash.match(/^#board=(.+)$/);
+  if (hashMatch) {
+    const boardId = decodeURIComponent(hashMatch[1]);
+    if (byId(boardId)) {
+      currentView = { name: "board", boardId };
+    }
+  }
+  window.addEventListener("hashchange", () => {
+    const m = location.hash.match(/^#board=(.+)$/);
+    if (m) {
+      const id = decodeURIComponent(m[1]);
+      if (id !== currentView.boardId || currentView.name !== "board") navigate({ name: "board", boardId: id });
+      return;
+    }
+    if (currentView.name !== "dashboard") navigate({ name: "dashboard" });
+  });
   render();
 })();

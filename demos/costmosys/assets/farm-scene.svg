@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" fill="none">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#BCCDDD" stroke-width=".8"/>
+    </pattern>
+  </defs>
+  <rect width="760" height="470" rx="24" fill="#DDE7F0"/>
+  <rect width="760" height="470" rx="24" fill="url(#grid)" opacity=".6"/>
+  <g transform="translate(22 18) scale(.94)">
+  <path d="m94 310 268-155 293 168-268 117Z" fill="#C4D8D1"/>
+  <path d="m94 310 293 130 268-117v16L387 456 94 326Z" fill="#A9C4BB"/>
+  <path d="m194 287 194-110 183 106-193 105Z" fill="#9EB9B1"/>
+  <path d="M213 193 389 92l165 96v118L378 407 213 311Z" fill="#F2ECDD"/>
+  <path d="m378 288 176-100v118L378 407Z" fill="#CDCDBF"/>
+  <path d="m213 193 81-94 84 189Z" fill="#FAF6EA"/>
+  <path d="m294 99 176-101 102 185-194 111Z" fill="#C7653A"/>
+  <path d="m294 99 176-101 9 6-176 103Z" fill="#F3A273"/>
+  <path d="m294 99 84 189 194-111 5 10-199 114-90-192Z" fill="#8E452E"/>
+  <path d="m294 99-99 90 7 12 92-84 84 184v-13Z" fill="#354252"/>
+  <path d="m330 87 81 181m-42-203 81 181m-42-203 81 181" stroke="#DB8155" stroke-width="3"/>
+  <path d="m222 219 148 85m-148-62 148 85m-148-62 148 85m-148-62 148 85" stroke="#DDD4C1" stroke-width="2"/>
+  <path d="m392 308 147-84m-147 108 147-84m-147 108 147-84m-147 108 147-84" stroke="#ADB6AB" stroke-width="2"/>
+  <path d="m268 265 58 34v74l-58-34Z" fill="#354252"/>
+  <path d="m274 276 45 26v61l-45-26Zm23 14v60" stroke="#6C8496" stroke-width="3"/>
+  <path d="m233 226 20 12v29l-20-12Zm105 61 20 12v29l-20-12Z" fill="#7FA8BA" stroke="#FAF6EA" stroke-width="5"/>
+  <path d="m420 307 27-15v32l-27 15Zm61-35 27-15v32l-27 15Z" fill="#6B95AC" stroke="#E6E4D7" stroke-width="5"/>
+  <path d="m272 204 23-28 20 53Z" fill="#D9DDCF" stroke="#C4C9BB" stroke-width="3"/>
+  <path d="m268 339-44 34 116 57 54-34Z" fill="#E1D2B7"/>
+  <g stroke="#F2ECDD" stroke-width="7" stroke-linecap="round">
+    <path d="m98 314 120 64m-120-84 120 64m-109-62v39m44-16v40m45-16v40"/>
+    <path d="m470 401 177-80m-177 60 177-80m-160 74v41m60-69v41m60-68v41"/>
+  </g>
+  <ellipse cx="542" cy="381" rx="51" ry="13" fill="#708E84" opacity=".22"/>
+  <g stroke-linecap="round">
+    <path d="M505 360v25m19-20v24m35-25v23m19-31v26" stroke="#F9F7EF" stroke-width="9"/>
+    <path d="M504 385h4m14 4h5m30-2h5m14-5h5" stroke="#354252" stroke-width="6"/>
+    <rect x="493" y="325" width="92" height="43" rx="18" fill="#F9F7EF"/>
+    <path d="M525 325c-14 12-1 23 9 22s20 8 11 21h18c12-19-5-22-7-30l4-13Z" fill="#354252"/>
+    <path d="m584 338 12 12" stroke="#354252" stroke-width="3"/>
+    <path d="m501 333-11-7m33 7 10-6" stroke="#F9F7EF" stroke-width="8"/>
+    <path d="m504 326-3-9m17 9 3-9" stroke="#D4B780" stroke-width="5"/>
+    <rect x="500" y="326" width="24" height="35" rx="10" fill="#F9F7EF"/>
+    <rect x="498" y="348" width="29" height="14" rx="7" fill="#D9B59F"/>
+    <circle cx="506" cy="340" r="2" fill="#354252"/>
+    <circle cx="519" cy="340" r="2" fill="#354252"/>
+  </g>
+  <path d="M178 137h-50v65m448 36h65v-75" stroke="#376DA9" stroke-width="2" stroke-dasharray="5 6"/>
+  <g fill="#E9EDF3" stroke="#376DA9" stroke-width="2">
+    <rect x="95" y="202" width="66" height="46" rx="10"/>
+    <rect x="608" y="117" width="66" height="46" rx="10"/>
+  </g>
+  <g stroke="#376DA9" stroke-width="2.5" stroke-linecap="round">
+    <path d="M117 225h22m-17-7h12m-12 14h12m496-92h22m-17-7h12m-12 14h12"/>
+  </g>
+  </g>
+  <g fill="#334B65" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600">
+    <text x="94" y="272">ESP KIRI</text>
+    <text x="605" y="103">ESP KANAN</text>
+    <text x="30" y="40" letter-spacing="2">SKEMA KANDANG</text>
+    <text x="30" y="442" font-size="12" font-weight="400">Ilustrasi sistem · bukan posisi sensor sebenarnya</text>
+  </g>
+</svg>

@@ -1,462 +1,375 @@
 (() => {
   'use strict';
 
-  const $ = (sel, root = document) => root.querySelector(sel);
+  const $ = (id) => document.getElementById(id);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const pad = (n) => String(n).padStart(2, '0');
-  const fmt1 = (n) => Number(n).toFixed(1);
-  const fmtDateWib = (d) => {
-    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-    const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-    return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-  };
+  const fmt1 = (n) => (typeof n === 'number' && Number.isFinite(n)) ? n.toFixed(1) : '—';
+  const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+  const DAYS = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const fmtDateWib = (d) => `${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
   const fmtClock = (d) => `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   const fmtDateTime = (d) => `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}, ${pad(d.getHours())}.${pad(d.getMinutes())}.${pad(d.getSeconds())} WIB`;
   const fmtShortDate = (d) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  const SENSOR_NAMES = ['Titik 1 • Depan','Titik 2 • Depan','Titik 3 • Tengah','Titik 4 • Tengah','Titik 5 • Belakang','Titik 6 • Belakang'];
+  const DHT_NAMES = ['DHT 1 • Depan Kanan','DHT 2 • Depan Kiri','DHT 3 • Belakang Kanan','DHT 4 • Belakang Kiri'];
+  const COLORS = ['#bd6b3a','#9b831e','#328b70','#4a86ae','#9272bd','#b96787'];
+  const PAGE_TITLES = { dash: 'Overview', log: 'Riwayat sensor', event: 'Aktivitas sprinkler', herd: 'Aktivitas Sapi', admin: 'Dashboard Admin' };
 
   const DEFAULTS = {
-    basis: 'temp',
-    window: 'all',
-    schedStart: '07:00',
-    schedEnd: '17:00',
-    threshold: 30.0,
-    durationMin: 10,
+    controlBasis: 'temperature',
+    autoSrc: 'threshold',
+    thresholdTemp: 30.0,
+    thresholdThi: 78.0,
+    maxDurMin: 10,
     cooldownMin: 120,
-    maxPerDay: 3,
+    maxCycles: 3,
   };
 
   const state = {
-    view: 'overview',
-    theme: localStorage.getItem('costmosys-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-    now: new Date(2026, 10, 14, 21, 11, 18), // Sabtu, 14 Nov 2026 21:11:18 WIB (synthetic fixed base)
+    view: 'dash',
+    theme: localStorage.getItem('scs_theme') === 'dark' ? 'dark' : 'light',
+    now: new Date(2026, 10, 14, 21, 11, 18),
     settings: { ...DEFAULTS },
-    mode: 'auto', // auto | manual
+    mode: 'auto',
     manualOn: false,
-    cycle: { phase: 'idle', remainSec: 0, cooldownRemainSec: 0, today: 0, lastStopMs: null },
-    nodes: {
-      left: { online: true, ds: 3, dsTotal: 3, dht: 2, dhtTotal: 2, seenSec: 2 },
-      right: { online: true, ds: 3, dsTotal: 3, dht: 2, dhtTotal: 2, seenSec: 2 },
-    },
-    sensors: makeSensors(29.2, 64.6),
+    cycle: { phase: 'idle', remainSec: 0, cooldownRemainSec: 0, today: 0 },
+    ds: [28.6, 29.0, 29.2, 29.3, 29.5, 29.8],
+    dht: [60.8, 63.2, 66.2, 68.2],
     history: [],
-    activity: [],
+    events: [],
     accounts: [
-      { id: 'a1', initials: 'AD', name: 'Adminfapet', email: 'admin@contoh.test', role: 'ADMIN', active: true, console: true },
-      { id: 'u1', initials: 'CA', name: '', email: 'cadangan@contoh.test', role: 'USER', active: false, console: false },
-      { id: 'u2', initials: 'OP', name: 'Operator', email: 'operator@contoh.test', role: 'USER', active: true, console: false },
-      { id: 'u3', initials: 'VI', name: 'Viewer', email: 'viewer@contoh.test', role: 'USER', active: true, console: false },
+      { id: 'a1', initials: 'A', name: 'Admin', email: 'admin@contoh.test', role: 'ADMIN', active: true },
+      { id: 'u1', initials: 'CA', name: '', email: 'cadangan@contoh.test', role: 'USER', active: false },
+      { id: 'u2', initials: 'OP', name: 'Operator', email: 'operator@contoh.test', role: 'USER', active: true },
+      { id: 'u3', initials: 'VI', name: 'Viewer', email: 'viewer@contoh.test', role: 'USER', active: true },
     ],
-    adminRole: 'user',
+    newRole: 'user',
     chartCleared: false,
   };
 
-  function clamp(n, a, b) { return Math.min(b, Math.max(a, n)); }
-  function rand(seed) { let x = seed || 1; return () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; return ((x >>> 0) % 10000) / 10000; }; }
-
-  function makeSensors(avgTemp, avgRh) {
-    const dsBase = [avgTemp - 0.6, avgTemp - 0.2, avgTemp, avgTemp + 0.1, avgTemp + 0.3, avgTemp + 0.6];
-    const dhtBase = [avgRh - 3.8, avgRh - 1.2, avgRh + 0.4, avgRh + 1.6];
-    return {
-      ds: dsBase.map(v => +v.toFixed(1)),
-      dht: dhtBase.map(v => +v.toFixed(1)),
-    };
+  function avg(arr) { const v = arr.filter(x => typeof x === 'number' && Number.isFinite(x)); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null; }
+  function thiOf(t, rh) { if (t == null || rh == null) return null; return (1.8 * t + 32) - (0.55 - 0.0055 * rh) * (1.8 * t - 26); }
+  function readings() {
+    const ds = state.ds.slice();
+    const dht = state.dht.slice();
+    const avgDs = avg(ds), avgRh = avg(dht);
+    return { ds, dht, avgDs, avgRh, thi: thiOf(avgDs, avgRh) };
   }
-
-  function calcAvg(arr) { const v = arr.filter(x => typeof x === 'number' && !Number.isNaN(x)); if (!v.length) return null; return v.reduce((a,b)=>a+b,0)/v.length; }
-  function calcThi(tempC, rh) { if (tempC == null || rh == null) return null; const t = tempC; return (0.8 * t) + ((rh / 100) * (t - 14.4)) + 46.4; }
-
-  function currentReadings() {
-    const ds = state.sensors.ds.slice();
-    const dht = state.sensors.dht.slice();
-    const avgDs = calcAvg(ds);
-    const avgRh = calcAvg(dht);
-    const thi = calcThi(avgDs, avgRh);
-    return { ds, dht, avgDs, avgRh, thi };
+  function activeThreshold() { return state.settings.controlBasis === 'thi' ? state.settings.thresholdThi : state.settings.thresholdTemp; }
+  function activeMetric(r) { return state.settings.controlBasis === 'thi' ? r.thi : r.avgDs; }
+  function statusFor(value, threshold, basis) {
+    if (value == null) return { key: 'unknown', text: 'DATA BELUM TERSEDIA', cls: 'neutral', detail: 'Data belum tersedia.' };
+    if (value >= threshold) return { key: 'hot', text: basis === 'thi' ? 'THRESHOLD THI TERCAPAI' : 'THRESHOLD SUHU TERCAPAI', cls: 'bahaya' };
+    if (value >= threshold - 1) return { key: 'warn', text: 'MENDEKATI THRESHOLD', cls: 'waspada' };
+    return { key: 'ok', text: basis === 'thi' ? 'DI BAWAH THRESHOLD THI' : 'DI BAWAH THRESHOLD SUHU', cls: 'normal' };
   }
 
   function seedHistory() {
-    const readings = [];
     const base = new Date(state.now.getTime());
-    let temp = 29.1;
-    let rh = 64.5;
+    const out = [];
     for (let i = 119; i >= 0; i--) {
       const t = new Date(base.getTime() - i * 30000);
-      const drift = Math.sin(i / 9) * 0.25 + (i % 7 === 0 ? 0.1 : 0);
-      temp = clamp(29.1 + drift, 28.4, 29.8);
-      rh = clamp(64.6 + Math.cos(i / 8) * 1.8, 60.2, 68.5);
-      const sensors = makeSensors(temp, rh);
-      const avgDs = calcAvg(sensors.ds);
-      const avgRh = calcAvg(sensors.dht);
-      const thi = calcThi(avgDs, avgRh);
-      const status = statusForBasis('temp', avgDs, thi, state.settings.threshold);
-      readings.push({
-        time: t, ds: sensors.ds, dht: sensors.dht, avgDs, avgRh, thi,
-        statusLabel: status.label,
-        sprinkler: i > 110 ? 'OFF' : 'OFF',
-      });
+      const drift = Math.sin(i / 9) * 0.25;
+      const temp = clamp(29.1 + drift, 28.4, 29.8);
+      const rh = clamp(64.6 + Math.cos(i / 8) * 1.8, 60.2, 68.5);
+      const ds = [temp-0.6,temp-0.2,temp,temp+0.1,temp+0.3,temp+0.6].map(v=>+v.toFixed(1));
+      const dht = [rh-3.8,rh-1.2,rh+0.4,rh+1.6].map(v=>+v.toFixed(1));
+      const avgDs = avg(ds), avgRh = avg(dht), thi = thiOf(avgDs, avgRh);
+      const st = statusFor(avgDs, 30, 'temperature');
+      out.push({ time: t, ds, dht, avgDs, avgRh, thi, status: st.key === 'hot' ? 'Suhu: ≥ threshold' : st.key === 'warn' ? 'Suhu: mendekati threshold' : 'Suhu: < threshold', sprinkler: 'OFF' });
     }
-    state.history = readings;
+    state.history = out;
   }
-
-  function seedActivity() {
+  function seedEvents() {
     const base = new Date(state.now.getTime());
-    state.activity = [
-      { t: new Date(base.getTime() - 49 * 60000), text: 'Sprinkler berhenti: durasi maksimum tercapai', kind: 'neutral' },
-      { t: new Date(base.getTime() - 51 * 60000), text: 'Sprinkler menyala otomatis: suhu mencapai threshold', kind: 'ok' },
-      { t: new Date(base.getTime() - 58 * 60000), text: 'Setting Suhu: threshold 30 °C, sepanjang waktu', kind: 'neutral' },
+    state.events = [
+      { t: new Date(base.getTime() - 49*60000), msg: 'Sprinkler berhenti: durasi maksimum tercapai' },
+      { t: new Date(base.getTime() - 51*60000), msg: 'Sprinkler menyala otomatis: suhu mencapai threshold' },
+      { t: new Date(base.getTime() - 58*60000), msg: 'Setting Suhu: threshold 30.0 °C, sepanjang waktu' },
     ];
   }
 
-  function statusForBasis(basis, avgDs, thi, threshold) {
-    const val = basis === 'thi' ? thi : avgDs;
-    if (val == null) return { key: 'unknown', label: 'Data belum tersedia', badge: 'DATA BELUM TERSEDIA', cls: 'badge-neutral' };
-    if (basis === 'thi') {
-      if (val >= threshold) return { key: 'above', label: 'THI: ≥ threshold', badge: 'THRESHOLD THI TERCAPAI', cls: 'badge-danger' };
-      if (val >= threshold - 1) return { key: 'near', label: 'THI: mendekati threshold', badge: 'MENDEKATI THRESHOLD', cls: 'badge-warn' };
-      return { key: 'below', label: 'THI: < threshold', badge: 'DI BAWAH THRESHOLD', cls: 'badge-ok' };
-    }
-    if (val >= threshold) return { key: 'above', label: 'Suhu: ≥ threshold', badge: 'THRESHOLD SUHU TERCAPAI', cls: 'badge-danger' };
-    if (val >= threshold - 1) return { key: 'near', label: 'Suhu: mendekati threshold', badge: 'MENDEKATI THRESHOLD', cls: 'badge-warn' };
-    return { key: 'below', label: 'Suhu: < threshold', badge: 'DI BAWAH THRESHOLD SUHU', cls: 'badge-ok' };
-  }
-
-  function tempBandLabel(temp, threshold) {
-    if (temp == null) return { text: 'Data belum tersedia', cls: 'badge-neutral' };
-    if (temp >= threshold) return { text: 'THRESHOLD SUHU TERCAPAI', cls: 'badge-danger' };
-    if (temp >= threshold - 1) return { text: 'MENDEKATI THRESHOLD', cls: 'badge-warn' };
-    return { text: 'DI BAWAH THRESHOLD SUHU', cls: 'badge-ok' };
-  }
-
-  const refs = {};
-  function cacheRefs() {
-    refs.views = $$('.view');
-    refs.navItems = $$('.nav-item[data-view]');
-    refs.crumb = $('#crumbCurrent');
-    refs.themeBtn = $('#themeBtn');
-    refs.menuBtn = $('#menuBtn');
-    refs.drawer = $('#drawer');
-    refs.drawerBackdrop = $('#drawerBackdrop');
-    refs.drawerClose = $('#drawerClose');
-    refs.clockText = $('#clockText');
-    refs.clockBig = $('#clockBig');
-    refs.clockDate = $('#clockDate');
-    refs.sprinklerStatePill = $('#sprinklerStatePill');
-    refs.sprinklerStatusText = $('#sprinklerStatusText');
-    refs.sprinklerDesc = $('#sprinklerDesc');
-    refs.sprinklerTemp = $('#sprinklerTemp');
-    refs.sprinklerThreshold = $('#sprinklerThreshold');
-    refs.sprinklerQuota = $('#sprinklerQuota');
-    refs.sprinklerDate = $('#sprinklerDate');
-    refs.sprinklerQuotaNote = $('#sprinklerQuotaNote');
-    refs.sprinklerCooldown = $('#sprinklerCooldown');
-    refs.sprinklerRule = $('#sprinklerRule');
-    refs.tempValue = $('#tempValue');
-    refs.tempBadge = $('#tempBadge');
-    refs.tempMarker = $('#tempMarker');
-    refs.tempMin = $('#tempMin');
-    refs.tempMax = $('#tempMax');
-    refs.tempThresholdLabel = $('#tempThresholdLabel');
-    refs.tempValidity = $('#tempValidity');
-    refs.rhValue = $('#rhValue');
-    refs.rhBadge = $('#rhBadge');
-    refs.rhMarker = $('#rhMarker');
-    refs.rhMin = $('#rhMin');
-    refs.rhMax = $('#rhMax');
-    refs.rhValidity = $('#rhValidity');
-    refs.thiValue = $('#thiValue');
-    refs.thiBadge = $('#thiBadge');
-    refs.thiMarker = $('#thiMarker');
-    refs.thiValidity = $('#thiValidity');
-    refs.nodeLeftBadge = $('#nodeLeftBadge');
-    refs.nodeRightBadge = $('#nodeRightBadge');
-    refs.nodeLeftDs = $('#nodeLeftDs');
-    refs.nodeLeftDht = $('#nodeLeftDht');
-    refs.nodeLeftSeen = $('#nodeLeftSeen');
-    refs.nodeRightDs = $('#nodeRightDs');
-    refs.nodeRightDht = $('#nodeRightDht');
-    refs.nodeRightSeen = $('#nodeRightSeen');
-    refs.evHeatBadge = $('#evHeatBadge');
-    refs.evHeatText = $('#evHeatText');
-    refs.evPostureBadge = $('#evPostureBadge');
-    refs.evPeopleBadge = $('#evPeopleBadge');
-    refs.evSprinklerBadge = $('#evSprinklerBadge');
-    refs.evSprinklerText = $('#evSprinklerText');
-    refs.historyBody = $('#historyBody');
-    refs.historyFoot = $('#historyFoot');
-    refs.historyCountPill = $('#historyCountPill');
-    refs.historyFilter = $('#historyFilter');
-    refs.activityList = $('#activityList');
-    refs.activityCountPill = $('#activityCountPill');
-    refs.accountList = $('#accountList');
-    refs.accountCount = $('#accountCount');
-    refs.chartCanvas = $('#trendCanvas');
-    refs.chartEmpty = $('#chartEmpty');
-    refs.trendLegend = $('#trendLegend');
+  const el = {};
+  function cache() {
+    ['connBadge','themeBtn','menuBtn','sideClose','sidebar','sideOverlay','pageBreadcrumb','clock','dateLine','greetingName',
+     'sprinklerState','sprinklerText','sprinklerTimer','sprinklerReason','cyclePhase','cycleQuota','modeInfo',
+     'btnAuto','btnManual','btnSprayOn','btnSprayOff',
+     'avgTemp','avgStatus','zoneTemp','zoneLo','zoneHi','zoneOkText','zoneWarnText','zoneHotText','zoneNote','minTemp','maxTemp','thresholdLabel','dsSummary','btnTemperatureDetails',
+     'avgHumidity','humidityStatus','minHumidity','maxHumidity','rhSummary','btnHumidityDetails','rulerRh',
+     'thiValue','thiStatus','thiThresholdLabel','thiSummary','rulerThi',
+     'condHeatPill','condHeatDetail','condPosturePill','condPostureDetail','condPersonPill','condPersonDetail','condSprayPill','condSprayDetail',
+     'chart','chartMetric','showAvg','legend','chartEmpty','btnClearChart','thresholdKey',
+     'inThreshold','rangeThreshold','inMaxDur','inCooldown','inMaxCycles','btnSaveCfg','settingsStatus',
+     'basisTemperature','basisThi','srcThreshold','srcSchedule','schedGroup','schedList','btnAddSched','scheduleTitle','schedHint','controlBasisHint','thresholdInputLabel',
+     'logHead','logBody','logCount','btnLogNow','btnExport','btnClearLog','filterSensor',
+     'eventList','btnClearEvents',
+     'herdPill','herdMessage','herdMeta','herdDay','herdZones','herdSynthetic',
+     'adminStatus','createUserForm','newUserName','newUserEmail','newUserPassword','btnCreateUser','userList','userCount',
+     'currentAccountAvatar','currentAccountName','currentAccountRole','currentAccountEmail','currentAccountState',
+     'sensorDialog','btnCloseSensors','sensorSection','sensorTitle','updateAge','sensorGrid','noSensor','humidityGrid','humidityCount',
+     'rightNode','leftNode'
+    ].forEach(id => el[id] = $(id));
   }
 
   function setTheme(theme) {
     state.theme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('costmosys-theme', theme);
-    refs.themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Ganti ke tema terang' : 'Ganti ke tema gelap');
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem('scs_theme', theme); } catch {}
+    const light = theme === 'light';
+    el.themeBtn.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#i-${light ? 'moon' : 'sun'}"/></svg>`;
+    el.themeBtn.title = light ? 'Gunakan tema gelap' : 'Gunakan tema terang';
+    el.themeBtn.setAttribute('aria-label', el.themeBtn.title);
     drawChart();
+  }
+
+  function openSidebar() {
+    el.sidebar.classList.add('open');
+    el.sidebar.setAttribute('aria-hidden', 'false');
+    el.sidebar.inert = false;
+    el.sideOverlay.hidden = false;
+    el.sideOverlay.classList.add('show');
+    el.menuBtn.setAttribute('aria-expanded', 'true');
+    document.getElementById('appShell').classList.add('sidebar-open');
+  }
+  function closeSidebar() {
+    el.sidebar.classList.remove('open');
+    el.sidebar.setAttribute('aria-hidden', 'true');
+    el.sidebar.inert = true;
+    el.sideOverlay.classList.remove('show');
+    el.sideOverlay.hidden = true;
+    el.menuBtn.setAttribute('aria-expanded', 'false');
+    document.getElementById('appShell').classList.remove('sidebar-open');
   }
 
   function switchView(view) {
     state.view = view;
-    refs.views.forEach(v => v.classList.toggle('active', v.id === `view-${view}`));
-    refs.navItems.forEach(b => b.classList.toggle('active', b.dataset.view === view));
-    const labels = { overview: 'Overview', history: 'Riwayat sensor', sprinkler: 'Aktivitas sprinkler', admin: 'Dashboard Admin' };
-    refs.crumb.textContent = labels[view] || view;
-    closeDrawer();
-    if (view === 'history') renderHistory();
-    if (view === 'sprinkler') renderActivity();
-    if (view === 'admin') renderAccounts();
-    if (view === 'overview') drawChart();
-  }
-
-  function openDrawer() { refs.drawer.classList.add('open'); refs.drawer.setAttribute('aria-hidden', 'false'); refs.drawerBackdrop.hidden = false; refs.menuBtn.setAttribute('aria-expanded', 'true'); }
-  function closeDrawer() { refs.drawer.classList.remove('open'); refs.drawer.setAttribute('aria-hidden', 'true'); refs.drawerBackdrop.hidden = true; refs.menuBtn.setAttribute('aria-expanded', 'false'); }
-
-  function sprinklerPhaseLabel() {
-    const c = state.cycle;
-    if (state.mode === 'manual' && state.manualOn) return { key: 'manual-on', pill: 'MENYEMPROT', pillCls: 'state-on', text: 'MENYEMPROT', textCls: 'is-on', desc: 'Mode manual · menyala sampai dimatikan.' };
-    if (c.phase === 'spraying') return { key: 'spraying', pill: 'MENYEMPROT', pillCls: 'state-on', text: 'MENYEMPROT', textCls: 'is-on', desc: `Siklus otomatis berjalan. Sisa durasi semprot ${fmtRemain(c.remainSec)}.` };
-    if (c.phase === 'cooldown') return { key: 'cooldown', pill: 'COOLDOWN', pillCls: 'state-warn', text: 'MATI', textCls: 'is-warn', desc: `Cooldown sejak berhenti aktual. Sisa cooldown ${fmtRemain(c.cooldownRemainSec)}.` };
-    if (state.mode === 'manual' && !state.manualOn) return { key: 'manual-off', pill: 'MATI', pillCls: 'state-off', text: 'MATI', textCls: 'is-off', desc: 'Mode manual. Relay mati sampai perintah ON.' };
-    return { key: 'idle', pill: 'MATI', pillCls: 'state-off', text: 'MATI', textCls: 'is-off', desc: 'Siklus sedang tidak menyiram. Syarat mulai diperiksa perangkat.' };
+    $$('.side-link[data-page]').forEach(btn => {
+      const on = btn.dataset.page === view;
+      btn.classList.toggle('active', on);
+      if (on) { if (!btn.querySelector('.nav-indicator')) { const s = document.createElement('span'); s.className='nav-indicator'; btn.appendChild(s); } }
+      else { const ind = btn.querySelector('.nav-indicator'); if (ind) ind.remove(); }
+    });
+    $$('[data-page]').forEach(node => {
+      if (node.classList.contains('side-link')) return;
+      node.hidden = node.dataset.page !== view;
+    });
+    el.pageBreadcrumb.textContent = PAGE_TITLES[view] || view;
+    closeSidebar();
+    if (view === 'log') renderHistory();
+    if (view === 'event') renderEvents();
+    if (view === 'herd') renderHerd();
+    if (view === 'admin') renderAdmin();
+    if (view === 'dash') { renderOverview(); drawChart(); syncSettingsUI(); }
   }
 
   function fmtRemain(sec) {
     sec = Math.max(0, Math.floor(sec));
-    const m = Math.floor(sec / 60);
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
     const s = sec % 60;
-    if (m >= 60) { const h = Math.floor(m / 60); const mm = m % 60; return `${h} jam ${mm} menit ${s} detik`; }
-    return `${m} menit ${s} detik`;
+    if (h > 0) return `${h}j ${m}m ${s}d`;
+    return `${m}m ${s}d`;
   }
 
-  function isSprinklerOn() {
-    if (state.mode === 'manual') return !!state.manualOn;
-    return state.cycle.phase === 'spraying';
+  function isSprinklerOn() { return state.mode === 'manual' ? !!state.manualOn : state.cycle.phase === 'spraying'; }
+
+  function sprinklerPhase() {
+    if (state.mode === 'manual' && state.manualOn) return { text: 'MENYALA', cls: 'on', reason: 'Mode manual · menyala sampai dimatikan.', phase: 'Manual aktif: sprinkler menyala.', timer: 'Manual · tanpa batas durasi otomatis' };
+    if (state.cycle.phase === 'spraying') return { text: 'MENYALA', cls: 'on', reason: `Siklus otomatis berjalan. Sisa durasi semprot ${fmtRemain(state.cycle.remainSec)}.`, phase: `Menyemprot · sisa ${fmtRemain(state.cycle.remainSec)}.`, timer: `Sisa semprot ${fmtRemain(state.cycle.remainSec)}` };
+    if (state.cycle.phase === 'cooldown') return { text: 'MATI', cls: 'off', reason: `Cooldown sejak berhenti aktual. Sisa cooldown ${fmtRemain(state.cycle.cooldownRemainSec)}.`, phase: `Cooldown · sisa ${fmtRemain(state.cycle.cooldownRemainSec)}.`, timer: `Cooldown ${fmtRemain(state.cycle.cooldownRemainSec)}` };
+    if (state.mode === 'manual') return { text: 'MATI', cls: 'off', reason: 'Mode manual. Relay mati sampai perintah ON.', phase: 'Manual aktif: relay mati.', timer: '' };
+    return { text: 'MATI', cls: 'off', reason: 'Siklus sedang tidak menyiram. Syarat mulai diperiksa perangkat.', phase: 'Status siklus: siap dievaluasi.', timer: '' };
+  }
+
+  function placeZones(avgDs, active) {
+    const box = el.zoneTemp;
+    const threshold = state.settings.thresholdTemp;
+    const on = active && state.settings.controlBasis === 'temperature';
+    const mark = box.querySelector('.ruler-mark');
+    box.dataset.state = on ? 'on' : 'off';
+    const zone = on && avgDs != null ? (avgDs >= threshold ? 'hot' : avgDs >= threshold - 1 ? 'warn' : 'ok') : '';
+    box.dataset.zone = zone;
+    const f = v => Number(v).toFixed(1);
+    const low = threshold - 1;
+    const lo = Math.floor(Math.min(24, low - 4));
+    const hi = Math.ceil(Math.max(38, threshold + 4));
+    const at = v => clamp((v - lo) / (hi - lo) * 100, 0, 100);
+    const ok = box.querySelector('.zone-ok'), warn = box.querySelector('.zone-warn'), hot = box.querySelector('.zone-hot');
+    if (on) {
+      ok.style.width = at(low) + '%';
+      warn.style.left = at(low) + '%'; warn.style.width = Math.max(0, at(threshold) - at(low)) + '%';
+      hot.style.left = at(threshold) + '%'; hot.style.width = Math.max(0, 100 - at(threshold)) + '%';
+    } else {
+      ok.style.width = ''; warn.style.left = ''; warn.style.width = ''; hot.style.left = ''; hot.style.width = '';
+    }
+    el.zoneOkText.textContent = on ? `< ${f(low)} °C` : 'Belum aktif';
+    el.zoneWarnText.textContent = on ? `${f(low)} ≤ T < ${f(threshold)} °C` : 'Belum aktif';
+    el.zoneHotText.textContent = on ? `≥ ${f(threshold)} °C` : 'Belum aktif';
+    el.zoneNote.textContent = on
+      ? `Oranye menandai 1 °C sebelum threshold ${f(threshold)} °C, hanya untuk tampilan. Warna bukan diagnosis sapi, batas mati, atau status sprinkler. Threshold hanya memulai siklus; durasi, cooldown, kuota, sensor, dan jadwal dijalankan perangkat.`
+      : 'Indikator threshold suhu belum aktif. Pilih dasar Suhu lalu simpan untuk melihat indikator. Pembacaan sensor tetap tersedia.';
+    ['ok','warn','hot'].forEach(name => box.querySelector('.zone-legend .zone-' + name).classList.toggle('active', zone === name));
+    mark.hidden = !zone;
+    if (zone) mark.style.left = at(avgDs) + '%';
+    el.zoneLo.textContent = String(lo);
+    el.zoneHi.textContent = String(hi);
+  }
+
+  function placeRuler(id, value, lo, hi, threshold) {
+    const box = $(id);
+    if (!box) return;
+    const mark = box.querySelector('.ruler-mark');
+    const thr = box.querySelector('.ruler-thr');
+    const at = v => clamp((v - lo) / (hi - lo) * 100, 0, 100);
+    mark.hidden = !(typeof value === 'number' && Number.isFinite(value));
+    if (!mark.hidden) mark.style.left = at(value) + '%';
+    if (thr) { thr.hidden = !(typeof threshold === 'number' && Number.isFinite(threshold)); if (!thr.hidden) thr.style.left = at(threshold) + '%'; }
   }
 
   function renderOverview() {
-    const r = currentReadings();
+    const r = readings();
     const s = state.settings;
-    const st = statusForBasis(s.basis, r.avgDs, r.thi, s.threshold);
-    const tempBand = tempBandLabel(r.avgDs, s.threshold);
+    const threshold = activeThreshold();
+    const basis = s.controlBasis;
+    const metric = activeMetric(r);
+    const st = statusFor(metric, threshold, basis);
+    const tempSt = statusFor(r.avgDs, s.thresholdTemp, 'temperature');
 
-    $('#clockBig').textContent = fmtClock(state.now);
-    $('#clockDate').textContent = fmtDateWib(state.now);
-    $('#clockText').textContent = `${fmtDateWib(state.now)} · ${fmtClock(state.now)} WIB`;
+    el.clock.textContent = fmtClock(state.now);
+    el.dateLine.textContent = fmtDateWib(state.now);
 
-    refs.tempValue.innerHTML = `${fmt1(r.avgDs)} <span class="metric-unit">°C</span>`;
-    refs.tempBadge.textContent = tempBand.text;
-    refs.tempBadge.className = `badge ${tempBand.cls}`;
-    refs.tempMin.textContent = `${fmt1(Math.min(...r.ds))} °C`;
-    refs.tempMax.textContent = `${fmt1(Math.max(...r.ds))} °C`;
-    refs.tempThresholdLabel.textContent = `${fmt1(s.threshold)} °C`;
-    refs.tempValidity.textContent = `${r.ds.filter(v => v != null).length}/6 DS valid`;
-    const tPct = clamp(((r.avgDs - 24) / (38 - 24)) * 100, 0, 100);
-    refs.tempMarker.style.left = `${tPct}%`;
+    // Temperature
+    el.avgTemp.textContent = r.avgDs == null ? '—' : fmt1(r.avgDs);
+    el.avgTemp.parentElement.classList.toggle('no-data', r.avgDs == null);
+    el.avgStatus.textContent = tempSt.text;
+    el.avgStatus.className = `status-pill ${tempSt.cls}`;
+    el.minTemp.textContent = r.avgDs == null ? '—' : fmt1(Math.min(...r.ds)) + ' °C';
+    el.maxTemp.textContent = r.avgDs == null ? '—' : fmt1(Math.max(...r.ds)) + ' °C';
+    el.thresholdLabel.textContent = fmt1(s.thresholdTemp) + ' °C';
+    el.dsSummary.textContent = `${r.ds.filter(Number.isFinite).length}/6 sensor valid`;
+    placeZones(r.avgDs, true);
+    el.thresholdLabel.closest('[data-threshold-basis]').hidden = basis !== 'temperature';
 
-    refs.rhValue.innerHTML = `${fmt1(r.avgRh)} <span class="metric-unit">%RH</span>`;
-    refs.rhBadge.textContent = `${r.dht.filter(v => v != null).length} TITIK TERPANTAU`;
-    refs.rhBadge.className = 'badge badge-info';
-    refs.rhMin.textContent = `${fmt1(Math.min(...r.dht))} %`;
-    refs.rhMax.textContent = `${fmt1(Math.max(...r.dht))} %`;
-    refs.rhValidity.textContent = `${r.dht.filter(v => v != null).length}/4 DHT valid`;
-    refs.rhMarker.style.left = `${clamp(((r.avgRh - 20) / 80) * 100, 0, 100)}%`;
+    // Humidity
+    el.avgHumidity.textContent = r.avgRh == null ? '—' : fmt1(r.avgRh);
+    el.avgHumidity.parentElement.classList.toggle('no-data', r.avgRh == null);
+    el.humidityStatus.textContent = r.avgRh == null ? 'DATA BELUM TERSEDIA' : '4 TITIK TERPANTAU';
+    el.humidityStatus.className = `status-pill ${r.avgRh == null ? 'neutral' : 'neutral'}`;
+    el.minHumidity.textContent = r.avgRh == null ? '—' : fmt1(Math.min(...r.dht)) + ' %RH';
+    el.maxHumidity.textContent = r.avgRh == null ? '—' : fmt1(Math.max(...r.dht)) + ' %RH';
+    el.rhSummary.textContent = `${r.dht.filter(Number.isFinite).length}/4 sensor valid · input RH untuk THI`;
+    placeRuler('rulerRh', r.avgRh, 20, 100, null);
+    const rhSpan = el.rulerRh.querySelector('.ruler-span');
+    if (rhSpan) { rhSpan.hidden = r.avgRh == null; if (r.avgRh != null) { const lo=20,hi=100,at=v=>clamp((v-lo)/(hi-lo)*100,0,100); rhSpan.style.left = at(Math.min(...r.dht))+'%'; rhSpan.style.width = Math.max(1.5, at(Math.max(...r.dht))-at(Math.min(...r.dht)))+'%'; } }
 
-    refs.thiValue.innerHTML = `${fmt1(r.thi)} <span class="metric-unit">THI</span>`;
-    refs.thiBadge.textContent = 'MONITORING THI';
-    refs.thiBadge.className = 'badge badge-ok';
-    refs.thiValidity.textContent = `${r.ds.length}/6 DS + ${r.dht.length}/4 DHT valid · dasar agregat tersedia`;
-    refs.thiMarker.style.left = `${clamp(((r.thi - 60) / 35) * 100, 0, 100)}%`;
-
-    // Node status
-    renderNodeStatus();
+    // THI
+    el.thiValue.textContent = r.thi == null ? '—' : fmt1(r.thi);
+    el.thiValue.parentElement.classList.toggle('no-data', r.thi == null);
+    const thiSt = statusFor(r.thi, s.thresholdThi, 'thi');
+    el.thiStatus.textContent = basis === 'thi' ? thiSt.text : 'MONITORING THI';
+    el.thiStatus.className = `status-pill ${basis === 'thi' ? thiSt.cls : 'neutral'}`;
+    el.thiThresholdLabel.textContent = fmt1(s.thresholdThi) + ' THI';
+    el.thiThresholdLabel.closest('[data-threshold-basis]').hidden = basis !== 'thi';
+    el.thiSummary.textContent = `Rata-rata 6 DS + RH rata-rata 4 DHT`;
+    placeRuler('rulerThi', r.thi, 60, 95, basis === 'thi' ? s.thresholdThi : null);
 
     // Sprinkler
-    const ph = sprinklerPhaseLabel();
-    refs.sprinklerStatePill.textContent = ph.pill;
-    refs.sprinklerStatePill.className = `state-pill ${ph.pillCls}`;
-    refs.sprinklerStatusText.textContent = ph.text;
-    refs.sprinklerStatusText.className = `sprinkler-status ${ph.textCls}`;
-    refs.sprinklerDesc.textContent = ph.desc;
-    refs.sprinklerTemp.textContent = s.basis === 'thi' ? `${fmt1(r.thi)} THI` : `${fmt1(r.avgDs)} °C`;
-    refs.sprinklerThreshold.textContent = s.basis === 'thi' ? `${fmt1(s.threshold)} THI` : `${fmt1(s.threshold)} °C`;
-    refs.sprinklerQuota.textContent = `${state.cycle.today}/${s.maxPerDay}`;
-    refs.sprinklerDate.textContent = `${fmtShortDate(state.now)} WIB`;
-    refs.sprinklerQuotaNote.textContent = state.cycle.today >= s.maxPerDay ? 'batas harian tercapai' : 'tersedia';
-    refs.sprinklerCooldown.textContent = state.cycle.phase === 'cooldown' ? fmtRemain(state.cycle.cooldownRemainSec) : 'tidak aktif';
-    refs.sprinklerRule.textContent = `Mulai saat ${s.basis === 'thi' ? 'THI' : 'Suhu'} ≥ ${fmt1(s.threshold)} ${s.basis === 'thi' ? 'THI' : '°C'}, ${s.window === 'all' ? 'sepanjang waktu' : `jadwal ${s.schedStart}–${s.schedEnd} WIB`}. Semprot ${s.durationMin} menit, cooldown ${s.cooldownMin} menit setelah berhenti, maks ${s.maxPerDay} mulai otomatis/hari (WIB).`;
+    const ph = sprinklerPhase();
+    el.sprinklerState.className = `sprinkler ${ph.cls}`;
+    el.sprinklerText.textContent = ph.text;
+    el.sprinklerTimer.textContent = ph.timer;
+    el.sprinklerReason.textContent = ph.reason;
+    el.cyclePhase.textContent = ph.phase;
+    el.cycleQuota.textContent = `${state.cycle.today}/${s.maxCycles} mulai otomatis hari ini · ${state.cycle.today >= s.maxCycles ? 'batas harian tercapai' : 'tersedia'}.`;
+    el.modeInfo.textContent = state.mode === 'manual' ? 'Mode manual aktif: kendali langsung dari dashboard.' : 'Mode otomatis aktif: perangkat mengevaluasi threshold dan proteksi.';
 
-    // Mode buttons
-    $$('.seg-btn[data-mode]').forEach(b => { const on = b.dataset.mode === state.mode; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    const on = isSprinklerOn();
-    $('#btnManualOn').disabled = state.mode !== 'manual' || on;
-    $('#btnManualOff').disabled = state.mode !== 'manual' || !on;
-    $('#modeNote').textContent = state.mode === 'manual'
-      ? (on ? 'Mode manual aktif. Sprinkler menyala sampai dimatikan manual.' : 'Mode manual aktif. Relay mati sampai perintah ON.')
-      : 'Mode otomatis aktif. Tombol manual tersedia untuk intervensi.';
+    el.btnAuto.classList.toggle('active', state.mode === 'auto');
+    el.btnManual.classList.toggle('active', state.mode === 'manual');
+    el.btnSprayOn.disabled = state.mode !== 'manual' || isSprinklerOn();
+    el.btnSprayOff.disabled = state.mode !== 'manual' || !isSprinklerOn();
 
-    // Evidence cards
-    refs.evHeatBadge.textContent = tempBand.text;
-    refs.evHeatBadge.className = `badge ${tempBand.cls}`;
-    refs.evHeatText.textContent = `Suhu rata-rata ${fmt1(r.avgDs)} °C berada di pita ${bandText(r.avgDs, s.threshold)}. Ini sinyal lingkungan, bukan diagnosis kondisi sapi.`;
-    refs.evSprinklerBadge.textContent = ph.pill;
-    refs.evSprinklerBadge.className = `badge ${ph.pillCls === 'state-on' ? 'badge-ok' : ph.pillCls === 'state-warn' ? 'badge-warn' : ph.pillCls === 'state-danger' ? 'badge-danger' : 'badge-off'}`;
-    refs.evSprinklerText.textContent = on ? `Relay aktif (${ph.key === 'manual-on' ? 'manual' : 'siklus otomatis'}). Status mengikuti simulasi kontrol.` : (state.cycle.phase === 'cooldown' ? `Relay mati. Cooldown aktif ${fmtRemain(state.cycle.cooldownRemainSec)}.` : 'Relay mati. Siklus otomatis tidak aktif; perangkat memeriksa syarat mulai berdasarkan threshold dan kebijakan cooldown.');
+    // Condition cards
+    el.condHeatPill.textContent = tempSt.text;
+    el.condHeatPill.className = `status-pill ${tempSt.cls}`;
+    el.condHeatDetail.textContent = r.avgDs == null ? 'Data suhu belum tersedia.' : `Suhu rata-rata ${fmt1(r.avgDs)} °C dibanding threshold ${fmt1(s.thresholdTemp)} °C. Ini sinyal lingkungan, bukan diagnosis kondisi sapi.`;
+    el.condPosturePill.textContent = 'TERAMATI';
+    el.condPosturePill.className = 'status-pill neutral';
+    el.condPostureDetail.textContent = 'Contoh sintetis: sebagian sapi terdeteksi berdiri, sebagian berbaring. Umpan pengamatan terpisah dari dashboard kontrol.';
+    el.condPersonPill.textContent = 'TIDAK TERDETEKSI';
+    el.condPersonPill.className = 'status-pill neutral';
+    el.condPersonDetail.textContent = '0 dari 120 contoh frame sintetis menandai orang di area kandang. Ini konteks visual terpisah, bukan sensor kehadiran.';
+    el.condSprayPill.textContent = ph.text === 'MENYALA' ? 'MENYALA' : state.cycle.phase === 'cooldown' ? 'COOLDOWN' : 'MATI';
+    el.condSprayPill.className = `status-pill ${ph.text === 'MENYALA' ? 'normal' : state.cycle.phase === 'cooldown' ? 'waspada' : 'neutral'}`;
+    el.condSprayDetail.textContent = ph.reason;
 
-    // Settings inputs
-    syncSettingsUI();
+    // Node pills
+    el.rightNode.textContent = 'ESP kanan · simulasi aktif';
+    el.leftNode.textContent = 'ESP kiri · simulasi aktif';
+    el.rightNode.classList.add('online');
+    el.leftNode.classList.add('online');
   }
 
-  function bandText(temp, threshold) {
-    if (temp >= threshold) return `≥ ${fmt1(threshold)} °C (threshold tercapai)`;
-    if (temp >= threshold - 1) return `${fmt1(threshold - 1)}–${fmt1(threshold)} °C (mendekati threshold)`;
-    return `< ${fmt1(threshold - 1)} °C (di bawah threshold)`;
-  }
-
-  function renderNodeStatus() {
-    const ln = state.nodes.left, rn = state.nodes.right;
-    refs.nodeLeftBadge.textContent = ln.online ? 'ONLINE' : 'OFFLINE';
-    refs.nodeLeftBadge.className = `badge ${ln.online ? 'badge-ok' : 'badge-danger'}`;
-    refs.nodeRightBadge.textContent = rn.online ? 'ONLINE' : 'OFFLINE';
-    refs.nodeRightBadge.className = `badge ${rn.online ? 'badge-ok' : 'badge-danger'}`;
-    refs.nodeLeftDs.textContent = `${ln.ds}/${ln.dsTotal}`;
-    refs.nodeLeftDht.textContent = `${ln.dht}/${ln.dhtTotal}`;
-    refs.nodeLeftSeen.textContent = ln.online ? `${ln.seenSec} detik lalu` : 'tidak tersedia';
-    refs.nodeRightDs.textContent = `${rn.ds}/${rn.dsTotal}`;
-    refs.nodeRightDht.textContent = `${rn.dht}/${rn.dhtTotal}`;
-    refs.nodeRightSeen.textContent = rn.online ? `${rn.seenSec} detik lalu` : 'tidak tersedia';
-  }
-
-  function syncSettingsUI() {
-    const s = state.settings;
-    $$('input[name="basis"]').forEach(r => r.checked = r.value === s.basis);
-    $$('input[name="window"]').forEach(r => r.checked = r.value === s.window);
-    $('#schedStart').value = s.schedStart;
-    $('#schedEnd').value = s.schedEnd;
-    $('#thresholdRange').value = s.threshold;
-    $('#thresholdNum').value = s.threshold;
-    $('#durationMin').value = s.durationMin;
-    $('#cooldownMin').value = s.cooldownMin;
-    $('#maxPerDay').value = s.maxPerDay;
-    $('#thresholdUnit').textContent = s.basis === 'thi' ? 'THI' : '°C';
-    $('#thresholdRange').min = s.basis === 'thi' ? 60 : 24;
-    $('#thresholdRange').max = s.basis === 'thi' ? 95 : 38;
-    $('#thresholdNum').min = s.basis === 'thi' ? 60 : 24;
-    $('#thresholdNum').max = s.basis === 'thi' ? 95 : 38;
-    $('#scheduleRow').style.opacity = s.window === 'schedule' ? '1' : '0.55';
-  }
-
-  function renderHistory() {
-    const filter = $('#historyFilter').value;
-    const s = state.settings;
-    let rows = state.history.slice().reverse();
-    if (filter !== 'all') {
-      rows = rows.filter(r => {
-        const st = statusForBasis(s.basis, r.avgDs, r.thi, s.threshold);
-        return st.key === filter;
-      });
+  function renderLegend(metric, showAvg) {
+    let items = [];
+    if (metric === 'temperature') {
+      items = ['DS1','DS2','DS3','DS4','DS5','DS6'].map((l,i)=>({l,c:COLORS[i]}));
+      if (showAvg) items.push({l:'Rata-rata',c:getComputedStyle(document.documentElement).getPropertyValue('--txt').trim() || '#1d2531'});
+    } else if (metric === 'humidity') {
+      items = ['DHT1','DHT2','DHT3','DHT4'].map((l,i)=>({l,c:COLORS[i]}));
+      if (showAvg) items.push({l:'Rata-rata',c:getComputedStyle(document.documentElement).getPropertyValue('--txt').trim() || '#1d2531'});
+    } else {
+      items = [{l:'THI',c:getComputedStyle(document.documentElement).getPropertyValue('--green').trim() || '#328b70'}];
+      if (showAvg) items.push({l:'Rata-rata',c:getComputedStyle(document.documentElement).getPropertyValue('--txt').trim() || '#1d2531'});
     }
-    const show = rows.slice(0, 120);
-    refs.historyBody.innerHTML = show.map(r => {
-      const st = statusForBasis(s.basis, r.avgDs, r.thi, s.threshold);
-      const tagCls = st.key === 'above' ? 'tag-danger' : st.key === 'near' ? 'tag-warn' : st.key === 'below' ? 'tag-ok' : 'tag-neutral';
-      return `<tr>
-        <td>${fmtDateTime(r.time)}</td>
-        ${r.ds.map(v => `<td>${fmt1(v)}</td>`).join('')}
-        ${r.dht.map(v => `<td>${fmt1(v)}</td>`).join('')}
-        <td><strong>${fmt1(r.avgDs)}</strong></td>
-        <td>${fmt1(r.avgRh)}</td>
-        <td>${fmt1(r.thi)}</td>
-        <td><span class="status-tag ${tagCls}">${st.label}</span></td>
-        <td>${r.sprinkler}</td>
-      </tr>`;
-    }).join('');
-    refs.historyFoot.textContent = `${show.length}/${state.history.length} baris terbaru`;
-    refs.historyCountPill.textContent = `${state.history.length} pembacaan terakhir`;
-  }
-
-  function renderActivity() {
-    const items = state.activity.slice().sort((a,b) => b.t - a.t);
-    refs.activityList.innerHTML = items.map(it => `
-      <li class="activity-item">
-        <span class="activity-dot ${it.kind || 'neutral'}" aria-hidden="true"></span>
-        <div class="activity-text">${escapeHtml(it.text)}</div>
-        <div class="activity-time">${fmtDateTime(it.t)}</div>
-      </li>
-    `).join('') || '<li class="activity-item"><span class="activity-dot neutral"></span><div class="activity-text">Belum ada aktivitas.</div><div></div></li>';
-    refs.activityCountPill.textContent = `${items.length} aktivitas`;
-  }
-
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  function renderAccounts() {
-    refs.accountCount.textContent = `${state.accounts.length} akun`;
-    refs.accountList.innerHTML = state.accounts.map(a => {
-      const initials = a.initials || (a.name || a.email).slice(0,2).toUpperCase();
-      const display = a.name || a.email;
-      const action = a.role === 'ADMIN' ? `<span class="acc-meta">Dikelola di Firebase Console</span>` : `<div class="acc-actions"><button class="btn btn-ghost btn-sm" type="button" data-toggle-account="${a.id}">${a.active ? 'Nonaktifkan' : 'Aktifkan'}</button></div>`;
-      return `<div class="account-row">
-        <div class="avatar" aria-hidden="true">${escapeHtml(initials)}</div>
-        <div>
-          <div class="acc-name">${escapeHtml(display)} <span class="badge ${a.role === 'ADMIN' ? 'badge-admin' : 'badge-neutral'}">${a.role}</span></div>
-          <div class="acc-email">${escapeHtml(a.email)}</div>
-          <div class="acc-meta"><span class="dot ${a.active ? 'ok' : ''}" aria-hidden="true" style="${a.active ? '' : 'color:var(--neutral)'}"></span>${a.active ? 'Aktif' : 'Nonaktif'}</div>
-        </div>
-        ${action}
-      </div>`;
-    }).join('');
+    el.legend.innerHTML = items.map(it => `<span><i class="swatch" style="background:${it.c}"></i>${it.l}</span>`).join('');
   }
 
   function drawChart() {
-    const canvas = refs.chartCanvas;
-    const empty = refs.chartEmpty;
+    const canvas = el.chart;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const metric = $('#trendMetric').value;
-    const showAvg = $('#trendAvg').checked;
+    const metric = el.chartMetric.value;
+    const showAvg = el.showAvg.checked;
     const s = state.settings;
     const data = state.history.slice(-120);
     const hasData = data.length > 0 && !state.chartCleared;
-    empty.hidden = hasData;
+    el.chartEmpty.style.display = hasData ? 'none' : '';
     canvas.style.visibility = hasData ? 'visible' : 'hidden';
-    if (!hasData) { ctx.clearRect(0,0,canvas.width,canvas.height); renderLegend(metric, showAvg); return; }
+    renderLegend(metric, showAvg);
+    if (!hasData) { ctx.clearRect(0,0,canvas.width,canvas.height); return; }
 
     const dpr = Math.max(1, window.devicePixelRatio || 1);
-    const cssW = canvas.clientWidth || 1200;
-    const cssH = 320;
+    const cssW = canvas.clientWidth || 900;
+    const cssH = parseInt(canvas.getAttribute('height'), 10) || 220;
     canvas.width = Math.floor(cssW * dpr);
     canvas.height = Math.floor(cssH * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, cssW, cssH);
 
-    const padL = 52, padR = 20, padT = 20, padB = 36;
+    const padL = 52, padR = 16, padT = 16, padB = 32;
     const W = cssW - padL - padR;
     const H = cssH - padT - padB;
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const gridC = isDark ? 'rgba(148,167,191,.15)' : 'rgba(100,116,139,.12)';
-    const textC = isDark ? '#8ea2bc' : '#64748b';
+    const style = getComputedStyle(document.documentElement);
+    const gridC = style.getPropertyValue('--line').trim() || '#cbd3de';
+    const textC = style.getPropertyValue('--muted').trim() || '#565e6c';
+    const txt = style.getPropertyValue('--txt').trim() || '#1d2531';
 
-    let series = [];
-    let yMin, yMax, thresholdVal = null, unit = '';
-    if (metric === 'temp') {
-      series = [0,1,2,3,4,5].map(i => ({ label: `DS${i+1}`, color: ['#f59e0b','#efb34c','#34c759','#3b82f6','#a855f7','#ec4899'][i], values: data.map(r => r.ds[i]) }));
-      if (showAvg) series.push({ label: 'Rata-rata', color: isDark ? '#edf3fb' : '#18283c', values: data.map(r => r.avgDs), dash: [6,4], width: 2.5 });
-      yMin = 24; yMax = 38; thresholdVal = s.basis === 'temp' ? s.threshold : 30; unit = '°C';
-    } else if (metric === 'rh') {
-      series = [0,1,2,3].map(i => ({ label: `DHT${i+1}`, color: ['#3b82f6','#06b6d4','#8b5cf6','#10b981'][i], values: data.map(r => r.dht[i]) }));
-      if (showAvg) series.push({ label: 'Rata-rata', color: isDark ? '#edf3fb' : '#18283c', values: data.map(r => r.avgRh), dash: [6,4], width: 2.5 });
-      yMin = 20; yMax = 100; unit = '%RH';
+    let series = [], yMin, yMax, thresholdVal = null;
+    if (metric === 'temperature') {
+      series = [0,1,2,3,4,5].map(i => ({ color: COLORS[i], values: data.map(r => r.ds[i]), width: 1.8 }));
+      if (showAvg) series.push({ color: txt, values: data.map(r => r.avgDs), width: 2.4, dash: [6,4] });
+      yMin = 24; yMax = 38; thresholdVal = s.controlBasis === 'temperature' ? s.thresholdTemp : null;
+    } else if (metric === 'humidity') {
+      series = [0,1,2,3].map(i => ({ color: COLORS[i], values: data.map(r => r.dht[i]), width: 1.8 }));
+      if (showAvg) series.push({ color: txt, values: data.map(r => r.avgRh), width: 2.4, dash: [6,4] });
+      yMin = 20; yMax = 100;
     } else {
-      series = [{ label: 'THI', color: '#10b981', values: data.map(r => r.thi), width: 2.5 }];
-      if (showAvg) series.push({ label: 'Rata-rata', color: isDark ? '#edf3fb' : '#18283c', values: data.map(r => r.thi), dash: [6,4], width: 2 });
-      yMin = 60; yMax = 95; thresholdVal = s.basis === 'thi' ? s.threshold : null; unit = 'THI';
+      series = [{ color: style.getPropertyValue('--green').trim() || '#328b70', values: data.map(r => r.thi), width: 2.4 }];
+      if (showAvg) series.push({ color: txt, values: data.map(r => r.thi), width: 2, dash: [6,4] });
+      yMin = 60; yMax = 95; thresholdVal = s.controlBasis === 'thi' ? s.thresholdThi : null;
     }
-
     const yFor = v => padT + H - ((v - yMin) / (yMax - yMin)) * H;
     const xFor = i => padL + (i / Math.max(1, data.length - 1)) * W;
 
@@ -469,17 +382,14 @@
       ctx.fillText(Number.isInteger(val) ? String(val) : val.toFixed(1), padL - 8, y);
     }
 
-    // threshold line
     if (thresholdVal != null && thresholdVal >= yMin && thresholdVal <= yMax) {
       const y = yFor(thresholdVal);
-      ctx.save(); ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]);
-      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + W, y); ctx.stroke();
-      ctx.restore();
+      ctx.save(); ctx.strokeStyle = style.getPropertyValue('--threshold-line').trim() || '#a55b16'; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + W, y); ctx.stroke(); ctx.restore();
     }
 
     series.forEach(ser => {
-      ctx.save();
-      ctx.strokeStyle = ser.color; ctx.lineWidth = ser.width || 1.8; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      ctx.save(); ctx.strokeStyle = ser.color; ctx.lineWidth = ser.width || 1.8; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
       if (ser.dash) ctx.setLineDash(ser.dash);
       let started = false;
       ser.values.forEach((v, i) => {
@@ -487,109 +397,174 @@
         const x = xFor(i), y = yFor(clamp(v, yMin, yMax));
         if (!started) { ctx.beginPath(); ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
       });
-      ctx.stroke();
-      ctx.restore();
+      ctx.stroke(); ctx.restore();
     });
 
-    // x labels
     ctx.fillStyle = textC; ctx.font = '12px "Segoe UI", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const labelEvery = Math.max(1, Math.floor(data.length / 6));
     data.forEach((r, i) => {
       if (i % labelEvery !== 0 && i !== data.length - 1) return;
       ctx.fillText(`${pad(r.time.getHours())}:${pad(r.time.getMinutes())}`, xFor(i), padT + H + 8);
     });
-
-    renderLegend(metric, showAvg);
   }
 
-  function renderLegend(metric, showAvg) {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    let items = [];
-    if (metric === 'temp') {
-      items = ['DS1','DS2','DS3','DS4','DS5','DS6'].map((l,i) => ({ l, c: ['#f59e0b','#efb34c','#34c759','#3b82f6','#a855f7','#ec4899'][i] }));
-      if (showAvg) items.push({ l: 'Rata-rata', c: isDark ? '#edf3fb' : '#18283c' });
-    } else if (metric === 'rh') {
-      items = ['DHT1','DHT2','DHT3','DHT4'].map((l,i) => ({ l, c: ['#3b82f6','#06b6d4','#8b5cf6','#10b981'][i] }));
-      if (showAvg) items.push({ l: 'Rata-rata', c: isDark ? '#edf3fb' : '#18283c' });
-    } else {
-      items = [{ l: 'THI', c: '#10b981' }];
-      if (showAvg) items.push({ l: 'Rata-rata', c: isDark ? '#edf3fb' : '#18283c' });
-    }
-    refs.trendLegend.innerHTML = items.map(it => `<span class="legend-item"><span class="legend-dot" style="background:${it.c}"></span>${it.l}</span>`).join('');
+  function buildLogHead() {
+    let h = '<th>Waktu (WIB)</th>';
+    for (let i = 1; i <= 6; i++) h += `<th>DS${i} °C</th>`;
+    for (let i = 1; i <= 4; i++) h += `<th>DHT${i} %RH</th>`;
+    h += '<th>Rata² DS</th><th>Rata² RH</th><th>THI</th><th>Status dasar terpilih</th><th>Sprinkler</th>';
+    el.logHead.innerHTML = h;
   }
 
-  function addActivity(text, kind = 'neutral') {
-    state.activity.push({ t: new Date(state.now.getTime()), text, kind });
-    if (state.activity.length > 50) state.activity = state.activity.slice(-50);
+  function renderHistory() {
+    const filter = el.filterSensor.value;
+    const s = state.settings;
+    let rows = state.history.slice().reverse();
+    if (filter === 'panas') rows = rows.filter(r => statusFor(activeMetric(r), activeThreshold(), s.controlBasis).key === 'hot');
+    if (filter === 'normal') rows = rows.filter(r => statusFor(activeMetric(r), activeThreshold(), s.controlBasis).key !== 'hot');
+    const show = rows.slice(0, 120);
+    el.logBody.innerHTML = show.map(r => {
+      const st = statusFor(activeMetric(r), activeThreshold(), s.controlBasis);
+      const cls = st.key === 'hot' ? 'hot' : st.key === 'ok' ? 'cold' : '';
+      return `<tr>
+        <td>${fmtDateTime(r.time)}</td>
+        ${r.ds.map(v => `<td>${fmt1(v)}</td>`).join('')}
+        ${r.dht.map(v => `<td>${fmt1(v)}</td>`).join('')}
+        <td><strong>${fmt1(r.avgDs)}</strong></td>
+        <td>${fmt1(r.avgRh)}</td>
+        <td>${fmt1(r.thi)}</td>
+        <td class="${cls}">${st.key === 'hot' ? (s.controlBasis === 'thi' ? 'THI: ≥ threshold' : 'Suhu: ≥ threshold') : st.key === 'warn' ? (s.controlBasis === 'thi' ? 'THI: mendekati threshold' : 'Suhu: mendekati threshold') : (s.controlBasis === 'thi' ? 'THI: < threshold' : 'Suhu: < threshold')}</td>
+        <td>${r.sprinkler}</td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="16" class="empty">Belum ada riwayat sensor.</td></tr>';
+    el.logCount.textContent = `${show.length}/${state.history.length} baris`;
+  }
+
+  function renderEvents() {
+    const items = state.events.slice().sort((a,b)=>b.t-a.t).slice(0, 50);
+    el.eventList.innerHTML = items.length ? items.map(it => `<li><div>${escapeHtml(it.msg)}</div><div class="t">${fmtDateTime(it.t)}</div></li>`).join('') : '<li class="hint">Belum ada aktivitas.</li>';
+  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function renderHerd() {
+    el.herdPill.textContent = 'DATA SINTETIS';
+    el.herdPill.className = 'status-pill neutral';
+    el.herdMessage.textContent = 'Umpan sintetis dimuat untuk demo portofolio. Tidak ada data kamera nyata.';
+    el.herdMeta.innerHTML = `<span>Rentang pengamatan: <b>08:00–16:00 WIB</b></span><span>Cakupan: <b>66%</b></span><span>Sampel: <b>960</b></span>`;
+    el.herdDay.innerHTML = `<option value="2026-11-14">2026-11-14</option>`;
+    const zones = [
+      { name: 'Zona Makan', standing: 142, lying: 38, mixed: 26, partial: 54, unobserved: 220 },
+      { name: 'Zona Istirahat', standing: 64, lying: 188, mixed: 22, partial: 40, unobserved: 166 },
+      { name: 'Zona Minum', standing: 48, lying: 18, mixed: 12, partial: 24, unobserved: 378 },
+    ];
+    el.herdZones.innerHTML = zones.map(z => {
+      const total = z.standing+z.lying+z.mixed+z.partial+z.unobserved;
+      const cov = Math.round(((total - z.unobserved) / total) * 100);
+      return `<article class="card zone-card"><h3>${z.name}</h3>
+        <div class="coverage"><div class="coverage-bar"><i style="width:${cov}%"></i></div><p><b>${cov}%</b> teramati</p></div>
+        <dl class="duration-list"><dt>Berdiri</dt><dd>${z.standing} mnt</dd><dt>Berbaring</dt><dd>${z.lying} mnt</dd><dt>Campuran</dt><dd>${z.mixed} mnt</dd><dt>Sebagian teramati</dt><dd>${z.partial} mnt</dd><dt>Tidak teramati</dt><dd>${z.unobserved} mnt</dd></dl>
+        <p class="zone-reasons">Data sintetis. Bukan durasi postur satu sapi.</p>
+      </article>`;
+    }).join('');
+  }
+
+  function renderAdmin() {
+    el.userCount.textContent = `${state.accounts.length} akun`;
+    el.userList.innerHTML = state.accounts.map(a => {
+      const initials = a.initials || (a.name || a.email).slice(0,2).toUpperCase();
+      const display = a.name || a.email;
+      const isAdmin = a.role === 'ADMIN';
+      const stateCls = a.active ? 'is-active' : '';
+      const stateTxt = a.active ? 'Aktif' : 'Nonaktif';
+      const actions = isAdmin ? `<span class="admin-owner-note">Dikelola melalui Firebase Console.</span>` : `<div class="user-management"><p class="user-management-note">Akses simulasi lokal.</p><div class="user-actions"><label class="access-toggle"><input type="checkbox" ${a.active ? 'checked' : ''} data-toggle-account="${a.id}" /> ${a.active ? 'Aktif' : 'Nonaktif'}</label><div class="user-action-buttons"><button class="btn small red" type="button" data-delete-account="${a.id}">Hapus</button></div></div></div>`;
+      return `<div class="user-row ${isAdmin ? 'user-row-admin' : ''}">
+        <div class="user-heading"><span class="user-avatar" aria-hidden="true">${escapeHtml(initials)}</span><div class="user-identity"><div class="user-name"><b>${escapeHtml(display)}</b><span class="user-role">${a.role}</span></div><span class="user-email">${escapeHtml(a.email)}</span></div><span class="user-state ${stateCls}">${stateTxt}</span></div>
+        ${actions}
+      </div>`;
+    }).join('');
+  }
+
+  function syncSettingsUI() {
+    const s = state.settings;
+    el.basisTemperature.checked = s.controlBasis === 'temperature';
+    el.basisThi.checked = s.controlBasis === 'thi';
+    el.srcThreshold.checked = s.autoSrc === 'threshold';
+    el.srcSchedule.checked = s.autoSrc === 'schedule';
+    const basis = s.controlBasis;
+    const thresh = basis === 'thi' ? s.thresholdThi : s.thresholdTemp;
+    el.thresholdInputLabel.textContent = basis === 'thi' ? 'Threshold semprot THI' : 'Threshold semprot suhu (°C)';
+    el.inThreshold.value = thresh;
+    el.rangeThreshold.value = thresh;
+    el.inThreshold.min = basis === 'thi' ? 60 : 20;
+    el.inThreshold.max = basis === 'thi' ? 95 : 40;
+    el.rangeThreshold.min = basis === 'thi' ? 60 : 20;
+    el.rangeThreshold.max = basis === 'thi' ? 95 : 40;
+    el.inMaxDur.value = s.maxDurMin;
+    el.inCooldown.value = s.cooldownMin;
+    el.inMaxCycles.value = s.maxCycles;
+    el.scheduleTitle.textContent = `Jendela jadwal ${basis === 'thi' ? 'THI' : 'Suhu'} (maks 6×)`;
+    el.schedGroup.style.display = s.autoSrc === 'schedule' ? '' : 'none';
+    el.controlBasisHint.textContent = 'Hanya profil terpilih yang mengendalikan relay. Suhu dan THI tersimpan terpisah.';
+  }
+
+  function addEvent(msg) {
+    state.events.push({ t: new Date(state.now.getTime()), msg });
+    if (state.events.length > 50) state.events = state.events.slice(-50);
   }
 
   function addHistoryReading() {
-    const r = currentReadings();
-    const s = state.settings;
-    const st = statusForBasis(s.basis, r.avgDs, r.thi, s.threshold);
+    const r = readings();
+    const st = statusFor(activeMetric(r), activeThreshold(), state.settings.controlBasis);
     state.history.push({
       time: new Date(state.now.getTime()),
       ds: r.ds, dht: r.dht, avgDs: r.avgDs, avgRh: r.avgRh, thi: r.thi,
-      statusLabel: st.label,
+      status: st.key === 'hot' ? (state.settings.controlBasis === 'thi' ? 'THI: ≥ threshold' : 'Suhu: ≥ threshold') : st.key === 'warn' ? (state.settings.controlBasis === 'thi' ? 'THI: mendekati threshold' : 'Suhu: mendekati threshold') : (state.settings.controlBasis === 'thi' ? 'THI: < threshold' : 'Suhu: < threshold'),
       sprinkler: isSprinklerOn() ? 'ON' : 'OFF',
     });
     if (state.history.length > 240) state.history = state.history.slice(-240);
+  }
+
+  function startSpray(reason) {
+    const s = state.settings;
+    state.cycle.phase = 'spraying';
+    state.cycle.remainSec = Math.max(1, Math.round(s.maxDurMin * 60));
+    state.cycle.cooldownRemainSec = 0;
+    if (reason === 'auto') {
+      state.cycle.today += 1;
+      addEvent(`Sprinkler menyala otomatis: ${s.controlBasis === 'thi' ? 'THI' : 'suhu'} mencapai threshold`);
+    } else {
+      addEvent('Sprinkler dinyalakan manual');
+    }
+  }
+
+  function stopSpray(reason) {
+    const s = state.settings;
+    if (state.cycle.phase === 'spraying') {
+      state.cycle.phase = 'cooldown';
+      state.cycle.cooldownRemainSec = Math.max(0, Math.round(s.cooldownMin * 60));
+      state.cycle.remainSec = 0;
+      if (reason === 'duration') addEvent('Sprinkler berhenti: durasi maksimum tercapai');
+      else if (reason === 'manual') addEvent('Sprinkler berhenti: dimatikan manual saat siklus aktif');
+      else addEvent('Sprinkler berhenti');
+    }
   }
 
   function maybeAutoStart() {
     const s = state.settings;
     if (state.mode !== 'auto') return;
     if (state.cycle.phase === 'spraying' || state.cycle.phase === 'cooldown') return;
-    if (state.cycle.today >= s.maxPerDay) return;
-    const r = currentReadings();
-    const val = s.basis === 'thi' ? r.thi : r.avgDs;
+    if (state.cycle.today >= s.maxCycles) return;
+    const r = readings();
+    const val = activeMetric(r);
     if (val == null) return;
-    if (val >= s.threshold) {
-      startSpray('auto');
-    }
-  }
-
-  function startSpray(reason) {
-    const s = state.settings;
-    state.cycle.phase = 'spraying';
-    state.cycle.remainSec = s.durationMin * 60;
-    state.cycle.cooldownRemainSec = 0;
-    if (reason === 'auto') {
-      state.cycle.today += 1;
-      addActivity(`Sprinkler menyala otomatis: ${s.basis === 'thi' ? 'THI' : 'suhu'} mencapai threshold`, 'ok');
-    } else {
-      addActivity('Sprinkler dinyalakan manual', 'ok');
-    }
-  }
-
-  function stopSpray(reason) {
-    const s = state.settings;
-    const wasSpraying = state.cycle.phase === 'spraying' || (state.mode === 'manual' && state.manualOn);
-    if (state.mode === 'manual' && reason === 'manual') {
-      state.manualOn = false;
-      addActivity('Sprinkler dimatikan manual', 'neutral');
-      // manual off: no auto cooldown unless we were in auto spray; keep simple
-      if (state.cycle.phase !== 'spraying') { renderAll(); return; }
-    }
-    if (state.cycle.phase === 'spraying') {
-      state.cycle.phase = 'cooldown';
-      state.cycle.cooldownRemainSec = s.cooldownMin * 60;
-      state.cycle.remainSec = 0;
-      state.cycle.lastStopMs = state.now.getTime();
-      if (reason === 'duration') addActivity('Sprinkler berhenti: durasi maksimum tercapai', 'neutral');
-      else if (reason === 'manual') addActivity('Sprinkler berhenti: dimatikan manual saat siklus aktif', 'neutral');
-      else addActivity('Sprinkler berhenti', 'neutral');
-    } else if (state.mode === 'manual' && reason === 'manual') {
-      // already handled
-    }
+    if (val >= activeThreshold()) startSpray('auto');
   }
 
   function tick() {
     state.now = new Date(state.now.getTime() + 1000);
-    // small sensor drift
     const drift = Math.sin(state.now.getSeconds() / 11) * 0.05;
-    state.sensors.ds = state.sensors.ds.map((v, i) => +clamp(v + drift * (i % 2 ? 1 : -0.5), 27.5, 33.5).toFixed(1));
-    state.sensors.dht = state.sensors.dht.map((v, i) => +clamp(v + drift * 0.3 * (i % 2 ? -1 : 1), 55, 75).toFixed(1));
+    state.ds = state.ds.map((v,i) => +clamp(v + drift * (i % 2 ? 1 : -0.5), 27.5, 33.5).toFixed(1));
+    state.dht = state.dht.map((v,i) => +clamp(v + drift * 0.3 * (i % 2 ? -1 : 1), 55, 75).toFixed(1));
 
     if (state.cycle.phase === 'spraying') {
       state.cycle.remainSec -= 1;
@@ -599,201 +574,164 @@
       if (state.cycle.cooldownRemainSec <= 0) {
         state.cycle.phase = 'idle';
         state.cycle.cooldownRemainSec = 0;
-        addActivity('Cooldown selesai: siklus otomatis siap dievaluasi', 'neutral');
+        addEvent('Cooldown selesai: siklus otomatis siap dievaluasi');
       }
     }
-
     maybeAutoStart();
-
     if (state.now.getSeconds() % 30 === 0) addHistoryReading();
-    renderAll();
+
+    renderOverview();
+    if (state.view === 'log') renderHistory();
+    if (state.view === 'event') renderEvents();
+    if (state.view === 'dash') drawChart();
+  }
+
+  function renderSensorDialog(kind) {
+    const r = readings();
+    if (kind === 'temperature') {
+      el.sensorTitle.textContent = '6 titik suhu kandang';
+      el.sensorSection.hidden = false;
+      el.sensorDialog.querySelector('[data-sensor-panel="humidity"]').hidden = true;
+      el.noSensor.style.display = 'none';
+      el.sensorGrid.innerHTML = r.ds.map((v, i) => {
+        const temp = v == null ? '—' : fmt1(v) + '°C';
+        const st = statusFor(v, state.settings.thresholdTemp, 'temperature');
+        return `<div class="sensor"><div class="sensor-meta"><span>DS${i+1}</span><span>${i < 3 ? 'KANAN' : 'KIRI'}</span></div><div class="s-name">${SENSOR_NAMES[i]}</div><div class="s-temp" style="color:${st.key==='hot'?'var(--negative-txt)':st.key==='warn'?'var(--warning-txt)':'var(--positive-txt)'}">${temp}</div><div class="bar"><i style="width:${v==null?0:clamp((v-25)/(38-25)*100,4,100)}%;background:${st.key==='hot'?'var(--negative-txt)':st.key==='warn'?'var(--warning-txt)':'var(--positive-txt)'}"></i></div><div class="s-state ${st.key==='hot'?'hot':st.key==='warn'?'warn':st.key==='ok'?'ok':'off'}">${v==null?'BELUM TERBACA':st.text}</div></div>`;
+      }).join('');
+    } else {
+      el.sensorTitle.textContent = 'Udara di sekitar ternak';
+      el.sensorSection.hidden = true;
+      el.sensorDialog.querySelector('[data-sensor-panel="humidity"]').hidden = false;
+      el.humidityCount.textContent = `${r.dht.filter(Number.isFinite).length}/4 valid`;
+      el.humidityGrid.innerHTML = r.dht.map((v, i) => {
+        return `<div class="sensor humidity-sensor"><div class="sensor-meta"><span>DHT${i+1}</span><span>${i < 2 ? 'KANAN' : 'KIRI'}</span></div><div class="s-name">${DHT_NAMES[i]}</div><div class="s-temp">${v==null?'—':fmt1(v)+'%RH'}</div><div class="bar"><i style="width:${v==null?0:clamp((v-20)/80*100,4,100)}%"></i></div><div class="dht-companion hint">Suhu DHT: —</div><div class="s-state ${v==null?'off':'ok'}">${v==null?'BELUM TERBACA':'TERPANTAU'}</div></div>`;
+      }).join('');
+    }
+  }
+
+  function wire() {
+    el.themeBtn.addEventListener('click', () => setTheme(state.theme === 'dark' ? 'light' : 'dark'));
+    el.menuBtn.addEventListener('click', () => el.sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    el.sideClose.addEventListener('click', closeSidebar);
+    el.sideOverlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
+
+    $$('.side-link[data-page]').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.page)));
+    $$('[data-goto]').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.goto)));
+
+    el.btnAuto.addEventListener('click', () => { state.mode = 'auto'; addEvent('Mode operasi diubah ke Otomatis'); renderOverview(); });
+    el.btnManual.addEventListener('click', () => { state.mode = 'manual'; addEvent('Mode operasi diubah ke Manual'); renderOverview(); });
+    el.btnSprayOn.addEventListener('click', () => { if (state.mode !== 'manual') return; state.manualOn = true; addEvent('Sprinkler dinyalakan manual'); renderOverview(); if (state.view === 'event') renderEvents(); });
+    el.btnSprayOff.addEventListener('click', () => { if (state.mode !== 'manual') return; const wasOn = state.manualOn; state.manualOn = false; if (wasOn) addEvent('Sprinkler dimatikan manual'); renderOverview(); if (state.view === 'event') renderEvents(); });
+
+    el.btnTemperatureDetails.addEventListener('click', () => { renderSensorDialog('temperature'); el.sensorDialog.showModal(); });
+    el.btnHumidityDetails.addEventListener('click', () => { renderSensorDialog('humidity'); el.sensorDialog.showModal(); });
+    el.btnCloseSensors.addEventListener('click', () => el.sensorDialog.close());
+    el.sensorDialog.addEventListener('click', (e) => { if (e.target === e.currentTarget) el.sensorDialog.close(); });
+
+    el.basisTemperature.addEventListener('change', () => { if (el.basisTemperature.checked) { state.settings.controlBasis = 'temperature'; syncSettingsUI(); } });
+    el.basisThi.addEventListener('change', () => { if (el.basisThi.checked) { state.settings.controlBasis = 'thi'; syncSettingsUI(); } });
+    el.srcThreshold.addEventListener('change', () => { if (el.srcThreshold.checked) { state.settings.autoSrc = 'threshold'; syncSettingsUI(); } });
+    el.srcSchedule.addEventListener('change', () => { if (el.srcSchedule.checked) { state.settings.autoSrc = 'schedule'; syncSettingsUI(); } });
+    el.rangeThreshold.addEventListener('input', e => el.inThreshold.value = e.target.value);
+    el.inThreshold.addEventListener('input', e => el.rangeThreshold.value = e.target.value);
+    el.btnSaveCfg.addEventListener('click', () => {
+      const basis = el.basisThi.checked ? 'thi' : 'temperature';
+      const thresh = Number(el.inThreshold.value);
+      state.settings.controlBasis = basis;
+      state.settings.autoSrc = el.srcSchedule.checked ? 'schedule' : 'threshold';
+      if (basis === 'thi') state.settings.thresholdThi = thresh; else state.settings.thresholdTemp = thresh;
+      state.settings.maxDurMin = clamp(Number(el.inMaxDur.value) || 10, 0.016666666666666666, 180);
+      state.settings.cooldownMin = clamp(Number(el.inCooldown.value) || 120, 0, 1440);
+      state.settings.maxCycles = clamp(Math.round(Number(el.inMaxCycles.value) || 3), 1, 100);
+      el.settingsStatus.textContent = 'Pengaturan disimpan (simulasi lokal).';
+      addEvent(`Pengaturan disimpan: basis ${basis === 'thi' ? 'THI' : 'Suhu DS'}, threshold ${fmt1(thresh)} ${basis === 'thi' ? 'THI' : '°C'}, durasi ${state.settings.maxDurMin} mnt, cooldown ${state.settings.cooldownMin} mnt, maks ${state.settings.maxCycles}/hari`);
+      renderOverview(); drawChart();
+      if (state.view === 'event') renderEvents();
+    });
+
+    el.chartMetric.addEventListener('change', drawChart);
+    el.showAvg.addEventListener('change', drawChart);
+    el.btnClearChart.addEventListener('click', () => { state.chartCleared = true; drawChart(); });
+    el.filterSensor.addEventListener('change', renderHistory);
+    el.btnExport.addEventListener('click', () => {
+      const header = ['WAKTU_WIB','DS1','DS2','DS3','DS4','DS5','DS6','DHT1','DHT2','DHT3','DHT4','RATA2_DS','RATA2_RH','THI','STATUS','SPRINKLER'];
+      const rows = state.history.map(r => [fmtDateTime(r.time), ...r.ds.map(v=>fmt1(v)), ...r.dht.map(v=>fmt1(v)), fmt1(r.avgDs), fmt1(r.avgRh), fmt1(r.thi), r.status, r.sprinkler]);
+      const csv = [header, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `costmosys-riwayat-sintetis-${fmtShortDate(state.now)}.csv`;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      addEvent('Export CSV riwayat sensor (simulasi lokal)'); renderEvents();
+    });
+    el.btnClearLog.addEventListener('click', () => { state.history = []; renderHistory(); addEvent('Riwayat sensor dihapus lokal (simulasi browser)'); renderEvents(); drawChart(); });
+    el.btnLogNow.addEventListener('click', () => { addHistoryReading(); renderHistory(); drawChart(); });
+    el.btnClearEvents.addEventListener('click', () => { state.events = []; renderEvents(); });
+
+    // Admin
+    el.createUserForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = el.newUserName.value.trim();
+      const email = el.newUserEmail.value.trim();
+      const pass = el.newUserPassword.value;
+      el.adminStatus.hidden = false;
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { el.adminStatus.textContent = 'Email tidak valid.'; return; }
+      if (pass.length < 8) { el.adminStatus.textContent = 'Password awal minimal 8 karakter.'; return; }
+      if (state.accounts.some(a => a.email.toLowerCase() === email.toLowerCase())) { el.adminStatus.textContent = 'Email sudah ada di daftar simulasi.'; return; }
+      const initials = (name || email).split(/[\s@._-]+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join('') || 'US';
+      const role = (document.querySelector('input[name="newAccountRole"]:checked')?.value || 'user').toUpperCase();
+      state.accounts.push({ id: 'u' + Date.now(), initials, name, email, role, active: true });
+      el.adminStatus.textContent = 'Akun simulasi ditambahkan (lokal, tidak dikirim ke server).';
+      el.createUserForm.reset();
+      renderAdmin();
+    });
+    el.userList.addEventListener('click', (e) => {
+      const toggle = e.target.closest('[data-toggle-account]');
+      if (toggle) { const a = state.accounts.find(x => x.id === toggle.dataset.toggleAccount); if (a && a.role !== 'ADMIN') { a.active = !a.active; addEvent(`Akun ${a.email} ${a.active ? 'diaktifkan' : 'dinonaktifkan'} (simulasi)`); renderAdmin(); if (state.view === 'event') renderEvents(); } return; }
+      const del = e.target.closest('[data-delete-account]');
+      if (del) { const idx = state.accounts.findIndex(x => x.id === del.dataset.deleteAccount); if (idx >= 0 && state.accounts[idx].role !== 'ADMIN') { const [a] = state.accounts.splice(idx,1); addEvent(`Akses akun ${a.email} dihapus (simulasi)`); renderAdmin(); if (state.view === 'event') renderEvents(); } }
+    });
+
+    window.addEventListener('resize', () => { if (state.view === 'dash') drawChart(); });
   }
 
   function renderAll() {
     renderOverview();
-    if (state.view === 'history') renderHistory();
-    if (state.view === 'sprinkler') renderActivity();
-    if (state.view === 'admin') renderAccounts();
-    if (state.view === 'overview') drawChart();
-  }
-
-  function exportCsv() {
-    const header = ['WAKTU_WIB','DS1','DS2','DS3','DS4','DS5','DS6','DHT1','DHT2','DHT3','DHT4','RATA2_DS','RATA2_RH','THI','STATUS','SPRINKLER'];
-    const rows = state.history.map(r => [
-      fmtDateTime(r.time), ...r.ds.map(v=>fmt1(v)), ...r.dht.map(v=>fmt1(v)),
-      fmt1(r.avgDs), fmt1(r.avgRh), fmt1(r.thi), r.statusLabel, r.sprinkler
-    ]);
-    const csv = [header, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `costmosys-riwayat-sintetis-${fmtShortDate(state.now)}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    addActivity('Export CSV riwayat sensor (simulasi lokal)', 'neutral');
-    renderActivity();
-  }
-
-  function openNodeDialog(kind) {
-    const r = currentReadings();
-    const dialog = $('#nodeDialog');
-    const body = $('#nodeDialogBody');
-    const title = $('#nodeDialogTitle');
-    if (kind === 'ds') {
-      title.textContent = 'Detail titik sensor DS18B20';
-      body.innerHTML = `<table class="detail-table"><tbody>
-        ${r.ds.map((v,i)=>`<tr><th>DS${i+1} (${i < 3 ? 'Node kiri' : 'Node kanan'})</th><td>${fmt1(v)} °C · valid</td></tr>`).join('')}
-        <tr><th>Rata-rata DS</th><td>${fmt1(r.avgDs)} °C</td></tr>
-        <tr><th>Threshold aktif</th><td>${fmt1(state.settings.threshold)} ${state.settings.basis === 'thi' ? 'THI' : '°C'}</td></tr>
-      </tbody></table>`;
-    } else {
-      title.textContent = 'Detail titik kelembapan DHT22';
-      body.innerHTML = `<table class="detail-table"><tbody>
-        ${r.dht.map((v,i)=>`<tr><th>DHT${i+1} (${i < 2 ? 'Node kiri' : 'Node kanan'})</th><td>${fmt1(v)} %RH · valid</td></tr>`).join('')}
-        <tr><th>Rata-rata RH</th><td>${fmt1(r.avgRh)} %RH</td></tr>
-        <tr><th>THI agregat</th><td>${fmt1(r.thi)} THI</td></tr>
-      </tbody></table>`;
-    }
-    dialog.showModal();
-  }
-
-  function wireEvents() {
-    refs.themeBtn.addEventListener('click', () => setTheme(state.theme === 'dark' ? 'light' : 'dark'));
-    refs.menuBtn.addEventListener('click', openDrawer);
-    refs.drawerClose.addEventListener('click', closeDrawer);
-    refs.drawerBackdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
-
-    refs.navItems.forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
-
-    $$('.seg-btn[data-mode]').forEach(btn => btn.addEventListener('click', () => {
-      state.mode = btn.dataset.mode;
-      addActivity(`Mode operasi diubah ke ${state.mode === 'auto' ? 'Otomatis' : 'Manual'}`, 'neutral');
-      renderAll();
-    }));
-
-    $('#btnManualOn').addEventListener('click', () => {
-      if (state.mode !== 'manual') return;
-      state.manualOn = true;
-      addActivity('Sprinkler dinyalakan manual', 'ok');
-      renderAll();
-    });
-    $('#btnManualOff').addEventListener('click', () => {
-      if (state.mode !== 'manual') return;
-      const wasOn = state.manualOn;
-      state.manualOn = false;
-      if (wasOn) addActivity('Sprinkler dimatikan manual', 'neutral');
-      renderAll();
-    });
-
-    $('#btnSaveSettings').addEventListener('click', () => {
-      const basis = $('input[name="basis"]:checked').value;
-      const windowMode = $('input[name="window"]:checked').value;
-      const threshold = Number($('#thresholdNum').value);
-      const durationMin = clamp(Number($('#durationMin').value) || 10, 1, 60);
-      const cooldownMin = clamp(Number($('#cooldownMin').value) || 120, 1, 240);
-      const maxPerDay = clamp(Number($('#maxPerDay').value) || 3, 1, 12);
-      state.settings = {
-        ...state.settings, basis, window: windowMode,
-        schedStart: $('#schedStart').value || '07:00',
-        schedEnd: $('#schedEnd').value || '17:00',
-        threshold, durationMin, cooldownMin, maxPerDay,
-      };
-      $('#settingsStatus').textContent = 'Pengaturan disimpan (simulasi lokal).';
-      addActivity(`Pengaturan disimpan: basis ${basis === 'thi' ? 'THI' : 'Suhu DS'}, threshold ${fmt1(threshold)} ${basis === 'thi' ? 'THI' : '°C'}, durasi ${durationMin} mnt, cooldown ${cooldownMin} mnt, maks ${maxPerDay}/hari`, 'neutral');
-      renderAll();
-    });
-
-    $$('input[name="basis"]').forEach(r => r.addEventListener('change', () => {
-      const basis = $('input[name="basis"]:checked').value;
-      $('#thresholdUnit').textContent = basis === 'thi' ? 'THI' : '°C';
-      if (basis === 'thi') { $('#thresholdRange').min = 60; $('#thresholdRange').max = 95; $('#thresholdNum').min = 60; $('#thresholdNum').max = 95; if (Number($('#thresholdNum').value) < 60) { $('#thresholdNum').value = 80; $('#thresholdRange').value = 80; } }
-      else { $('#thresholdRange').min = 24; $('#thresholdRange').max = 38; $('#thresholdNum').min = 24; $('#thresholdNum').max = 38; if (Number($('#thresholdNum').value) > 38) { $('#thresholdNum').value = 30; $('#thresholdRange').value = 30; } }
-    }));
-    $$('input[name="window"]').forEach(r => r.addEventListener('change', () => {
-      $('#scheduleRow').style.opacity = $('input[name="window"]:checked').value === 'schedule' ? '1' : '0.55';
-    }));
-    $('#thresholdRange').addEventListener('input', e => $('#thresholdNum').value = e.target.value);
-    $('#thresholdNum').addEventListener('input', e => $('#thresholdRange').value = e.target.value);
-
-    $('#trendMetric').addEventListener('change', drawChart);
-    $('#trendAvg').addEventListener('change', drawChart);
-    $('#btnClearChart').addEventListener('click', () => { state.chartCleared = true; drawChart(); });
-    $('#historyFilter').addEventListener('change', renderHistory);
-    $('#btnExportCsv').addEventListener('click', exportCsv);
-    $('#btnClearHistory').addEventListener('click', () => { state.history = []; renderHistory(); addActivity('Riwayat sensor dihapus lokal (simulasi browser)', 'neutral'); });
-    $('#btnAddReading').addEventListener('click', () => { addHistoryReading(); renderHistory(); drawChart(); });
-    $('#btnClearActivity').addEventListener('click', () => { state.activity = []; renderActivity(); });
-
-    $$('.link-btn[data-open="node-detail"]').forEach(btn => btn.addEventListener('click', () => openNodeDialog(btn.dataset.kind)));
-    $('#nodeDialogClose').addEventListener('click', () => $('#nodeDialog').close());
-    $('#nodeDialog').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
-
-    // Admin
-    $$('.seg-btn[data-role]').forEach(btn => btn.addEventListener('click', () => {
-      state.adminRole = btn.dataset.role;
-      $$('.seg-btn[data-role]').forEach(b => { const on = b.dataset.role === state.adminRole; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    }));
-    $('#adminForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = $('#adminName').value.trim();
-      const email = $('#adminEmail').value.trim();
-      const pass = $('#adminPass').value;
-      const msg = $('#adminFormMsg');
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = 'Email tidak valid.'; msg.className = 'form-msg error'; return; }
-      if (pass.length < 8) { msg.textContent = 'Password awal minimal 8 karakter.'; msg.className = 'form-msg error'; return; }
-      if (state.accounts.some(a => a.email.toLowerCase() === email.toLowerCase())) { msg.textContent = 'Email sudah ada di daftar simulasi.'; msg.className = 'form-msg error'; return; }
-      const initials = (name || email).split(/[\s@._-]+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join('');
-      state.accounts.push({ id: 'u' + Date.now(), initials: initials || 'US', name, email, role: state.adminRole.toUpperCase(), active: true, console: false });
-      msg.textContent = 'Akun simulasi ditambahkan (lokal, tidak dikirim ke server).';
-      msg.className = 'form-msg';
-      $('#adminForm').reset();
-      state.adminRole = 'user';
-      $$('.seg-btn[data-role]').forEach(b => { const on = b.dataset.role === 'user'; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-      renderAccounts();
-    });
-    refs.accountList.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-toggle-account]');
-      if (!btn) return;
-      const a = state.accounts.find(x => x.id === btn.dataset.toggleAccount);
-      if (!a || a.role === 'ADMIN') return;
-      a.active = !a.active;
-      addActivity(`Akun ${a.email} ${a.active ? 'diaktifkan' : 'dinonaktifkan'} (simulasi)`, 'neutral');
-      renderAccounts();
-    });
-
-    window.addEventListener('resize', () => { if (state.view === 'overview') drawChart(); });
+    if (state.view === 'log') renderHistory();
+    if (state.view === 'event') renderEvents();
+    if (state.view === 'herd') renderHerd();
+    if (state.view === 'admin') renderAdmin();
+    if (state.view === 'dash') drawChart();
   }
 
   function init() {
-    cacheRefs();
+    cache();
     setTheme(state.theme);
+    buildLogHead();
     seedHistory();
-    seedActivity();
-    wireEvents();
+    seedEvents();
+    wire();
+    switchView('dash');
     renderAll();
+    syncSettingsUI();
     setInterval(tick, 1000);
 
     window.__COSTMOSYS_DEMO__ = {
-      version: 1,
+      version: 2,
       getState: () => JSON.parse(JSON.stringify({
         view: state.view, theme: state.theme, mode: state.mode, manualOn: state.manualOn,
-        cycle: state.cycle, settings: state.settings, nodes: state.nodes,
-        historyCount: state.history.length, activityCount: state.activity.length,
+        cycle: state.cycle, settings: state.settings,
+        historyCount: state.history.length, activityCount: state.events.length,
         accounts: state.accounts.length,
         sprinklerOn: isSprinklerOn(),
       })),
       switchView,
       setMode: (m) => { state.mode = m; renderAll(); },
-      manualOn: () => { state.mode = 'manual'; state.manualOn = true; addActivity('Sprinkler dinyalakan manual', 'ok'); renderAll(); },
-      manualOff: () => { state.mode = 'manual'; state.manualOn = false; addActivity('Sprinkler dimatikan manual', 'neutral'); renderAll(); },
+      manualOn: () => { state.mode = 'manual'; state.manualOn = true; addEvent('Sprinkler dinyalakan manual'); renderAll(); },
+      manualOff: () => { state.mode = 'manual'; state.manualOn = false; addEvent('Sprinkler dimatikan manual'); renderAll(); },
       saveSettings: (patch) => { Object.assign(state.settings, patch || {}); syncSettingsUI(); renderAll(); },
       addReading: () => { addHistoryReading(); renderAll(); },
       clearHistory: () => { state.history = []; renderAll(); },
-      clearActivity: () => { state.activity = []; renderAll(); },
-      exportCsv,
+      clearActivity: () => { state.events = []; renderAll(); },
       tick: (n = 1) => { for (let i = 0; i < n; i++) tick(); },
     };
   }

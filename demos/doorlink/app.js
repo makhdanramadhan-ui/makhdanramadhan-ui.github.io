@@ -2,10 +2,10 @@
   'use strict';
 
   const SEEDED_USERS = [
-    { id: 'u1', name: 'Sample Owner', username: 'owner', password: 'demo-owner', role: 'owner', room: 'A-101', status: 'Active' },
-    { id: 'u2', name: 'Sample Tenant', username: 'tenant1', password: 'demo-tenant', role: 'tenant', room: 'B-203', status: 'Active' },
-    { id: 'u3', name: 'Sample Guest', username: 'guest1', password: 'demo-guest', role: 'guest', room: 'C-105', status: 'Active' },
-    { id: 'u4', name: 'Sample Technician', username: 'tech1', password: 'demo-tech', role: 'technician', room: '', status: 'Active' },
+    { id: 'u1', name: 'Sample Owner', username: 'owner', role: 'owner', room: 'A-101', status: 'Active' },
+    { id: 'u2', name: 'Sample Tenant', username: 'tenant1', role: 'tenant', room: 'B-203', status: 'Active' },
+    { id: 'u3', name: 'Sample Guest', username: 'guest1', role: 'guest', room: 'C-105', status: 'Active' },
+    { id: 'u4', name: 'Sample Technician', username: 'tech1', role: 'technician', room: '', status: 'Active' },
   ];
 
   const SEEDED_LOGS = [
@@ -25,6 +25,7 @@
       users: SEEDED_USERS.map((u) => ({ ...u })),
       logs: SEEDED_LOGS.map((l) => ({ ...l })),
       logFilter: 'all',
+      doorState: 'Siap',
     };
   }
 
@@ -95,8 +96,8 @@
     state = seedState();
     editingUserId = null;
     clearFeedback();
-    $('login-form').reset();
-    $('add-user-form').reset();
+    const addForm = $('add-user-form');
+    if (addForm) addForm.reset();
     $('door-username').value = '';
     $('door-status-text').textContent = 'Masukkan username untuk membuka pintu.';
     $('door-status-idle').className = 'door-status-idle';
@@ -105,7 +106,7 @@
   }
 
   function clearFeedback() {
-    ['login-error', 'guest-feedback', 'add-user-feedback', 'door-feedback', 'logs-feedback', 'hotspot-feedback'].forEach((id) => {
+    ['login-error', 'guest-feedback', 'add-user-feedback', 'door-feedback', 'logs-feedback'].forEach((id) => {
       const el = $(id);
       if (el) { el.textContent = ''; el.className = el.className.replace(/\b(success|error)\b/g, '').trim(); }
     });
@@ -128,7 +129,8 @@
     $('stat-users').textContent = String(state.users.length);
     $('stat-roles').textContent = String(new Set(state.users.map((u) => u.role)).size);
     $('stat-logs').textContent = String(state.logs.length);
-    $('stat-hotspot').textContent = '0';
+    const doorStat = $('stat-door');
+    if (doorStat) doorStat.textContent = state.doorState || 'Siap';
   }
 
   function statusPill(status) {
@@ -198,39 +200,34 @@
     renderLogs();
   }
 
-  function handleLogin(e) {
-    e.preventDefault();
+  function enterAs(role) {
     clearFeedback();
-    const username = $('login-username').value.trim();
-    const password = $('login-password').value;
-    const user = state.users.find((u) => u.username === username && u.password === password && u.status === 'Active');
-    if (!user) {
-      setFeedback('login-error', 'Username atau password tidak cocok dengan akun demo sintetis.', 'error');
-      return;
-    }
-    state.currentUser = { username: user.username, role: user.role, name: user.name, room: user.room };
-    if (user.role === 'guest') {
-      $('guest-username').value = user.username;
-      const gp = $('guest-password');
-      if (gp) gp.value = 'demo-guest';
-      setFeedback('guest-feedback', '', null);
-      showView('guest');
-      return;
-    }
-    if (user.role === 'owner') {
+    if (role === 'admin') {
+      state.currentUser = { username: 'owner', role: 'owner', name: 'Sample Owner', room: 'A-101' };
       showView('admin');
       showAdminPanel('dashboard');
       renderAll();
       return;
     }
-    setFeedback('login-error', 'Peran ini tidak memiliki tampilan demo khusus. Gunakan akun owner atau guest.', 'error');
+    if (role === 'resident') {
+      state.currentUser = { username: 'penghuni', role: 'guest', name: 'Penghuni Fiktif', room: 'C-105' };
+      state.doorState = 'Siap';
+      const nameEl = $('guest-display-name');
+      const roomEl = $('guest-display-room');
+      if (nameEl) nameEl.textContent = state.currentUser.name;
+      if (roomEl) roomEl.textContent = `Kamar ${state.currentUser.room}`;
+      setFeedback('guest-feedback', '', null);
+      renderStats();
+      showView('guest');
+      return;
+    }
   }
 
   function handleLogout() {
     state.currentUser = null;
+    state.doorState = 'Siap';
     closeSidebar();
     clearFeedback();
-    $('login-form').reset();
     showView('login');
   }
 
@@ -238,18 +235,19 @@
     clearFeedback();
     const user = state.currentUser;
     if (!user || user.role !== 'guest') {
-      setFeedback('guest-feedback', 'Sesi demo tidak valid. Silakan login ulang.', 'error');
+      setFeedback('guest-feedback', 'Sesi demo tidak valid. Silakan pilih peran penghuni lagi.', 'error');
       return;
     }
     const room = user.room || 'C-105';
+    state.doorState = 'Terbuka';
     addLog({
       time: fmtNow(),
       username: user.username,
       method: 'web',
       status: 'Allowed',
-      message: `Pintu kamar ${room} dibuka (simulasi Guest Portal)`,
+      message: `Pintu kamar ${room} dibuka (simulasi Portal Penghuni)`,
     });
-    setFeedback('guest-feedback', `Simulasi berhasil: pintu kamar ${room} dibuka untuk ${user.username}.`, 'success');
+    setFeedback('guest-feedback', `Simulasi berhasil: pintu kamar ${room} dibuka untuk ${user.name}.`, 'success');
   }
 
   function handleDoorOpen() {
@@ -272,6 +270,8 @@
         : "Role 'guest' tidak memiliki izin buka pintu";
     addLog({ time: fmtNow(), username, method: 'web', status: allowed ? 'Allowed' : 'Denied', message });
     if (allowed) {
+      state.doorState = 'Terbuka';
+      renderStats();
       statusIdle.className = 'door-status-idle is-success';
       statusText.textContent = `Akses diizinkan untuk ${username}.`;
       setFeedback('door-feedback', 'Simulasi berhasil: pintu dibuka.', 'success');
@@ -287,12 +287,13 @@
     clearFeedback();
     const name = $('new-name').value.trim();
     const username = $('new-username').value.trim();
-    const password = $('new-password').value;
+    const passwordInput = $('new-password');
+    const password = passwordInput ? passwordInput.value : '';
     const role = $('new-role').value;
     const room = $('new-room').value.trim();
 
-    if (!name || !username || !role || (!editingUserId && password.length < 4)) {
-      setFeedback('add-user-feedback', 'Lengkapi nama, username, role, dan password minimal 4 karakter.', 'error');
+    if (!name || !username || !role) {
+      setFeedback('add-user-feedback', 'Lengkapi nama, username, dan role.', 'error');
       return;
     }
     const exists = state.users.some((u) => u.username === username && u.id !== editingUserId);
@@ -313,15 +314,16 @@
       editingUserId = null;
       document.querySelector('.btn-add-user span').textContent = 'Tambah User';
     } else {
-      state.users.push({
+      const newUser = {
         id: `u${Date.now()}`,
         name,
         username,
-        password,
         role,
         room,
         status: 'Active',
-      });
+      };
+      if (password) newUser.password = password;
+      state.users.push(newUser);
       setFeedback('add-user-feedback', `User ${username} ditambahkan (simulasi lokal).`, 'success');
     }
     $('add-user-form').reset();
@@ -334,11 +336,12 @@
     editingUserId = id;
     $('new-name').value = user.name;
     $('new-username').value = user.username;
-    $('new-password').value = '';
+    const pw = $('new-password');
+    if (pw) pw.value = '';
     $('new-role').value = user.role;
     $('new-room').value = user.room || '';
     document.querySelector('.btn-add-user span').textContent = 'Simpan Perubahan';
-    setFeedback('add-user-feedback', `Mode edit untuk ${user.username}. Kosongkan password jika tidak ingin mengubahnya.`, 'success');
+    setFeedback('add-user-feedback', `Mode edit untuk ${user.username}.`, 'success');
     $('new-name').focus();
   }
 
@@ -405,30 +408,24 @@
     renderAll();
   }
 
-  function bindEvents() {
-    $('login-form').addEventListener('submit', handleLogin);
-    $('reset-demo-btn').addEventListener('click', resetDemo);
-
-    qsa('.demo-fill').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        $('login-username').value = btn.dataset.user || '';
-        $('login-password').value = btn.dataset.pass || '';
-        setFeedback('login-error', 'Kredensial demo sintetis terisi. Klik "Masuk ke DoorLink".', 'success');
-        $('login-username').focus();
-      });
-    });
-
-    $('open-hotspot-view').addEventListener('click', () => {
-      clearFeedback();
-      showView('hotspot');
-    });
-    $('hotspot-back-btn').addEventListener('click', () => {
+  function applyHashRoute() {
+    const hash = (window.location.hash || '').toLowerCase();
+    if (!hash || hash === '#' || hash === '#login') return;
+    if (hash.includes('hotspot')) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      closeSidebar();
       clearFeedback();
       showView('login');
-    });
-    $('hotspot-submit').addEventListener('click', () => {
-      setFeedback('hotspot-feedback', 'Simulasi lokal: halaman hotspot ini hanya dokumentasi UI, tidak terhubung ke jaringan.', 'error');
-    });
+    }
+  }
+
+  function bindEvents() {
+    $('reset-demo-btn').addEventListener('click', resetDemo);
+
+    const adminEntry = $('entry-admin');
+    if (adminEntry) adminEntry.addEventListener('click', () => enterAs('admin'));
+    const residentEntry = $('entry-resident');
+    if (residentEntry) residentEntry.addEventListener('click', () => enterAs('resident'));
 
     qsa('[data-action="logout"]').forEach((btn) => btn.addEventListener('click', handleLogout));
     $('guest-open-btn').addEventListener('click', handleGuestOpen);
@@ -473,6 +470,9 @@
     window.addEventListener('resize', () => {
       if (window.innerWidth > 860) closeSidebar();
     });
+
+    window.addEventListener('hashchange', applyHashRoute);
+    applyHashRoute();
   }
 
   bindEvents();

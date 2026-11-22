@@ -143,7 +143,6 @@ a { color: inherit; }
 .brand-sub { margin-top: 4px; font-size: 14px; color: #5f6b7a; }
 .login-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; color: #1f2937; }
 .login-desc { margin: 10px 0 30px; font-size: 16px; line-height: 1.5; color: #6b7280; }
-.login-form { display: flex; flex-direction: column; }
 .field-label { margin: 0 0 10px; font-size: 13px; font-weight: 700; color: #334155; }
 .field-label-light { color: #e2e8f0; font-size: 15px; }
 .field-input {
@@ -166,7 +165,6 @@ a { color: inherit; }
 }
 .field-input-dark::placeholder { color: #94a3b8; }
 .field-input-dark:focus { border-color: rgba(34, 211, 238, 0.55); box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.16); }
-.login-form .field-input { margin-bottom: 18px; }
 .form-error, .form-feedback, .guest-feedback, .logs-feedback {
   min-height: 20px;
   margin: -4px 0 12px;
@@ -195,26 +193,27 @@ a { color: inherit; }
 .btn-primary:focus-visible { outline: 3px solid rgba(96, 165, 250, 0.45); outline-offset: 2px; }
 .btn-primary svg { width: 20px; height: 20px; flex: 0 0 auto; }
 .login-footnote { margin: 20px 0 0; text-align: center; font-size: 12px; color: #6b7280; }
-.login-demo-hint {
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px dashed #cbd5e1;
+.login-role-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 18px;
 }
-.demo-hint-title { margin: 0 0 10px; font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; }
-.demo-hint-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.demo-fill, .demo-link-btn {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  color: #334155;
-  font-size: 13px;
-  font-weight: 700;
+.btn-role-entry { width: 100%; }
+.btn-role-entry-resident {
+  background: linear-gradient(90deg, #334155, #475569);
+  box-shadow: 0 10px 25px rgba(51, 65, 85, 0.22);
 }
-.demo-fill:hover, .demo-link-btn:hover, .demo-fill:focus-visible, .demo-link-btn:focus-visible {
-  background: #eff6ff; border-color: #93c5fd; outline: none;
+.btn-role-entry-resident:hover { filter: brightness(1.08); }
+.guest-identity-card {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.32);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  margin-bottom: 14px;
 }
-.demo-link-btn { width: 100%; margin-top: 10px; }
+.guest-identity-name { font-size: 18px; font-weight: 800; color: #f8fafc; }
+.guest-identity-room { margin-top: 4px; font-size: 14px; color: #94a3b8; font-weight: 600; }
 
 /* GUEST */
 .view-guest {
@@ -231,7 +230,7 @@ a { color: inherit; }
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
 }
 .guest-brand { display: flex; align-items: center; gap: 14px; }
-.guest-brand .brand-icon, .sidebar-brand .brand-icon, .hotspot-brand .brand-icon {
+.guest-brand .brand-icon, .sidebar-brand .brand-icon {
   background: linear-gradient(135deg, #22d3ee, #2563eb);
   box-shadow: 0 8px 24px rgba(34, 211, 238, 0.2);
   color: #fff;
@@ -597,50 +596,6 @@ a { color: inherit; }
 .door-status-idle.is-denied svg { color: #fb7185; }
 .door-status-idle.is-success p { color: #86efac; font-weight: 700; }
 .door-status-idle.is-denied p { color: #fda4af; font-weight: 700; }
-
-/* HOTSPOT */
-.view-hotspot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 28px 16px;
-  background: linear-gradient(160deg, #0f2238, #16365b);
-}
-.hotspot-shell { width: min(520px, 100%); }
-.hotspot-doc-banner {
-  margin-bottom: 16px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(148,163,184,0.2);
-  color: #dbe7f3;
-  font-size: 13px;
-  line-height: 1.5;
-}
-.hotspot-back-btn {
-  margin-top: 10px;
-  display: inline-flex;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(148,163,184,0.12);
-  color: #fff;
-  font-weight: 700;
-}
-.hotspot-back-btn:hover, .hotspot-back-btn:focus-visible { background: rgba(148,163,184,0.2); outline: none; }
-.hotspot-card {
-  padding: 28px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(248,250,252,0.96), rgba(241,245,249,0.94));
-  color: #1f2937;
-  box-shadow: var(--shadow);
-}
-.hotspot-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.hotspot-title { font-size: 28px; font-weight: 800; color: #1e3a5f; line-height: 1; }
-.hotspot-sub { margin-top: 4px; font-size: 13px; color: #64748b; font-weight: 600; }
-.hotspot-desc { margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: #475569; }
-.hotspot-card .field-input { margin-bottom: 16px; }
-.hotspot-note { margin: 14px 0 0; font-size: 12px; color: #64748b; text-align: center; }
-.hotspot-card .form-error { color: #b91c1c; }
 
 /* RESPONSIVE */
 .sidebar-overlay {
