@@ -1,0 +1,11 @@
+.cctv-grid { display: grid; gap: 24px; }
+.cctv-card .section-head { margin-bottom: 16px; }
+.cctv-frame { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #111827; }
+.cctv-svg { display: block; width: 100%; height: auto; }
+.cctv-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+.cctv-meta .meta-k { color: var(--text-dim); font-weight: 700; margin-right: 4px; }
+.cctv-notes ul { margin: 12px 0 0; padding-left: 20px; color: var(--text-muted); line-height: 1.7; }
+.cctv-notes li + li { margin-top: 6px; }
+@media (max-width: 700px) {
+  .cctv-meta { flex-direction: column; gap: 6px; }
+}
