@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; script-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none';">
+  <title>WishNotes — Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#" data-view="dashboard" aria-label="WishNotes beranda">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 7h-2.2A2.9 2.9 0 0 0 18 6a3 3 0 0 0-5.2-2A3 3 0 0 0 7 4a3 3 0 0 0-.2 3H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1Zm-8-3a1 1 0 0 1 1 1c0 .4-.1.7-.4 1H11V5a1 1 0 0 1 1-1ZM9 5a1 1 0 0 1 1-1 1 1 0 0 1 1 1v2H9.4A1.5 1.5 0 0 1 9 6V5Zm2 14H7v-8h4v8Zm6 0h-4v-8h4v8Zm2-10H5V9h14v0Z" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">Wishnotes</span>
+      </a>
+      <nav class="topbar-right" id="topbar-right">
+        <a class="nav-link" href="#" data-view="dashboard">Jelajahi</a>
+        <div class="user-menu" id="user-menu">
+          <span class="user-name" id="user-name">Demo User</span>
+          <span class="avatar avatar-sm avatar-red" id="user-avatar">DU</span>
+          <span class="caret" aria-hidden="true">▾</span>
+        </div>
+      </nav>
+    </header>
+
+    <div class="synthetic-banner" role="status">
+      <span class="synthetic-pill">Data sintetis</span>
+      <span>Demo portofolio. Semua pesan, papan, dan pengguna adalah data tiruan yang disimpan lokal di browser Anda.</span>
+      <a class="synthetic-back" href="../../projects.html#wishnote">← Kembali ke studi kasus</a>
+      <a class="synthetic-back" href="#" data-view="admin" class="synthetic-back-admin">Admin demo</a>
+      <button type="button" class="synthetic-back" id="reset-demo-global" class="synthetic-reset">Reset demo</button>
+    </div>
+
+    <main id="main"></main>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

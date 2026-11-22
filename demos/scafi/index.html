@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none';">
+  <title>SCAFI — Smart Control Against Fire and Intruder</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" type="button" id="menuBtn" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="brand">
+          <div class="brand-name">SCAFI</div>
+          <div class="brand-sub">Smart Control Against Fire and Intruder</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="synthetic-badge" aria-label="Synthetic data indicator">Synthetic data</span>
+        <span class="status-pill" id="devicePill">
+          <span class="status-dot" id="deviceDot"></span>
+          <span id="deviceStatusText">Simulasi Aktif</span>
+        </span>
+        <div class="toggle-wrap" title="Mode simulasi">
+          <span class="toggle-label">SIM</span>
+          <button class="toggle-switch on" type="button" id="simToggle" role="switch" aria-checked="true" aria-label="Toggle simulasi">
+            <span class="toggle-knob"></span>
+          </button>
+        </div>
+        <div class="clock" id="clockText">Jum, 22 Mei 2026 22.31.07</div>
+      </div>
+    </header>
+
+    <div class="subbar">
+      <a class="back-link" href="../../projects.html#scafi">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span>Kembali ke studi kasus</span>
+      </a>
+      <div class="subbar-note">Demo UI statis dengan data sintetis — tidak terhubung ke perangkat, Firebase, atau Telegram.</div>
+    </div>
+
+    <main class="dashboard">
+      <section class="banner safe" id="mainBanner" aria-live="polite">
+        <div class="banner-icon" id="bannerIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="banner-text" id="bannerText">LABORATORIUM AMAN</div>
+      </section>
+
+      <section class="cards-grid" aria-label="Pembacaan sensor">
+        <article class="sensor-card temp-card">
+          <div class="card-accent temp-accent"></div>
+          <div class="card-head">
+            <div class="card-icon temp-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            </div>
+            <h2 class="card-title">TEMPERATURE</h2>
+          </div>
+          <div class="card-body temp-body">
+            <div class="thermo" aria-hidden="true">
+              <div class="thermo-tube">
+                <div class="thermo-fill" id="thermoFill"></div>
+              </div>
+              <div class="thermo-bulb"><div class="thermo-bulb-fill" id="thermoBulb"></div></div>
+            </div>
+            <div class="reading">
+              <div class="reading-value temp-value" id="tempValue">31.1</div>
+              <div class="reading-unit">°C</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="sensor-card humidity-card">
+          <div class="card-accent humidity-accent"></div>
+          <div class="card-head">
+            <div class="card-icon humidity-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <h2 class="card-title">HUMIDITY</h2>
+          </div>
+          <div class="card-body humidity-body">
+            <div class="gauge-wrap">
+              <svg class="gauge-svg" viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="46" class="gauge-track"></circle>
+                <circle cx="60" cy="60" r="46" class="gauge-arc" id="humidityArc"></circle>
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-value humidity-value" id="humidityValue">68.8</span>
+                <span class="gauge-unit">%</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="sensor-card intruder-card">
+          <div class="card-accent intruder-accent"></div>
+          <div class="card-head">
+            <div class="card-icon intruder-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22v-5l-2-1v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4l-2 1v5"/><path d="M8 11l-2 2"/><path d="M16 11l2 2"/></svg>
+            </div>
+            <h2 class="card-title">INTRUDER DETECTION</h2>
+          </div>
+          <div class="card-body intruder-body">
+            <div class="intruder-top">
+              <div class="intruder-shield" id="intruderShield">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="reading">
+                <div class="reading-value intruder-value" id="intruderValue">63</div>
+                <div class="reading-unit">cm</div>
+              </div>
+            </div>
+            <div class="area-pill safe" id="intruderPill">AREA AMAN</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-head">
+          <div class="panel-title-wrap">
+            <span class="panel-title-icon temp-title-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            </span>
+            <h2 class="panel-title">RATA-RATA BERGERAK SUHU (°C)</h2>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-swatch"></span>
+            <span>Suhu (°C)</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="tempChart" aria-label="Grafik rata-rata bergerak suhu" role="img"></canvas>
+          <div class="chart-tooltip" id="chartTooltip" aria-hidden="true"></div>
+        </div>
+        <div class="chart-readout">
+          <span class="chart-readout-current" id="chartCurrent">31.1 °C</span>
+          <span class="chart-readout-avg" id="chartAvg">Avg: 31.1</span>
+        </div>
+      </section>
+
+      <section class="panel controls-panel">
+        <div class="panel-head">
+          <div class="panel-title-wrap">
+            <span class="panel-title-icon sim-title-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+            <h2 class="panel-title">SIMULASI &amp; KONTROL</h2>
+          </div>
+          <div class="controls-meta">Data sintetis · status browser lokal</div>
+        </div>
+        <div class="controls-grid">
+          <div class="control-card">
+            <div class="control-info">
+              <div class="control-name">Simulasi Api</div>
+              <div class="control-desc">Menaikkan suhu di atas ambang 40 °C untuk memicu status kebakaran. Terpisah dari simulasi intrusi.</div>
+            </div>
+            <div class="control-actions">
+              <span class="control-state" id="fireState">Tidak aktif</span>
+              <button class="sim-btn fire-btn" type="button" id="fireBtn">Mulai simulasi api</button>
+            </div>
+          </div>
+          <div class="control-card">
+            <div class="control-info">
+              <div class="control-name">Simulasi Intrusi</div>
+              <div class="control-desc">Mendekatkan objek di bawah ambang 15 cm untuk memicu deteksi intrusi. Terpisah dari simulasi api.</div>
+            </div>
+            <div class="control-actions">
+              <span class="control-state" id="intrusionState">Tidak aktif</span>
+              <button class="sim-btn intrusion-btn" type="button" id="intrusionBtn">Mulai simulasi intrusi</button>
+            </div>
+          </div>
+          <div class="control-card reset-card">
+            <div class="control-info">
+              <div class="control-name">Reset Demo</div>
+              <div class="control-desc">Kembalikan pembacaan, grafik, dan riwayat ke kondisi awal yang tersimpan di browser.</div>
+            </div>
+            <div class="control-actions">
+              <button class="sim-btn reset-btn" type="button" id="resetBtn">Reset data sintetis</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="panel-head">
+          <div class="panel-title-wrap">
+            <span class="panel-title-icon history-title-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </span>
+            <h2 class="panel-title">RIWAYAT EVENT DASHBOARD</h2>
+          </div>
+          <div class="history-meta" id="historyMeta">0 event</div>
+        </div>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Waktu (WIB)</th>
+                <th>Jenis</th>
+                <th>Detail</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

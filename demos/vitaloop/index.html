@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self';">
+  <title>VitaLoop Dashboard - Synthetic Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Application navigation">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+            <rect x="3" y="3" width="11" height="11" rx="2" fill="#305680"/>
+            <rect x="18" y="3" width="11" height="11" rx="2" fill="#4b77a8"/>
+            <rect x="3" y="18" width="11" height="11" rx="2" fill="#4b77a8"/>
+            <rect x="18" y="18" width="11" height="11" rx="2" fill="#305680" opacity=".75"/>
+          </svg>
+        </div>
+        <span class="brand-name">ThingsBoard</span>
+        <span class="brand-edition">CE 4.3.1</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <a class="nav-item" href="#main" data-nav="home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="#main" data-nav="alarms">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          <span>Alarms</span>
+        </a>
+        <a class="nav-item nav-item-active" href="#main" data-nav="dashboards" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          <span>Dashboards</span>
+        </a>
+        <a class="nav-item" href="#main" data-nav="entities">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+          <span>Entities</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p class="sidebar-note">Synthetic demo shell</p>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle navigation" aria-expanded="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          </button>
+          <div class="dashboard-title-block">
+            <p class="breadcrumb">Dashboards / VitaLoop</p>
+            <h1 class="dashboard-title">VitaLoop &mdash; Heart Rate &amp; SpO2 Monitor</h1>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="synthetic-badge" role="status" aria-label="Synthetic data demo">
+            <span class="synthetic-dot" aria-hidden="true"></span>
+            Synthetic data
+          </div>
+          <a class="back-link" href="../../projects.html#vitaloop">Back to case study</a>
+        </div>
+      </header>
+
+      <div class="toolbar-row">
+        <div class="toolbar-left">
+          <div class="device-pill">
+            <span class="device-label">Device</span>
+            <span class="device-name">vitaloop-wristband-01</span>
+            <span class="device-state" id="deviceState">Simulated</span>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <label class="time-range-label" for="timeRange">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            Time range
+          </label>
+          <select id="timeRange" class="time-range-select">
+            <option value="5">Last 5 minutes</option>
+            <option value="15" selected>Last 15 minutes</option>
+            <option value="30">Last 30 minutes</option>
+            <option value="60">Last 1 hour</option>
+            <option value="360">Last 6 hours</option>
+            <option value="1440">Last 24 hours</option>
+          </select>
+          <button class="toolbar-btn" id="resetDemo" type="button">Reset demo</button>
+        </div>
+      </div>
+
+      <main id="main" class="dashboard-main" tabindex="-1">
+        <section class="notice-bar" aria-label="Demo notice">
+          <p><strong>Coursework prototype demo.</strong> Not medical advice. All readings are synthetic, seeded in the browser, and resettable. No real device, account, telemetry, or external network request is used.</p>
+        </section>
+
+        <section class="widget-grid" aria-label="Dashboard widgets">
+          <article class="widget widget-kpi" aria-labelledby="bpm-title">
+            <header class="widget-header">
+              <h2 id="bpm-title">Heart Rate</h2>
+              <span class="widget-tag">MAX30102</span>
+            </header>
+            <div class="widget-body kpi-body">
+              <div class="kpi-value-wrap">
+                <div class="kpi-value" id="bpmValue">--</div>
+                <div class="kpi-unit">BPM</div>
+              </div>
+              <div class="kpi-meta">
+                <p class="kpi-status" id="bpmStatus">Waiting for simulated reading</p>
+                <p class="kpi-sub" id="bpmSub">4-sample average, accepted 40-180 BPM</p>
+              </div>
+              <div class="gauge" aria-hidden="true">
+                <svg class="gauge-svg" viewBox="0 0 100 8" preserveAspectRatio="none">
+                  <rect class="gauge-track-rect" x="0" y="0" width="100" height="8" rx="4"></rect>
+                  <rect class="gauge-fill-rect gauge-fill-bpm" id="bpmGauge" x="0" y="0" width="0" height="8" rx="4"></rect>
+                </svg>
+                <div class="gauge-scale"><span>40</span><span>180</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="widget widget-kpi" aria-labelledby="spo2-title">
+            <header class="widget-header">
+              <h2 id="spo2-title">SpO2</h2>
+              <span class="widget-tag">MAX30102</span>
+            </header>
+            <div class="widget-body kpi-body">
+              <div class="kpi-value-wrap">
+                <div class="kpi-value" id="spo2Value">--</div>
+                <div class="kpi-unit">%</div>
+              </div>
+              <div class="kpi-meta">
+                <p class="kpi-status" id="spo2Status">Waiting for simulated reading</p>
+                <p class="kpi-sub" id="spo2Sub">200-sample estimate; 80 when no finger detected</p>
+              </div>
+              <div class="gauge" aria-hidden="true">
+                <svg class="gauge-svg" viewBox="0 0 100 8" preserveAspectRatio="none">
+                  <rect class="gauge-track-rect" x="0" y="0" width="100" height="8" rx="4"></rect>
+                  <rect class="gauge-fill-rect gauge-fill-spo2" id="spo2Gauge" x="0" y="0" width="0" height="8" rx="4"></rect>
+                </svg>
+                <div class="gauge-scale"><span>80</span><span>100</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="widget widget-kpi widget-kpi-small" aria-labelledby="update-title">
+            <header class="widget-header">
+              <h2 id="update-title">Last Telemetry</h2>
+              <span class="widget-tag">MQTT JSON</span>
+            </header>
+            <div class="widget-body kpi-body">
+              <div class="telemetry-line"><span class="telemetry-key">Topic</span><span class="telemetry-val">v1/devices/me/telemetry</span></div>
+              <div class="telemetry-line"><span class="telemetry-key">Payload</span><span class="telemetry-val mono" id="payloadValue">{ "bpm": --, "spo2": -- }</span></div>
+              <div class="telemetry-line"><span class="telemetry-key">Last update</span><span class="telemetry-val" id="lastUpdate">--</span></div>
+              <div class="telemetry-line"><span class="telemetry-key">Window points</span><span class="telemetry-val" id="pointCount">--</span></div>
+            </div>
+          </article>
+
+          <article class="widget widget-chart" aria-labelledby="bpm-chart-title">
+            <header class="widget-header">
+              <h2 id="bpm-chart-title">Heart Rate History</h2>
+              <span class="widget-tag" id="bpmChartRange">Last 15 minutes</span>
+            </header>
+            <div class="widget-body chart-body">
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-swatch legend-swatch-bpm"></span>bpm</span>
+              </div>
+              <div class="chart-wrap">
+                <svg id="bpmChart" class="chart-svg" viewBox="0 0 720 260" preserveAspectRatio="none" role="img" aria-label="Heart rate history line chart"></svg>
+              </div>
+              <div class="chart-foot" id="bpmChartFoot"></div>
+            </div>
+          </article>
+
+          <article class="widget widget-chart" aria-labelledby="spo2-chart-title">
+            <header class="widget-header">
+              <h2 id="spo2-chart-title">SpO2 History</h2>
+              <span class="widget-tag" id="spo2ChartRange">Last 15 minutes</span>
+            </header>
+            <div class="widget-body chart-body">
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-swatch legend-swatch-spo2"></span>spo2</span>
+              </div>
+              <div class="chart-wrap">
+                <svg id="spo2Chart" class="chart-svg" viewBox="0 0 720 260" preserveAspectRatio="none" role="img" aria-label="SpO2 history line chart"></svg>
+              </div>
+              <div class="chart-foot" id="spo2ChartFoot"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="provenance" aria-labelledby="provenance-title">
+          <h2 id="provenance-title">Provenance and limits</h2>
+          <div class="provenance-grid">
+            <div class="provenance-card">
+              <h3>Evidence used</h3>
+              <ul>
+                <li>Owner-provided VitaLoop case study text in <code>E:/portfolio-site/projects.html</code> and <code>C:/Users/LyNx/portfolio-work/projects.html</code> (identical section, reference-only during this phase).</li>
+                <li>Owner-provided hardware images in <code>C:/Users/LyNx/portfolio-work/assets/projects/vitaloop/</code>: wristband, wristband in use, schematic. No owner-provided dashboard screenshot was found.</li>
+                <li>Visual reference fallback: ThingsBoard CE 4.3.1 public documentation/layout conventions (dashboard grid, widget cards, timewindow control, entity/device context). Exact original VitaLoop dashboard layout is unavailable.</li>
+              </ul>
+            </div>
+            <div class="provenance-card">
+              <h3>What is synthetic</h3>
+              <ul>
+                <li>All BPM and SpO2 readings, timestamps, device state, and telemetry payloads are generated in-browser from a fixed seed.</li>
+                <li>No MQTT broker, ThingsBoard server, EC2 instance, PostgreSQL, Nginx, RStudio session, or real sensor is connected.</li>
+                <li>Time range selection and Reset demo only change local seeded browser state.</li>
+              </ul>
+            </div>
+            <div class="provenance-card">
+              <h3>Not claimed</h3>
+              <ul>
+                <li>No medical use, diagnosis, clinical accuracy, alarm workflow, or real sensor calibration.</li>
+                <li>No parity claim for unseen original ThingsBoard dashboard screens, widget placement, or custom styling beyond documented flows and public ThingsBoard CE 4.3.1 conventions.</li>
+                <li>Coursework prototype context only.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
