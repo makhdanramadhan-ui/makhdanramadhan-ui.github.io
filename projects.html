@@ -227,14 +227,14 @@
           <article class="study" id="agent-platform" data-areas="ai software">
             <div class="study-text">
               <h3>Multi-agent automation platform</h3>
-              <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">control UI demo (synthetic data)</a> · AI · Software · Automation</p>
-              <p class="lede">Eight Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB) under systemd, plus a 9Router model gateway. A master tracker watches the others, a worker agent runs coding jobs, and Telegram along with a React and TypeScript web control UI (LyNx Agent Control) handle commands, alerts, and history review.</p>
+              <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener" style="color:var(--signal)">Link: control UI demo (synthetic data)</a> · AI · Software · Automation</p>
+              <p class="lede">Nine Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB RAM) under systemd, plus a 9Router model gateway. The source is TypeScript with a strict zero-<code>any</code> gate, compiled to JavaScript at service start. A master tracker watches the other agents, reviews work, and handles alerts. Telegram and a React and TypeScript web dashboard handle commands and history.</p>
             </div>
             <div class="study-visual">
               <div class="diagram-wrap">
                 <svg class="diagram" viewBox="0 0 640 300" role="img" aria-labelledby="d2t d2d">
                   <title id="d2t">Multi-agent platform layout</title>
-                  <desc id="d2d">Telegram and the control dashboard connect to the master tracker. Inside one Ubuntu VPS the tracker connects to five agent groups: worker, researcher, trading and DEX, content, and InternshipAgent.</desc>
+                  <desc id="d2d">Telegram and the control dashboard connect to the master tracker. Inside one Ubuntu VPS the tracker connects to worker, researcher, trading, content, and internship agent groups. Nine Node.js services run under systemd plus a 9Router model gateway.</desc>
                   <rect class="box" x="20" y="8" width="164" height="48" rx="4"/>
                   <text x="102" y="29" text-anchor="middle">Telegram + Control UI</text>
                   <text class="dim" x="102" y="44" text-anchor="middle">commands, history, alerts</text>
@@ -242,7 +242,7 @@
                   <text class="dim" x="16" y="104">Ubuntu VPS, 2 vCPU / 2 GB, systemd</text>
                   <rect class="box" x="187" y="120" width="260" height="54" rx="4"/>
                   <text x="317" y="142" text-anchor="middle">Master tracker / watchdog</text>
-                  <text class="dim" x="317" y="160" text-anchor="middle">health checks, guarded auto-fix, rollback</text>
+                  <text class="dim" x="317" y="160" text-anchor="middle">health checks, RAM gate, audit, rollback</text>
                   <path class="wire" d="M102 56V147H187"/><circle class="dot" cx="102" cy="56" r="3.5"/><circle class="dot" cx="187" cy="147" r="3.5"/>
                   <path class="wire" d="M317 174V198M69 198H565M69 198V218M193 198V218M317 198V218M441 198V218M565 198V218"/>
                   <circle class="dot" cx="317" cy="174" r="3.5"/>
@@ -252,16 +252,16 @@
                   <text class="dim" x="69" y="274" text-anchor="middle">model fallback</text>
                   <rect class="box" x="134" y="218" width="118" height="68" rx="4"/>
                   <text x="193" y="240" text-anchor="middle">Researcher</text>
-                  <text class="dim" x="193" y="258" text-anchor="middle">scheduled research</text>
-                  <text class="dim" x="193" y="274" text-anchor="middle">idempotent scan IDs</text>
+                  <text class="dim" x="193" y="258" text-anchor="middle">4x daily scans</text>
+                  <text class="dim" x="193" y="274" text-anchor="middle">10 Spot, Futures, DEX</text>
                   <rect class="box" x="258" y="218" width="118" height="68" rx="4"/>
                   <text x="317" y="240" text-anchor="middle">Trading, DEX</text>
-                  <text class="dim" x="317" y="258" text-anchor="middle">max entries</text>
-                  <text class="dim" x="317" y="274" text-anchor="middle">risk caps</text>
+                  <text class="dim" x="317" y="258" text-anchor="middle">max 3 entries/day</text>
+                  <text class="dim" x="317" y="274" text-anchor="middle">real trades only</text>
                   <rect class="box" x="382" y="218" width="118" height="68" rx="4"/>
                   <text x="441" y="240" text-anchor="middle">Content</text>
                   <text class="dim" x="441" y="258" text-anchor="middle">campaign, affiliate</text>
-                  <text class="dim" x="441" y="274" text-anchor="middle">clip and render</text>
+                  <text class="dim" x="441" y="274" text-anchor="middle">audit before upload</text>
                   <rect class="box" x="506" y="218" width="118" height="68" rx="4"/>
                   <text x="565" y="240" text-anchor="middle">InternshipAgent</text>
                   <text class="dim" x="565" y="258" text-anchor="middle">job boards</text>
@@ -295,49 +295,49 @@
                   <text class="dim" x="386" y="146" text-anchor="middle">revision rounds, circuit breaker</text>
                 </svg>
               </div>
-              <p class="diagram-note">I designed the system, set up the VPS, and built the dashboard. I review changes and approve deployment.</p>
+              <p class="diagram-note">I designed the system, set up the VPS, and built the dashboard. I review changes and approve deployments.</p>
             </div>
             <details class="more study-more">
               <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
               <div class="detail detail-grid">
                 <div>
                   <h4>Goal</h4>
-                  <p>Keep several automation agents running on a small server without checking each one by hand, and stop them from spending model calls without limit.</p>
+                  <p>Keep nine automation agents running on one 2 GB VPS without checking each one by hand, with clear limits and recovery when something fails.</p>
                   <h4>Personal contribution</h4>
-                  <p>Solo project. I designed the system, set up the VPS, and built the dashboard. I use AI coding agents for parts of the implementation and review every change before deployment. The orchestrator assigns work to specialised agents and checks exit codes, test counts, and logs; I approve changes before deployment.</p>
+                  <p>Solo project. I designed the system, set up the VPS, and built the dashboard. I use AI coding agents for parts of the implementation and review every change before deployment. An orchestrator assigns work to specialised agents and checks exit codes, test totals, and logs. I approve changes before deployment.</p>
                   <h4>What runs</h4>
                   <ul>
-                    <li>Master tracker / watchdog: deterministic 60 s checks, bug detection and guarded auto-fix.</li>
-                    <li>Worker: executes coding jobs, with model routing and fallback through 9Router.</li>
-                    <li>Researcher: cross-agent market and content research, pushed to consumer agents.</li>
-                    <li>Trading (spot and futures) and an on-chain DEX agent, both with hard risk rails.</li>
-                    <li>Campaign content: a video clipping and render pipeline with local quality gates and an audit queue.</li>
-                    <li>Affiliate content agent.</li>
-                    <li>Internship job-board agent: scrapes public job boards, filters by field, Jabodetabek location and period, removes duplicates and sends a Telegram digest without LLMs.</li>
-                    <li>LyNx Agent Control: React, TypeScript, and Express web interface with session/CSRF auth, service controls, and timeline-filtered history across Spot/Futures closed PnL, research notes, and worker audits.</li>
-                    <li>Supporting service: 9Router, the model-routing gateway the agents call.</li>
+                    <li>Master tracker / watchdog: deterministic 60 s checks, bug detection, guarded auto-fix, RAM gate, and preemption for heavy jobs.</li>
+                    <li>Worker: runs coding jobs in isolated worktrees, with model routing and fallback through 9Router.</li>
+                    <li>Researcher: four scans per day (00:00, 06:00, 12:00, 18:00 WIB). Each scan sends 10 Spot, 10 Futures, and 10 DEX candidates with technical, fundamental, and news reasons.</li>
+                    <li>Trading (spot and futures): reviews researcher candidates and decides entry, price trigger, or skip. Hard limits: max 3 entries per day, each at most 1/3 of daily starting capital, real trades only.</li>
+                    <li>DEX: on-chain trading on Base following smart-money wallets, with the same daily entry limit and safety checks.</li>
+                    <li>Campaign content (ContentRewards and TryBuzzer): video clip pipeline with local quality gates. The tracker audits every video before upload.</li>
+                    <li>Affiliate content (Shopee): product video pipeline. The tracker audits every video before upload.</li>
+                    <li>InternshipAgent: scrapes public job boards, filters by field, Jabodetabek location and period, removes duplicates, and sends a Telegram digest without LLMs.</li>
+                    <li>LyNx Agent Control: React, TypeScript, and Express web dashboard with session and CSRF auth, service controls, and history views.</li>
                   </ul>
                 </div>
                 <div>
                   <h4>Key decisions</h4>
                   <ul>
-                    <li>Auto-fix is guarded: tests run before deploy, and there is a rollback.</li>
-                    <li>Daily model-call caps limit usage. The system checks for idle work without calling a model.</li>
-                    <li>One nightly storage cleanup, run only by the tracker.</li>
-                    <li>Research notifications carry idempotent scan IDs.</li>
-                    <li>The trading agents have hard limits: a maximum number of entries and risk caps.</li>
-                    <li>Telegram and the private web dashboard serve as control and audit channels; the public demo swaps live feeds for synthetic data.</li>
+                    <li>TypeScript source with a strict zero-<code>any</code> gate. Each service compiles its require graph to JavaScript at start and runs with V8 memory-saving flags.</li>
+                    <li>Deploys use a safe-window script: fast-forward only, backup, restart outside trading and content slot windows, 10-minute health check, and automatic rollback.</li>
+                    <li>Hard money rules: max 3 entries per day, each at most 1/3 of daily starting capital, real trades only. Risk-critical files are guarded by money-equivalence tests.</li>
+                    <li>Memory controls on a 2 GB VPS: tracker RAM gate and preemption for renders, page-cache drop when a content agent reports low RAM, and stuck-slot detection.</li>
+                    <li>Agents Group: agents discuss failed or skipped work in Telegram and the dashboard. The tracker acts as judge and records lessons per agent. Lessons can only make agents more cautious.</li>
+                    <li>Every video is audited by the tracker before upload. Telegram and the private web dashboard are control and audit channels; the public demo uses synthetic data.</li>
                   </ul>
                   <h4>Results</h4>
-                  <p>Test counts come from <code>node --test</code>. The backend repos are private; the public demo uses simulated data.</p>
+                  <p>Test counts come from <code>node --test</code> on the local clones on 22 Nov 2026. The backend repos are private; the public demo uses simulated data.</p>
                   <table class="data">
                     <caption>Tests per service group</caption>
                     <thead><tr><th scope="col">Service</th><th scope="col">Tests</th></tr></thead>
-                    <tbody><tr><th scope="row">Tracker</th><td>about 300</td></tr><tr><th scope="row">Trading</th><td>493</td></tr><tr><th scope="row">DEX</th><td>188</td></tr><tr><th scope="row">Researcher</th><td>183</td></tr><tr><th scope="row">Content</th><td>649</td></tr><tr><th scope="row">Control dashboard server</th><td>37</td></tr></tbody>
+                    <tbody><tr><th scope="row">Tracker</th><td>336 pass</td></tr><tr><th scope="row">Trading</th><td>565 pass</td></tr><tr><th scope="row">DEX</th><td>251 pass</td></tr><tr><th scope="row">Researcher</th><td>248 pass</td></tr><tr><th scope="row">Content (Campaign)</th><td>800 pass, 3 fail, 3 skip</td></tr><tr><th scope="row">Content (Affiliate)</th><td>499 pass, 1 skip</td></tr><tr><th scope="row">Control dashboard (server)</th><td>180 pass</td></tr><tr><th scope="row">Control dashboard (web)</th><td>8 pass</td></tr></tbody>
                   </table>
                   <p class="note" style="margin-top:0.8rem">I don’t publish financial or performance figures for this platform.</p>
                   <h4>Stack</h4>
-                  <p class="stack">Node.js, React, TypeScript, Express, SQLite, Ubuntu, systemd, 9Router, LLM APIs, Telegram, <code>node --test</code>.</p>
+                  <p class="stack">Node.js, TypeScript, React, Express, SQLite, Ubuntu, systemd, 9Router, LLM APIs, Telegram, <code>node --test</code>.</p>
                   <h4>Links</h4>
                   <p class="links"><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Control UI demo (synthetic data)</a></p>
                 </div>
