@@ -85,51 +85,6 @@
             <h2 id="t1">Selected Projects</h2>
           </div>
 
-          <article class="study" id="netwatch-rs" data-areas="networks software data">
-            <div class="study-text">
-              <h3>netwatch-rs</h3>
-              <p class="subtitle">Live packet monitor and rule-based anomaly detector TUI</p>
-              <p class="meta"><b>Personal project</b> · Rust · pcap · etherparse · ratatui · Network security</p>
-              <p class="lede">A terminal tool that captures packets from an interface or replays a <code>.pcap</code> file, parses Ethernet/IPv4/IPv6/TCP/UDP/ICMP and DNS queries, and raises alerts for port scans, SYN spikes and DNS bursts.</p>
-            </div>
-            <div class="study-visual">
-              <figure class="figure">
-                <a class="figure-trigger" href="assets/projects/netwatch-rs/demo.gif" data-title="netwatch-rs — TUI demo">
-                  <img src="assets/projects/netwatch-rs/demo.gif" width="1006" height="431" loading="lazy" alt="Terminal dashboard showing a traffic sparkline, top talkers, protocol distribution and a port scan alert">
-                </a>
-                <figcaption>Recorded TUI session: traffic panels and the port scan alert raised during replay of the sample capture.</figcaption>
-              </figure>
-            </div>
-            <details class="more study-more">
-              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
-              <div class="detail detail-grid">
-                <div>
-                  <h4>Problem</h4>
-                  <p>Coursework covered routing, switching and Packet Tracer troubleshooting, but not packet-level inspection. I wanted a small project that proves I can decode raw bytes safely and recognise simple attack patterns without relying on a heavyweight IDS.</p>
-                  <h4>Architecture</h4>
-                  <p>A capture thread reads live packets or a pcap file and pushes them into a bounded channel. A second thread parses each frame with <code>etherparse</code>, updates 60-second traffic statistics and runs the detector. The UI reads an <code>Arc&lt;AppState&gt;</code> snapshot at 10 FPS, so terminal rendering never blocks capture.</p>
-                  <h4>Detection rules &amp; trade-offs</h4>
-                  <p>Three sliding-window rules cover more than 15 unique destination ports in 5 seconds, more than 50 unacknowledged SYN packets in 1 second, and more than 50 DNS queries in 10 seconds. ACK packets clear matching SYN state by 4-tuple. Rules are explainable and cheap, but they need tuning per network and cannot detect slow or encrypted patterns.</p>
-                </div>
-                <div>
-                  <h4>Performance benchmark</h4>
-                  <p>Local release-mode measurement (Windows x86_64, 2026-11-22): 19,600,541 packets/s over 100,000 synthetic Ethernet/IPv4/UDP frames.</p>
-                  <p>The benchmark times only the parser over a synthetic Ethernet/IPv4/UDP frame in release mode; live capture throughput also depends on the interface and driver.</p>
-                  <h4>Known limitations</h4>
-                  <ul>
-                    <li>Header and metadata inspection only; no TLS decryption or deep payload analysis.</li>
-                    <li>IP fragments are counted as traffic but not reassembled before L4 parsing.</li>
-                    <li>Live Windows capture requires Npcap; offline pcap replay needs no driver or root privileges.</li>
-                  </ul>
-                  <h4>Stack</h4>
-                  <p class="stack">Rust 2021, pcap, etherparse, ratatui, crossterm, clap, serde, serde_json, Python localhost traffic simulator.</p>
-                  <h4>Links</h4>
-                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/netwatch-rs" target="_blank" rel="noopener">Repository</a></p>
-                </div>
-              </div>
-            </details>
-          </article>
-
           <article class="study" id="costmosys" data-areas="embedded software ai data">
             <div class="study-text">
               <h3>COSTMOSYS</h3>
@@ -486,6 +441,51 @@
                   <h4>Links</h4>
                   <p class="links"><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project" target="_blank" rel="noopener">Repository</a> · <a href="https://machine-learning-project-u8yovshrqrc5tm5s2y2qto.streamlit.app/" target="_blank" rel="noopener">Live Streamlit demo</a></p>
                   <p class="note">The README and the app are written in Indonesian.</p>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="study" id="netwatch-rs" data-areas="networks software data">
+            <div class="study-text">
+              <h3>netwatch-rs</h3>
+              <p class="subtitle">Live packet monitor and rule-based anomaly detector TUI</p>
+              <p class="meta"><b>Personal project</b> · Rust · pcap · etherparse · ratatui · Network security</p>
+              <p class="lede">A terminal tool that captures packets from an interface or replays a <code>.pcap</code> file, parses Ethernet/IPv4/IPv6/TCP/UDP/ICMP and DNS queries, and raises alerts for port scans, SYN spikes and DNS bursts.</p>
+            </div>
+            <div class="study-visual">
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/netwatch-rs/demo.gif" data-title="netwatch-rs — TUI demo">
+                  <img src="assets/projects/netwatch-rs/demo.gif" width="1006" height="431" loading="lazy" alt="Terminal dashboard showing a traffic sparkline, top talkers, protocol distribution and a port scan alert">
+                </a>
+                <figcaption>Recorded TUI session: traffic panels and the port scan alert raised during replay of the sample capture.</figcaption>
+              </figure>
+            </div>
+            <details class="more study-more">
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
+              <div class="detail detail-grid">
+                <div>
+                  <h4>Problem</h4>
+                  <p>Coursework covered routing, switching and Packet Tracer troubleshooting, but not packet-level inspection. I wanted a small project that proves I can decode raw bytes safely and recognise simple attack patterns without relying on a heavyweight IDS.</p>
+                  <h4>Architecture</h4>
+                  <p>A capture thread reads live packets or a pcap file and pushes them into a bounded channel. A second thread parses each frame with <code>etherparse</code>, updates 60-second traffic statistics and runs the detector. The UI reads an <code>Arc&lt;AppState&gt;</code> snapshot at 10 FPS, so terminal rendering never blocks capture.</p>
+                  <h4>Detection rules &amp; trade-offs</h4>
+                  <p>Three sliding-window rules cover more than 15 unique destination ports in 5 seconds, more than 50 unacknowledged SYN packets in 1 second, and more than 50 DNS queries in 10 seconds. ACK packets clear matching SYN state by 4-tuple. Rules are explainable and cheap, but they need tuning per network and cannot detect slow or encrypted patterns.</p>
+                </div>
+                <div>
+                  <h4>Performance benchmark</h4>
+                  <p>Local release-mode measurement (Windows x86_64, 2026-11-22): 19,600,541 packets/s over 100,000 synthetic Ethernet/IPv4/UDP frames.</p>
+                  <p>The benchmark times only the parser over a synthetic Ethernet/IPv4/UDP frame in release mode; live capture throughput also depends on the interface and driver.</p>
+                  <h4>Known limitations</h4>
+                  <ul>
+                    <li>Header and metadata inspection only; no TLS decryption or deep payload analysis.</li>
+                    <li>IP fragments are counted as traffic but not reassembled before L4 parsing.</li>
+                    <li>Live Windows capture requires Npcap; offline pcap replay needs no driver or root privileges.</li>
+                  </ul>
+                  <h4>Stack</h4>
+                  <p class="stack">Rust 2021, pcap, etherparse, ratatui, crossterm, clap, serde, serde_json, Python localhost traffic simulator.</p>
+                  <h4>Links</h4>
+                  <p class="links"><a href="https://github.com/makhdanramadhan-ui/netwatch-rs" target="_blank" rel="noopener">Repository</a></p>
                 </div>
               </div>
             </details>
