@@ -242,10 +242,17 @@
   height: 40px;
   background: var(--tone);
   color: var(--ink);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
   transition: transform 0.3s var(--ease-spring);
+}
+
+.project-avatar svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .project-tab[aria-selected="true"] .project-avatar {
