@@ -273,6 +273,7 @@
   }
 
   function startMarquee() {
+    if (reduceMotion.matches) return;
     for (const row of document.querySelectorAll(".tool-row")) {
       row.append(...[...row.children].map((chip) => chip.cloneNode(true)));
     }
