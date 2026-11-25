@@ -332,6 +332,27 @@ main:focus {
   letter-spacing: -0.04em;
 }
 
+.btn-light,
+.brand-mark {
+  position: relative;
+}
+
+.btn-light::after,
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: 0 0 10px 2px rgb(164 108 245 / 0.65), 0 0 28px 4px rgb(116 140 255 / 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+[data-beam-struck]::after {
+  opacity: 1;
+}
+
 .site-header {
   position: relative;
   z-index: 20;
@@ -607,6 +628,56 @@ body.has-sheet {
   .footer-columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.beam {
+  position: absolute;
+  z-index: -1;
+  inset: -76px 0 auto;
+  height: 900px;
+  pointer-events: none;
+}
+
+.beam-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(164 108 245 / 0.16), rgb(116 140 255 / 0.06) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  pointer-events: none;
+}
+
+[data-spotlight]::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: radial-gradient(260px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(214 173 242 / 0.75), transparent 70%) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  pointer-events: none;
+}
+
+[data-spotlight]:hover::before,
+[data-spotlight]:hover::after {
+  opacity: 1;
 }
 
 .js [data-reveal] {

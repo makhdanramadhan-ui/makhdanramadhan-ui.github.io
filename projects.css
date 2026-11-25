@@ -21,7 +21,22 @@ code {
 }
 
 .projects-hero {
+  position: relative;
+  isolation: isolate;
   padding: clamp(56px, 8vw, 104px) 0 24px;
+}
+
+.hero-panel {
+  --bleed: clamp(0px, 3vw, 32px);
+  margin-inline: calc(-1 * var(--bleed));
+  padding: clamp(40px, 5.5vw, 72px) calc(var(--bleed) + clamp(20px, 3vw, 40px)) clamp(32px, 4vw, 48px);
+  border: 1px solid rgb(255 255 255 / 0.06);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1.5px) 0 0 / 22px 22px,
+    radial-gradient(120% 90% at 0 0, rgb(116 140 255 / 0.08), transparent 55%),
+    var(--bg-frame);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 40px 120px -40px rgb(0 0 0 / 0.9);
 }
 
 .projects-hero h1 {

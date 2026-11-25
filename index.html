@@ -27,6 +27,7 @@
     <script>document.documentElement.classList.add("js");</script>
     <script src="site.js" defer></script>
     <script src="motion.js" defer></script>
+    <script src="beam.js" defer></script>
     <script src="home.js" defer></script>
     <title>Muhamad Akhdan Ramadhan | Software, Applied AI &amp; IoT</title>
   </head>
@@ -81,7 +82,7 @@
 
     <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="beam" aria-hidden="true">
+        <div class="beam" aria-hidden="true" data-surface=".showcase .window" data-source=".site-header .btn-light" data-beam-x="0.78">
           <canvas class="beam-canvas"></canvas>
         </div>
 
@@ -99,8 +100,8 @@
           <h1 id="hero-title" class="hero-title">
             <span class="hero-word">Meet</span>
             <span class="hero-emblem" aria-hidden="true"><span class="hero-emblem-text">MA</span><span class="hero-emblem-cursor"></span></span>
-            <span class="hero-word">Akhdan</span>
-            <span class="visually-hidden">— Muhamad Akhdan Ramadhan</span>
+            <span class="hero-word">Muhamad</span>
+            <span class="hero-name">Akhdan Ramadhan</span>
           </h1>
 
           <p class="hero-lead">
@@ -288,7 +289,7 @@
         </header>
 
         <div class="bento">
-          <article class="bento-card bento-wide" data-reveal>
+          <article class="bento-card bento-wide" data-reveal data-spotlight>
             <div class="tool-marquee" aria-hidden="true">
               <div class="tool-row">
                 <span>TypeScript</span><span>Node.js</span><span>React</span><span>Express</span><span>Python</span><span>PHP</span><span>Laravel</span><span>SQLite</span><span>REST APIs</span><span>Git</span>
@@ -306,13 +307,13 @@
             </div>
           </article>
 
-          <article class="bento-card" data-reveal>
+          <article class="bento-card" data-reveal data-spotlight>
             <div class="agent-log" aria-hidden="true">
               <p class="agent-log-head"><span class="hash">#</span> ops</p>
               <ol class="agent-log-lines" data-log>
-                <li style="--tone:var(--lilac)"><b>Tracker</b><span>All services healthy.</span></li>
-                <li style="--tone:var(--mint)"><b>Worker</b><span>Job finished. Waiting for review.</span></li>
-                <li style="--tone:var(--amber)"><b>Tracker</b><span>Review passed. Deploy backed up.</span></li>
+                <li><img src="assets/agents/tracker.webp" width="32" height="32" alt="" loading="lazy"><b>Tracker</b><span>All services healthy.</span></li>
+                <li><img src="assets/agents/worker.webp" width="32" height="32" alt="" loading="lazy"><b>Worker</b><span>Job finished. Waiting for review.</span></li>
+                <li><img src="assets/agents/tracker.webp" width="32" height="32" alt="" loading="lazy"><b>Tracker</b><span>Review passed. Deploy backed up.</span></li>
               </ol>
             </div>
             <div class="bento-copy">
@@ -325,7 +326,7 @@
             </div>
           </article>
 
-          <article class="bento-card" data-reveal>
+          <article class="bento-card" data-reveal data-spotlight>
             <div class="packet-term" aria-hidden="true">
               <p><span class="t-dim">L2</span> Ethernet <span class="t-dim">→</span> <span class="t-dim">L3</span> IPv4 <span class="t-dim">→</span> <span class="t-dim">L4</span> TCP</p>
               <p><span class="t-dim">rule</span> port scan</p>
@@ -342,7 +343,7 @@
             </div>
           </article>
 
-          <article class="bento-card is-pastel" style="--card:var(--lilac)" data-reveal>
+          <article class="bento-card is-pastel" style="--card:var(--lilac)" data-reveal data-spotlight>
             <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><rect x="26" y="26" width="44" height="44" rx="6"/><path d="M38 12v14m20-14v14M38 70v14m20-14v14M12 38h14m-14 20h14m44-20h14m-14 20h14"/><circle cx="48" cy="48" r="7"/></svg>
             <div class="bento-copy">
               <p class="eyebrow">Coursework &amp; practice</p>
@@ -354,7 +355,7 @@
             </div>
           </article>
 
-          <article class="bento-card is-pastel" style="--card:var(--mint)" data-reveal>
+          <article class="bento-card is-pastel" style="--card:var(--mint)" data-reveal data-spotlight>
             <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M14 30h20v36H14zM62 30h20v36H62z"/><path d="M34 40h28M34 56h28"/><circle cx="24" cy="48" r="4"/><circle cx="72" cy="48" r="4"/></svg>
             <div class="bento-copy">
               <p class="eyebrow">Studied in coursework</p>
@@ -366,7 +367,7 @@
             </div>
           </article>
 
-          <article class="bento-card is-pastel" style="--card:var(--amber)" data-reveal>
+          <article class="bento-card is-pastel" style="--card:var(--amber)" data-reveal data-spotlight>
             <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M14 80h68"/><path d="M22 72V50m16 22V34m16 38V44m16 28V22"/></svg>
             <div class="bento-copy">
               <p class="eyebrow">Studied in coursework</p>

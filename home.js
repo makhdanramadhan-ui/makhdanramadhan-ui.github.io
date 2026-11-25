@@ -9,136 +9,6 @@
     new IntersectionObserver((entries) => onChange(entries[0].isIntersecting), { rootMargin }).observe(element);
   }
 
-  const BEAM_SHADER = `
-precision mediump float;
-uniform vec2 uRes;
-uniform float uTime;
-uniform float uBeamX;
-uniform float uHorizon;
-
-float hash(vec2 p) {
-  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-}
-
-float noise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
-}
-
-float fbm(vec2 p) {
-  float value = 0.0;
-  float amplitude = 0.5;
-  for (int i = 0; i < 5; i++) {
-    value += amplitude * noise(p);
-    p *= 2.03;
-    amplitude *= 0.5;
-  }
-  return value;
-}
-
-void main() {
-  vec2 uv = gl_FragCoord.xy / uRes;
-  uv.y = 1.0 - uv.y;
-  float aspect = uRes.x / uRes.y;
-  float dx = (uv.x - uBeamX) * aspect;
-  float above = smoothstep(uHorizon + 0.015, uHorizon - 0.01, uv.y);
-  float depth = smoothstep(0.0, uHorizon, uv.y);
-
-  float flow = fbm(vec2(dx * 3.0, uv.y * 2.2 - uTime * 0.22));
-  float core = exp(-pow(dx * mix(110.0, 38.0, depth), 2.0)) * (0.45 + 0.55 * depth);
-  float halo = exp(-abs(dx) * (16.0 - 6.0 * flow)) * (0.25 + 0.75 * depth * depth) + exp(-abs(dx) * 4.0) * 0.07 * depth;
-  float wisps = smoothstep(0.45, 0.92, fbm(vec2(dx * 5.0 + uTime * 0.04, uv.y * 3.2 - uTime * 0.35))) * exp(-abs(dx) * 5.5) * depth;
-  float pool = exp(-pow((uv.y - uHorizon) * 9.0, 2.0)) * (exp(-abs(dx) * 3.0) + 0.25 * exp(-abs(dx) * 0.9));
-  float rim = exp(-pow((uv.y - uHorizon) * 55.0, 2.0)) * exp(-abs(dx) * 0.9);
-
-  vec2 cell = floor(gl_FragCoord.xy / 1.5);
-  float twinkle = step(0.998, hash(cell)) * (0.5 + 0.5 * sin(uTime * 2.4 + hash(cell + 7.0) * 40.0));
-  float dust = twinkle * exp(-abs(dx) * 3.0) * depth;
-
-  vec3 blue = vec3(0.2, 0.5, 1.0);
-  vec3 violet = vec3(0.62, 0.48, 1.0);
-  vec3 pink = vec3(0.96, 0.5, 0.86);
-  vec3 tint = mix(blue, mix(violet, pink, smoothstep(0.05, 0.35, dx)), smoothstep(-0.05, 0.25, dx));
-
-  vec3 color = vec3(1.0) * core * 1.8 + blue * halo * 1.1 + tint * wisps * 0.8 + dust * vec3(0.85, 0.9, 1.0) * 0.7;
-  color *= above;
-  color += mix(blue, vec3(1.0), 0.4) * pool * 1.05 + vec3(0.85, 0.92, 1.0) * rim * 0.9;
-  color = 1.0 - exp(-color * 1.4);
-  gl_FragColor = vec4(color, max(color.r, max(color.g, color.b)));
-}`;
-
-  function startBeam() {
-    const holder = document.querySelector(".beam");
-    const canvas = holder?.querySelector("canvas");
-    const showcase = document.querySelector(".showcase");
-    if (!holder || !canvas || reduceMotion.matches) return;
-    const gl = canvas.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true });
-    if (!gl) return;
-
-    const compile = (type, source) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
-    };
-    const vertex = compile(gl.VERTEX_SHADER, "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}");
-    const fragment = compile(gl.FRAGMENT_SHADER, BEAM_SHADER);
-    if (!vertex || !fragment) return;
-    const program = gl.createProgram();
-    gl.attachShader(program, vertex);
-    gl.attachShader(program, fragment);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
-    gl.useProgram(program);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const position = gl.getAttribLocation(program, "p");
-    gl.enableVertexAttribArray(position);
-    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-    const uniforms = {
-      res: gl.getUniformLocation(program, "uRes"),
-      time: gl.getUniformLocation(program, "uTime"),
-      beamX: gl.getUniformLocation(program, "uBeamX"),
-      horizon: gl.getUniformLocation(program, "uHorizon"),
-    };
-
-    const resize = () => {
-      const scale = Math.min(devicePixelRatio || 1, 1.5) * 0.6;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.round(rect.width * scale));
-      canvas.height = Math.max(1, Math.round(rect.height * scale));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uniforms.res, canvas.width, canvas.height);
-      const windowTop = showcase ? showcase.getBoundingClientRect().top - rect.top : rect.height * 0.7;
-      gl.uniform1f(uniforms.horizon, Math.min(0.95, Math.max(0.3, windowTop / rect.height)));
-      gl.uniform1f(uniforms.beamX, innerWidth < 760 ? 0.74 : 0.81);
-    };
-    new ResizeObserver(resize).observe(canvas);
-    resize();
-
-    let visible = true;
-    let frame = 0;
-    const start = performance.now();
-    const draw = (now) => {
-      gl.uniform1f(uniforms.time, (now - start) / 1000);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      frame = visible && !document.hidden ? requestAnimationFrame(draw) : 0;
-    };
-    const resume = () => {
-      if (!frame && visible && !document.hidden) frame = requestAnimationFrame(draw);
-    };
-    whenVisible(holder, (isVisible) => {
-      visible = isVisible;
-      resume();
-    });
-    document.addEventListener("visibilitychange", resume);
-    requestAnimationFrame(() => holder.classList.add("is-live"));
-  }
-
   function startShowcase() {
     const showcase = document.querySelector("[data-showcase]");
     if (!showcase) return;
@@ -224,26 +94,27 @@ void main() {
   }
 
   const NETWORK = {
-    hub: { id: "tracker", name: "Tracker", initials: "TR", tone: "var(--lilac)" },
+    hub: { id: "owner", name: "Akhdan (me)", initials: "MA", tone: "var(--lilac)" },
     agents: [
-      { id: "worker", name: "Worker", initials: "WK", tone: "var(--mint)", shape: "shape-squircle" },
-      { id: "researcher", name: "Researcher", initials: "RS", tone: "var(--sky)", shape: "shape-blob" },
-      { id: "trading", name: "Trading", initials: "TD", tone: "var(--amber)", shape: "shape-diamond" },
-      { id: "dex", name: "DEX", initials: "DX", tone: "var(--coral)", shape: "shape-squircle" },
-      { id: "campaign", name: "Campaign", initials: "CP", tone: "var(--mint)", shape: "shape-blob" },
-      { id: "affiliate", name: "Affiliate", initials: "AF", tone: "var(--lilac)", shape: "shape-diamond" },
-      { id: "internship", name: "InternshipAgent", initials: "IN", tone: "var(--amber)", shape: "shape-squircle" },
-      { id: "dashboard", name: "Dashboard", initials: "UI", tone: "var(--sky)", shape: "shape-blob" },
+      { id: "tracker", name: "Tracker", avatar: "tracker", tone: "var(--sky)" },
+      { id: "worker", name: "Worker", avatar: "worker", tone: "var(--amber)" },
+      { id: "researcher", name: "Researcher", avatar: "researcher", tone: "var(--lilac)" },
+      { id: "trading", name: "Trading", avatar: "trading", tone: "var(--mint)" },
+      { id: "dex", name: "DEX", avatar: "dex", tone: "var(--sky)" },
+      { id: "campaign", name: "Campaign", avatar: "campaign", tone: "var(--coral)" },
+      { id: "affiliate", name: "Affiliate", avatar: "affiliate", tone: "var(--amber)" },
+      { id: "internship", name: "InternshipAgent", avatar: "internship", tone: "var(--lilac)" },
     ],
     script: [
-      { from: "tracker", to: "*", text: "Health check: every service is up." },
+      { from: "owner", to: "*", text: "Morning. Run today’s checks." },
+      { from: "tracker", to: "owner", text: "Health check: every service is up." },
       { from: "researcher", to: "trading", text: "Scan sent: 10 Spot, 10 Futures, 10 DEX candidates." },
       { from: "trading", to: "tracker", text: "Reviewed. Still at most 3 entries today." },
       { from: "campaign", to: "tracker", text: "Video rendered. Waiting for audit." },
       { from: "tracker", to: "campaign", text: "Audit passed. Upload approved." },
-      { from: "worker", to: "tracker", text: "Coding job done. Ready for review." },
-      { from: "internship", to: "dashboard", text: "New listings sent to Telegram." },
-      { from: "dashboard", to: "tracker", text: "History updated." },
+      { from: "worker", to: "owner", text: "Coding job done. Ready for your review." },
+      { from: "owner", to: "worker", text: "Approved. Deploy with a backup." },
+      { from: "internship", to: "owner", text: "New listings sent to Telegram." },
     ],
   };
 
@@ -262,7 +133,10 @@ void main() {
       node.className = `network-node${isHub ? " is-hub" : ""}`;
       node.style.setProperty("--i", String(i));
       node.style.setProperty("--tone", agent.tone);
-      node.innerHTML = `<span class="network-bubble"></span><span class="network-avatar ${agent.shape ?? ""}"><span>${agent.initials}</span></span><span class="network-label">${agent.name}</span>`;
+      const face = agent.avatar
+        ? `<img src="assets/agents/${agent.avatar}.webp" width="64" height="64" alt="" loading="lazy" decoding="async">`
+        : `<span>${agent.initials}</span>`;
+      node.innerHTML = `<span class="network-bubble"></span><span class="network-avatar">${face}</span><span class="network-label">${agent.name}</span>`;
       layer.append(node);
       nodes.set(agent.id, { element: node, bubble: node.querySelector(".network-bubble"), x: 0, y: 0 });
     };
@@ -422,7 +296,6 @@ void main() {
     for (const card of cards) observer.observe(card);
   }
 
-  startBeam();
   startShowcase();
   startNetwork();
   startAgentLog();

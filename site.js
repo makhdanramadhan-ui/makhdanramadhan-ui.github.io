@@ -27,6 +27,18 @@
     });
   }
 
+  for (const card of document.querySelectorAll("[data-spotlight]")) {
+    card.addEventListener(
+      "pointermove",
+      (event) => {
+        const box = card.getBoundingClientRect();
+        card.style.setProperty("--spot-x", `${event.clientX - box.left}px`);
+        card.style.setProperty("--spot-y", `${event.clientY - box.top}px`);
+      },
+      { passive: true },
+    );
+  }
+
   const revealables = document.querySelectorAll("[data-reveal]");
   if (!("IntersectionObserver" in window)) {
     for (const element of revealables) element.classList.add("is-revealed");
