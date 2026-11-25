@@ -382,6 +382,9 @@ void main() {
   const SLOW_FRAME_MS = 40;
   const MIN_QUALITY = 0.35;
   const AVOID_GAP = 56;
+  const MAX_UNIT = 1.25;
+  const SURFACE_EDGE_GAP = 4;
+  const TOUCH_GLOW_MS = 1400;
 
   const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
   const easeOutCubic = (x) => 1 - (1 - clamp(x, 0, 1)) ** 3;
@@ -493,7 +496,10 @@ void main() {
   const canvas = holder?.querySelector("canvas");
   if (!holder || !canvas) return;
   const surface = document.querySelector(holder.dataset.surface);
-  const source = holder.dataset.source ? document.querySelector(holder.dataset.source) : null;
+  const sourceCandidates = (holder.dataset.source ?? "")
+    .split(",")
+    .map((selector) => selector.trim() && document.querySelector(selector.trim()))
+    .filter(Boolean);
   const anchor = Number(holder.dataset.beamX ?? 0.78);
   const avoided = holder.dataset.avoid ? [...document.querySelectorAll(holder.dataset.avoid)] : [];
   const contentRange = document.createRange();
@@ -539,18 +545,22 @@ void main() {
   let lastNow = 0;
   let onScreen = true;
   let alive = true;
+  let markedSource = null;
+  let touchRelease = 0;
 
-  const markSource = (active) => {
-    if (!source) return;
-    if (active) {
-      source.setAttribute("data-beam-source", "");
-      source.style.setProperty("--beam-rim", rim);
-    } else {
-      source.removeAttribute("data-beam-source");
-      source.removeAttribute("data-beam-struck");
-      source.style.removeProperty("--beam-rim");
+  const markSource = (element) => {
+    if (element === markedSource) return;
+    if (markedSource) {
+      markedSource.removeAttribute("data-beam-source");
+      markedSource.removeAttribute("data-beam-struck");
+      markedSource.style.removeProperty("--beam-rim");
     }
-    holder.toggleAttribute("data-sourced", active);
+    if (element) {
+      element.setAttribute("data-beam-source", "");
+      element.style.setProperty("--beam-rim", rim);
+    }
+    markedSource = element;
+    holder.toggleAttribute("data-sourced", Boolean(element));
   };
 
   const measureSurface = (box) => {
@@ -574,16 +584,18 @@ void main() {
 
   const layout = () => {
     const box = holder.getBoundingClientRect();
-    const unit = clamp(Math.min(view.width / 585, view.height / 507), 0.2, 1.25);
+    const unit = clamp(Math.min(view.width / 585, view.height / 507), 0.2, MAX_UNIT);
     let target = measureSurface(box) ?? offscreenSurface();
-    const clearX = avoided.reduce((right, element) => Math.max(right, contentRight(element) - box.left + AVOID_GAP), 0);
+    const avoidGap = (AVOID_GAP * unit) / MAX_UNIT;
+    const clearX = avoided.reduce((right, element) => Math.max(right, contentRight(element) - box.left + avoidGap), 0);
     let columnX = Math.max(anchor * view.width, clearX);
-    const inset = target.radius + 6;
+    const inset = target.radius + SURFACE_EDGE_GAP;
     let sourceRect = null;
-    const sourceBox = source?.getBoundingClientRect();
-    if (sourceBox && sourceBox.width > 0) {
+    const source = sourceCandidates.find((element) => element.getBoundingClientRect().width > 0);
+    if (source && target.real) {
+      const sourceBox = source.getBoundingClientRect();
       const center = (sourceBox.left + sourceBox.right) / 2 - box.left;
-      if (target.real && center >= clearX && center >= target.left + inset && center <= target.right - inset) {
+      if (center >= clearX && center >= target.left + inset && center <= target.right - inset) {
         const sourceRadius = Number.parseFloat(getComputedStyle(source).borderTopLeftRadius) || 0;
         sourceRect = {
           left: sourceBox.left - box.left,
@@ -595,7 +607,7 @@ void main() {
         columnX = center;
       }
     }
-    markSource(Boolean(sourceRect));
+    markSource(sourceRect ? source : null);
     if (target.real) {
       if (columnX > target.right - inset) return null;
       if (columnX >= target.left) columnX = clamp(columnX, target.left + inset, target.right - inset);
@@ -646,7 +658,7 @@ void main() {
     if (!scene) return false;
     const state = introState(scene);
     const { unit, columnX, target, sourceRect } = scene;
-    source?.toggleAttribute("data-beam-struck", Boolean(sourceRect) && state.struck);
+    markedSource?.toggleAttribute("data-beam-struck", Boolean(sourceRect) && state.struck);
 
     gl.useProgram(program);
     gl.uniform2f(uniform.uViewport, view.width, view.height);
@@ -754,18 +766,29 @@ void main() {
       wake();
     }
   }).observe(holder);
+  const trackPointer = (event) => {
+    const box = holder.getBoundingClientRect();
+    pointer.x = event.clientX - box.left;
+    pointer.y = event.clientY - box.top;
+    pointer.inside = pointer.x >= 0 && pointer.y >= 0 && pointer.x <= box.width && pointer.y <= box.height;
+    wake();
+  };
+  addEventListener("pointermove", trackPointer, { passive: true });
   addEventListener(
-    "pointermove",
+    "pointerdown",
     (event) => {
-      const box = holder.getBoundingClientRect();
-      pointer.x = event.clientX - box.left;
-      pointer.y = event.clientY - box.top;
-      pointer.inside = pointer.x >= 0 && pointer.y >= 0 && pointer.x <= box.width && pointer.y <= box.height;
-      wake();
+      if (event.pointerType === "mouse") return;
+      trackPointer(event);
+      clearTimeout(touchRelease);
+      touchRelease = setTimeout(() => {
+        pointer.inside = false;
+        wake();
+      }, TOUCH_GLOW_MS);
     },
     { passive: true },
   );
-  document.documentElement.addEventListener("pointerleave", () => {
+  document.documentElement.addEventListener("pointerleave", (event) => {
+    if (event.pointerType !== "mouse") return;
     pointer.inside = false;
     wake();
   });
@@ -776,7 +799,7 @@ void main() {
   canvas.addEventListener("webglcontextlost", () => {
     alive = false;
     cancelAnimationFrame(frame);
-    markSource(false);
+    markSource(null);
   });
 
   relayout();

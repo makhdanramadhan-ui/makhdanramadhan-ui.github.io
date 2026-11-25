@@ -351,6 +351,12 @@ main:focus {
   opacity: 1;
 }
 
+.menu-toggle[data-beam-source] {
+  border-color: transparent;
+  background: var(--action);
+  color: var(--ink);
+}
+
 .site-header {
   position: relative;
   z-index: 20;
@@ -515,7 +521,7 @@ body.has-sheet {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 520px) {
   .header-actions .btn-light {
     display: none;
   }

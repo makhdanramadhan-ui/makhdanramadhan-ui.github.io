@@ -132,6 +132,66 @@
   font-weight: 500;
 }
 
+@media (max-width: 1020px) {
+  .hero-copy {
+    padding-inline: 120px;
+  }
+
+  .hero-title,
+  .hero-lead {
+    text-shadow: 0 1px 14px rgb(0 0 0 / 0.5);
+  }
+
+  .hero-actions .btn-glass {
+    background: rgb(28 28 28 / 0.72);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-copy {
+    justify-items: start;
+    padding-inline: 0 calc(26px + 7.7vw);
+    text-align: left;
+  }
+
+  .hero-copy .hero-badge {
+    gap: 5px;
+    margin-bottom: 22px;
+    padding-right: 11px;
+    font-size: 11px;
+  }
+
+  .hero-title {
+    justify-content: flex-start;
+    font-size: clamp(30px, 8.6vw, 42px);
+  }
+
+  .hero-name {
+    text-align: left;
+  }
+
+  .hero-emblem {
+    margin-inline: 0.18em 0.12em;
+  }
+
+  .hero-lead {
+    margin-top: 24px;
+    font-size: 16px;
+    text-wrap: pretty;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-copy .hero-badge-text {
+    display: none;
+  }
+}
+
 .showcase {
   width: min(100% - 2 * var(--gutter), var(--page));
   margin: clamp(56px, 6vw, 80px) auto 0;
