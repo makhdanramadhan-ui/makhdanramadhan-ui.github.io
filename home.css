@@ -47,8 +47,8 @@
   aspect-ratio: 1;
   margin: 0 0.14em 0 0.22em;
   border-radius: 20%;
-  background: var(--lilac);
-  box-shadow: inset 0 -0.04em 0 rgb(20 20 20 / 0.12), 0 0.2em 0.5em -0.25em rgb(214 173 242 / 0.6);
+  background: var(--sky);
+  box-shadow: inset 0 -0.04em 0 rgb(20 20 20 / 0.12), 0 0.2em 0.5em -0.25em rgb(116 185 255 / 0.6);
   color: var(--ink);
   transform: translateY(0.02em);
   animation: emblem-float 6s ease-in-out infinite;
