@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0c111b">
+    <meta name="theme-color" content="#1a1a1a">
     <meta name="description" content="Muhamad Akhdan Ramadhan — Computer Engineering Technology student at IPB University building software, applied AI, and IoT projects. Open to internships in software, applied AI, and IoT.">
     <link rel="canonical" href="https://makhdanramadhan-ui.github.io/">
     <meta property="og:type" content="website">
@@ -21,300 +21,532 @@
     <meta name="twitter:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="preload" href="assets/fonts/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/public-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home.css">
     <script>document.documentElement.classList.add("js");</script>
+    <script src="site.js" defer></script>
     <script src="motion.js" defer></script>
+    <script src="home.js" defer></script>
     <title>Muhamad Akhdan Ramadhan | Software, Applied AI &amp; IoT</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <div class="wrap header-inner">
-        <a class="home-link" href="#about">Muhamad Akhdan Ramadhan</a>
-        <nav class="site-nav" aria-label="Main navigation">
-          <button
-            class="menu-button"
-            type="button"
-            popovertarget="site-menu"
-            popovertargetaction="toggle"
-            aria-controls="site-menu"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-            <span>Menu</span>
-          </button>
-          <ul id="site-menu" class="site-menu" popover="auto">
-            <li><a href="#skills">Skills &amp; Stack</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="projects.html">Projects</a></li>
-          </ul>
-        </nav>
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">MA</span><span class="brand-name">Muhamad Akhdan Ramadhan</span></a>
+      <nav class="nav-track" aria-label="Main navigation">
+        <a href="#work">Work</a>
+        <a href="#agents">Agents</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+        <a href="projects.html">Projects</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-light" href="M-Akhdan-Ramadhan-CV.pdf" download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+          Download CV
+        </a>
+        <a class="btn btn-glass" href="projects.html">
+          Projects
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-sheet" data-sheet-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+        </button>
       </div>
     </header>
 
+    <div class="site-sheet" id="site-sheet" role="dialog" aria-modal="true" aria-label="Site menu">
+      <div class="site-sheet-top">
+        <span class="brand"><span class="brand-mark" aria-hidden="true">MA</span><span class="brand-name">Muhamad Akhdan Ramadhan</span></span>
+        <button class="menu-toggle" type="button" aria-label="Close menu" data-sheet-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Site menu links">
+        <a href="#work" style="--i:0">Work</a>
+        <a href="#agents" style="--i:1">Agents</a>
+        <a href="#skills" style="--i:2">Skills</a>
+        <a href="#education" style="--i:3">Education</a>
+        <a href="#contact" style="--i:4">Contact</a>
+        <a href="projects.html" style="--i:5">Projects</a>
+      </nav>
+      <div class="site-sheet-actions">
+        <a class="btn btn-light btn-lg" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV (PDF, 1 page)</a>
+        <a class="btn btn-glass btn-lg" href="mailto:akhdanrama@gmail.com">Email me</a>
+      </div>
+    </div>
+
     <main id="main" tabindex="-1">
-      <section class="intro wrap" id="about" tabindex="-1" aria-labelledby="name">
-        <h1 id="name">Muhamad Akhdan<br>Ramadhan</h1>
-        <p class="role">Computer Engineering Technology · Software, Applied AI &amp; IoT</p>
-        <div class="intro-bottom">
-          <div class="intro-copy">
-            <p>I'm a Computer Engineering Technology student at IPB University. I enjoy learning how software and hardware work together, and I pick up new tools quickly when I have a project to apply them to. I work with agentic, multi-agent workflows to plan, build, and review my work.</p>
-            <p class="gpa">GPA 3.61 / 4.00 (semesters 1–4)</p>
-          </div>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="beam" aria-hidden="true">
+          <canvas class="beam-canvas"></canvas>
+        </div>
+
+        <div class="hero-copy">
+          <p class="hero-badge">
+            <span class="hero-badge-tag">Open</span>
+            <span class="hero-badge-text">Internship in</span>
+            <span class="hero-badge-item">Software</span>
+            <span class="hero-badge-sep" aria-hidden="true">·</span>
+            <span class="hero-badge-item">Applied AI</span>
+            <span class="hero-badge-sep" aria-hidden="true">·</span>
+            <span class="hero-badge-item">IoT</span>
+          </p>
+
+          <h1 id="hero-title" class="hero-title">
+            <span class="hero-word">Meet</span>
+            <span class="hero-emblem" aria-hidden="true"><span class="hero-emblem-text">MA</span><span class="hero-emblem-cursor"></span></span>
+            <span class="hero-word">Akhdan</span>
+            <span class="visually-hidden">— Muhamad Akhdan Ramadhan</span>
+          </h1>
+
+          <p class="hero-lead">
+            Computer Engineering Technology student at IPB University, building across
+            <span class="chip-inline"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-amber"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4m5-4v4m-5 10v4m5-4v4M3 9.5h4m-4 5h4m10-5h4m-4 5h4"/></svg><b>IoT</b></span>,
+            <span class="chip-inline"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-lilac"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></svg><b>applied AI</b></span>,
+            <span class="chip-inline"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-sky"><path d="m8 7-5 5 5 5m8-10 5 5-5 5"/></svg><b>software</b></span> and
+            <span class="chip-inline"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-mint"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7 6 16m7-9 5 9M7.2 18h9.6"/></svg><b>networks</b></span>.
+            I pick up new tools quickly when I have a project to apply them to.
+          </p>
+
           <div class="hero-actions">
-            <a class="button" href="M-Akhdan-Ramadhan-CV.pdf" download>
-              Download CV <span>(PDF, 1 page)</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
+            <a class="btn btn-light btn-lg" href="M-Akhdan-Ramadhan-CV.pdf" download>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+              Download CV <span class="btn-note">PDF, 1 page</span>
             </a>
-            <a class="button button-secondary" href="projects.html">
-              Projects
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-5-5 5 5-5 5"/></svg>
+            <a class="btn btn-glass btn-lg" href="#contact">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v10H9l-5 4z"/></svg>
+              Contact
             </a>
           </div>
         </div>
-        <a class="map-invitation" href="#selected-work">
-          <span>Selected work</span>
-          <svg viewBox="0 0 160 24" aria-hidden="true">
-            <path class="trace" pathLength="1" d="M2 12H156m-8-8 8 8-8 8"/>
-            <path class="packet" pathLength="1" d="M2 12H156"/>
-          </svg>
-        </a>
-      </section>
 
-      <section class="selected-work" id="selected-work" tabindex="-1" aria-labelledby="selected-work-heading">
-        <div class="wrap">
-          <div class="section-heading">
-            <h2 id="selected-work-heading">Selected work</h2>
-            <p>Eight projects across network security, IoT, embedded systems, automation, machine learning, web, and data.</p>
-          </div>
-          <div class="work-grid">
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · IoT · Machine Learning · Computer Vision · Firebase</p>
-              <h3><a href="projects.html#costmosys">COSTMOSYS</a></h3>
-              <p class="subtitle">Cow Stress Monitoring System</p>
-              <p class="lede">Two-node ESP32 system with ESP-NOW, Firebase telemetry, and sprinkler relay control, plus a YOLO26n model that detects cows and people in CCTV frames.</p>
-              <p class="links"><a href="projects.html#costmosys">Case study</a><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">Repository</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Solo personal project</b> · AI · Software · Automation</p>
-              <h3><a href="projects.html#agent-platform">Multi-agent automation platform</a></h3>
-              <p class="lede">Nine Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB RAM) under systemd, plus a 9Router model gateway. The services are written in TypeScript. A master tracker watches the other agents, reviews their work, and handles alerts. Telegram and a React web dashboard handle commands and history.</p>
-              <p class="links"><a href="projects.html#agent-platform">Case study</a><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Demo</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · Semester 4, mobile/IoT course · group of 4 · IoT · Embedded · Firebase · Telegram</p>
-              <h3><a href="projects.html#scafi">SCAFI</a></h3>
-              <p class="lede">Smart Control Against Fire and Intruder. A theft and fire alarm with an ultrasonic sensor, a DHT22, and buzzers that sends alerts to Firebase and Telegram when fire or intrusion thresholds are met.</p>
-              <p class="links"><a href="projects.html#scafi">Case study</a><a href="demos/scafi/index.html">Demo</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · Semester 4, Wireless Technology · group of 4 · IoT · Embedded · Networking · FastAPI</p>
-              <h3><a href="projects.html#doorlink">DoorLink</a></h3>
-              <p class="lede">A boarding-house door lock built on ESP32, RFID, and MikroTik: open with a registered card or through a web page reachable only on the boarding-house Wi-Fi, with access logged by a FastAPI backend.</p>
-              <p class="links"><a href="projects.html#doorlink">Case study</a><a href="demos/doorlink/index.html">Demo</a><a href="https://github.com/makhdanramadhan-ui/doorlink" target="_blank" rel="noopener">Repository</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · IoT · Embedded · Cloud · Data</p>
-              <h3><a href="projects.html#vitaloop">VitaLoop</a></h3>
-              <p class="lede">Sensor wristband prototype streaming heart-rate and blood-oxygen readings to ThingsBoard on an AWS EC2 Ubuntu server, with data analysis in RStudio.</p>
-              <p class="links"><a href="projects.html#vitaloop">Case study</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · Machine Learning · Data · Streamlit</p>
-              <h3><a href="projects.html#churn">Customer churn prediction</a></h3>
-              <p class="lede">Calibrated logistic regression on the IBM Telco dataset served in a Streamlit app for single and batch predictions.</p>
-              <p class="links"><a href="projects.html#churn">Case study</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project" target="_blank" rel="noopener">Repository</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Coursework</b> · Semester 3, Web Programming · group project · full-stack development · Web · Laravel · SQLite</p>
-              <h3><a href="projects.html#wishnote">WishNotes</a></h3>
-              <p class="lede">A Laravel app for leaving notes on themed boards, including a Christmas tree board where visitors place ornaments with messages at chosen coordinates.</p>
-              <p class="links"><a href="projects.html#wishnote">Case study</a><a href="demos/wishnotes/index.html">Demo</a><a href="https://github.com/makhdanramadhan-ui/WishNotes" target="_blank" rel="noopener">Repository</a></p>
-            </article>
-            <article class="work-card">
-              <p class="meta"><b>Solo personal project</b> · Rust · Network security · TUI</p>
-              <h3><a href="projects.html#netwatch-rs">netwatch-rs</a></h3>
-              <p class="lede">Live packet monitor and mini-IDS in the terminal. Parses Layer 2–4 and DNS, tracks bandwidth and top talkers, and alerts on port scans, SYN spikes and DNS bursts.</p>
-              <p class="links"><a href="projects.html#netwatch-rs">Case study</a><a href="https://github.com/makhdanramadhan-ui/netwatch-rs" target="_blank" rel="noopener">Repository</a></p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="knowledge" id="skills" tabindex="-1" aria-labelledby="skills-heading">
-        <div class="wrap">
-          <div class="section-heading">
-            <h2 id="skills-heading">Skills &amp; Stack</h2>
-            <p>What I use in projects and what I’ve studied in class.</p>
-          </div>
-
-          <div class="system-map">
-            <svg class="map-spine" viewBox="0 0 24 100" preserveAspectRatio="none" aria-hidden="true">
-              <path class="trace" pathLength="1" d="M12 0V100"/>
-              <path class="packet" pathLength="1" d="M12 0V100"/>
-            </svg>
-
-            <div class="domain-column">
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">Software &amp; web</span>
-                  <span class="domain-overview">Interfaces, APIs, and the data behind them.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>I connect web interfaces to backend APIs, manage application state, and handle failed requests and retries.</p>
-                  <p class="tools"><strong>Tools I use</strong>JavaScript / TypeScript, Node.js, React, Express, Python, PHP, Laravel, HTML, CSS, SQL, SQLite, REST APIs, Git.</p>
-                  <a class="see-projects" href="projects.html?area=software">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
-
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">AI systems &amp; automation</span>
-                  <span class="domain-overview">Model routing, job queues, and review.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>I run agents as Linux services, route model requests, and queue jobs. If a review can’t run, the output waits. I monitor the services and keep a rollback path for fixes. I work with agentic, multi-agent workflows to plan, build, and review work.</p>
-                  <p class="tools"><strong>Tools I use</strong>LLM APIs, 9Router, Linux, systemd, Node.js, Python, Telegram controls, Docker Compose, n8n.</p>
-                  <p class="honesty">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
-                  <a class="see-projects" href="projects.html?area=ai">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
-
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">Computer networks</span>
-                  <span class="domain-overview">How devices connect, route traffic, and control access.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>I studied routing, switching, and wireless networking through Cisco courses. I’ve also used MikroTik to configure network access and user authentication. In netwatch-rs I applied that foundation to raw packet parsing, traffic statistics, and rule-based anomaly detection in Rust.</p>
-                  <p class="tools"><strong>Coursework &amp; practice</strong>Cisco networking, routing, switching, wireless networks, MikroTik, access configuration, user authentication, Rust packet parsing, pcap, network security rules.</p>
-                  <a class="see-projects" href="projects.html?area=networks">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
+        <section class="showcase" id="work" aria-labelledby="work-title" data-showcase>
+          <h2 id="work-title" class="visually-hidden">Selected work</h2>
+          <div class="window">
+            <div class="window-bar">
+              <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window-title">Selected work <span>· 8 projects</span></span>
+              <a class="window-link" href="projects.html">All case studies
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
             </div>
+            <div class="window-body">
+              <div class="window-list" role="tablist" aria-label="Projects" aria-orientation="vertical">
+                <button class="project-tab" role="tab" id="tab-costmosys" aria-controls="panel-costmosys" aria-selected="true" style="--tone:var(--mint)">
+                  <span class="project-avatar shape-squircle" aria-hidden="true">CO</span>
+                  <span class="project-tab-text"><span class="project-tab-name">COSTMOSYS <em>IoT · CV</em></span><span class="project-tab-line">Cow stress monitoring system</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-agents" aria-controls="panel-agents" aria-selected="false" tabindex="-1" style="--tone:var(--lilac)">
+                  <span class="project-avatar shape-blob" aria-hidden="true">AI</span>
+                  <span class="project-tab-text"><span class="project-tab-name">Multi-agent platform <em>Solo</em></span><span class="project-tab-line">Nine services on one VPS</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-scafi" aria-controls="panel-scafi" aria-selected="false" tabindex="-1" style="--tone:var(--coral)">
+                  <span class="project-avatar shape-diamond" aria-hidden="true">SC</span>
+                  <span class="project-tab-text"><span class="project-tab-name">SCAFI <em>Group of 4</em></span><span class="project-tab-line">Fire and intruder alarm</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-doorlink" aria-controls="panel-doorlink" aria-selected="false" tabindex="-1" style="--tone:var(--sky)">
+                  <span class="project-avatar shape-squircle" aria-hidden="true">DL</span>
+                  <span class="project-tab-text"><span class="project-tab-name">DoorLink <em>Group of 4</em></span><span class="project-tab-line">ESP32, RFID and MikroTik lock</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-vitaloop" aria-controls="panel-vitaloop" aria-selected="false" tabindex="-1" style="--tone:var(--amber)">
+                  <span class="project-avatar shape-blob" aria-hidden="true">VL</span>
+                  <span class="project-tab-text"><span class="project-tab-name">VitaLoop <em>IoT</em></span><span class="project-tab-line">Sensor wristband prototype</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-churn" aria-controls="panel-churn" aria-selected="false" tabindex="-1" style="--tone:var(--mint)">
+                  <span class="project-avatar shape-diamond" aria-hidden="true">ML</span>
+                  <span class="project-tab-text"><span class="project-tab-name">Churn prediction <em>ML</em></span><span class="project-tab-line">Calibrated logistic regression</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-wishnotes" aria-controls="panel-wishnotes" aria-selected="false" tabindex="-1" style="--tone:var(--coral)">
+                  <span class="project-avatar shape-squircle" aria-hidden="true">WN</span>
+                  <span class="project-tab-text"><span class="project-tab-name">WishNotes <em>Laravel</em></span><span class="project-tab-line">Notes on themed boards</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-netwatch" aria-controls="panel-netwatch" aria-selected="false" tabindex="-1" style="--tone:var(--sky)">
+                  <span class="project-avatar shape-blob" aria-hidden="true">RS</span>
+                  <span class="project-tab-text"><span class="project-tab-name">netwatch-rs <em>Rust</em></span><span class="project-tab-line">Packet monitor and mini-IDS</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+              </div>
 
-            <div class="domain-column">
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">Embedded &amp; hardware</span>
-                  <span class="domain-overview">Taking measurements and connecting them to software.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>I work with microcontrollers and sensors, from taking a reading on an ESP32 to sending it to a ThingsBoard server on AWS and onto a dashboard.</p>
-                  <p class="tools"><strong>Coursework &amp; practice</strong>ESP / ESP32, Arduino, sensors, IoT, ESP-NOW, Firebase, AWS, Ubuntu server, ThingsBoard, device-to-dashboard data flow.</p>
-                  <a class="see-projects" href="projects.html?area=embedded">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
-
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">Industrial automation</span>
-                  <span class="domain-overview">Logic that connects inputs, conditions, and outputs.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>In class, I studied PLC control logic in CX-Programmer and used Factory I/O to see how it responds to simulated inputs.</p>
-                  <p class="tools"><strong>Studied in coursework</strong>PLC logic, CX-Programmer, Factory I/O, input/output relationships, control sequences.</p>
-                  <a class="see-projects" href="projects.html?area=industrial">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
-
-              <details class="domain">
-                <summary>
-                  <span class="node" aria-hidden="true"></span>
-                  <span class="summary-title">Data &amp; computing</span>
-                  <span class="domain-overview">Understanding the data, the OS, and the machine.</span>
-                  <span class="toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="domain-body">
-                  <p>I used RStudio to process and analyse VitaLoop’s sensor data. My coursework also covers MATLAB, Linux, and computer architecture.</p>
-                  <p class="tools"><strong>Studied in coursework</strong>RStudio, MATLAB, Linux, computer architecture, data processing.</p>
-                  <a class="see-projects" href="projects.html?area=data">See projects<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
-                </div>
-              </details>
+              <div class="window-panels">
+                <article class="project-panel" role="tabpanel" id="panel-costmosys" aria-labelledby="tab-costmosys">
+                  <figure class="panel-media"><img src="assets/projects/costmosys/detections.webp" width="1400" height="788" alt="YOLO26n detections of cows and people in a CCTV frame"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · IoT · Machine Learning · Computer Vision · Firebase</p>
+                    <h3>COSTMOSYS <span>Cow Stress Monitoring System</span></h3>
+                    <p>Two-node ESP32 system with ESP-NOW, Firebase telemetry, and sprinkler relay control, plus a YOLO26n model that detects cows and people in CCTV frames.</p>
+                    <p class="panel-links"><a href="projects.html#costmosys">Case study</a><a href="https://github.com/makhdanramadhan-ui/COSTMOSYS" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" hidden>
+                  <figure class="panel-media"><img src="assets/projects/lynx-control/ringkasan.webp" width="1024" height="640" loading="lazy" alt="LyNx Agent Control overview with VPS metrics and agent cards in demo mode"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Solo personal project</b> · AI · Software · Automation</p>
+                    <h3>Multi-agent automation platform</h3>
+                    <p>Nine Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB RAM) under systemd, plus a 9Router model gateway. The services are written in TypeScript. A master tracker watches the other agents, reviews their work, and handles alerts. Telegram and a React web dashboard handle commands and history.</p>
+                    <p class="panel-links"><a href="projects.html#agent-platform">Case study</a><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Demo</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-scafi" aria-labelledby="tab-scafi" hidden>
+                  <figure class="panel-media"><img src="assets/projects/scafi/dashboard.webp" width="1400" height="625" loading="lazy" alt="SCAFI dashboard showing sensor readings and alert state"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · Semester 4, mobile/IoT course · group of 4 · IoT · Embedded · Firebase · Telegram</p>
+                    <h3>SCAFI <span>Smart Control Against Fire and Intruder</span></h3>
+                    <p>A theft and fire alarm with an ultrasonic sensor, a DHT22, and buzzers that sends alerts to Firebase and Telegram when fire or intrusion thresholds are met.</p>
+                    <p class="panel-links"><a href="projects.html#scafi">Case study</a><a href="demos/scafi/index.html">Demo</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-doorlink" aria-labelledby="tab-doorlink" hidden>
+                  <figure class="panel-media"><img src="assets/projects/doorlink/admin-dashboard-desktop.webp" width="1365" height="768" loading="lazy" alt="DoorLink admin dashboard on desktop"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · Semester 4, Wireless Technology · group of 4 · IoT · Embedded · Networking · FastAPI</p>
+                    <h3>DoorLink</h3>
+                    <p>A boarding-house door lock built on ESP32, RFID, and MikroTik: open with a registered card or through a web page reachable only on the boarding-house Wi-Fi, with access logged by a FastAPI backend.</p>
+                    <p class="panel-links"><a href="projects.html#doorlink">Case study</a><a href="demos/doorlink/index.html">Demo</a><a href="https://github.com/makhdanramadhan-ui/doorlink" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-vitaloop" aria-labelledby="tab-vitaloop" hidden>
+                  <figure class="panel-media"><img src="assets/projects/vitaloop/wristband-in-use.webp" width="620" height="538" loading="lazy" alt="VitaLoop sensor wristband prototype worn on a wrist"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · IoT · Embedded · Cloud · Data</p>
+                    <h3>VitaLoop</h3>
+                    <p>Sensor wristband prototype streaming heart-rate and blood-oxygen readings to ThingsBoard on an AWS EC2 Ubuntu server, with data analysis in RStudio.</p>
+                    <p class="panel-links"><a href="projects.html#vitaloop">Case study</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-churn" aria-labelledby="tab-churn" hidden>
+                  <figure class="panel-media"><img src="assets/projects/churn/app.webp" width="1280" height="960" loading="lazy" alt="Customer churn prediction Streamlit app"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · Machine Learning · Data · Streamlit</p>
+                    <h3>Customer churn prediction</h3>
+                    <p>Calibrated logistic regression on the IBM Telco dataset served in a Streamlit app for single and batch predictions.</p>
+                    <p class="panel-links"><a href="projects.html#churn">Case study</a><a href="https://github.com/makhdanramadhan-ui/Machine-Learning-Project" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-wishnotes" aria-labelledby="tab-wishnotes" hidden>
+                  <figure class="panel-media"><img src="assets/projects/wishnote/christmas-tree.webp" width="1365" height="1147" loading="lazy" alt="WishNotes Christmas tree board with ornaments holding messages"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · Semester 3, Web Programming · group project · full-stack development · Web · Laravel · SQLite</p>
+                    <h3>WishNotes</h3>
+                    <p>A Laravel app for leaving notes on themed boards, including a Christmas tree board where visitors place ornaments with messages at chosen coordinates.</p>
+                    <p class="panel-links"><a href="projects.html#wishnote">Case study</a><a href="demos/wishnotes/index.html">Demo</a><a href="https://github.com/makhdanramadhan-ui/WishNotes" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-netwatch" aria-labelledby="tab-netwatch" hidden>
+                  <figure class="panel-media"><img src="assets/projects/netwatch-rs/demo.gif" width="1006" height="431" loading="lazy" alt="netwatch-rs terminal UI showing live traffic and alerts"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Solo personal project</b> · Rust · Network security · TUI</p>
+                    <h3>netwatch-rs</h3>
+                    <p>Live packet monitor and mini-IDS in the terminal. Parses Layer 2–4 and DNS, tracks bandwidth and top talkers, and alerts on port scans, SYN spikes and DNS bursts.</p>
+                    <p class="panel-links"><a href="projects.html#netwatch-rs">Case study</a><a href="https://github.com/makhdanramadhan-ui/netwatch-rs" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </section>
 
-      <section class="education-section" id="education" tabindex="-1" aria-labelledby="education-heading">
-        <div class="wrap">
-          <div class="section-heading">
-            <h2 id="education-heading">Education</h2>
-            <p>Coursework in software, networks, and physical systems.</p>
+      <section class="agents" id="agents" aria-labelledby="agents-title" data-network>
+        <header class="section-heading is-centered" data-reveal>
+          <h2 id="agents-title">My agents work together.</h2>
+          <p>I work with agentic, multi-agent workflows to plan, build, and review my work. On my own VPS, a master tracker watches eight other services, reviews their output, and handles alerts.</p>
+        </header>
+
+        <div class="network" data-reveal>
+          <div class="network-stage">
+            <svg class="network-links" aria-hidden="true"></svg>
+            <div class="network-nodes" aria-hidden="true"></div>
           </div>
-          <div class="education">
-            <h3>IPB University<span>Sekolah Vokasi</span></h3>
-            <div>
-              <p><strong>Teknologi Rekayasa Komputer</strong><br>Computer Engineering Technology, applied bachelor’s program (D4)<br>Semester 5 (2026) / Angkatan 61</p>
-              <p class="gpa">GPA 3.61 / 4.00 (semesters 1–4)</p>
-              <p>The program spans computer networks, sensor-based IoT, and intelligent systems and automation. <a href="https://sv.ipb.ac.id/teknologi-rekayasa-komputer/" target="_blank" rel="noopener">Official program description</a></p>
+          <ul class="network-legend">
+            <li><b>Master tracker</b> checks every service every 60 seconds and applies guarded fixes.</li>
+            <li><b>Worker</b> runs coding jobs with model fallback through the 9Router gateway.</li>
+            <li><b>Researcher</b> sends 10 Spot, 10 Futures, and 10 DEX candidates four times a day.</li>
+            <li><b>Trading and DEX</b> keep hard limits: at most 3 entries per day, real trades only.</li>
+            <li><b>Campaign and Affiliate</b> render videos; the tracker audits every video before upload.</li>
+            <li><b>InternshipAgent</b> filters public job boards and sends a Telegram digest.</li>
+            <li><b>Control dashboard</b> handles commands and history over React, TypeScript, and Express.</li>
+          </ul>
+        </div>
+        <p class="network-note page">Simplified illustration of my multi-agent automation platform. <a class="text-link" href="projects.html#agent-platform">Read the case study<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></p>
+      </section>
+
+      <section class="skills page" id="skills" aria-labelledby="skills-title">
+        <header class="section-heading" data-reveal>
+          <h2 id="skills-title">Skills &amp; Stack</h2>
+          <p>What I use in projects and what I’ve studied in class.</p>
+        </header>
+
+        <div class="bento">
+          <article class="bento-card bento-wide" data-reveal>
+            <div class="tool-marquee" aria-hidden="true">
+              <div class="tool-row">
+                <span>TypeScript</span><span>Node.js</span><span>React</span><span>Express</span><span>Python</span><span>PHP</span><span>Laravel</span><span>SQLite</span><span>REST APIs</span><span>Git</span>
+              </div>
+              <div class="tool-row is-reverse">
+                <span>JavaScript</span><span>HTML</span><span>CSS</span><span>SQL</span><span>FastAPI</span><span>Streamlit</span><span>Rust</span><span>Docker Compose</span><span>n8n</span><span>Linux</span>
+              </div>
             </div>
-          </div>
-          <div class="certificates">
-            <h3>Cisco Networking Academy</h3>
-            <p>Completed courses, not a professional CCNA certification.</p>
-            <a href="certificates/ccna-introduction-to-networks.pdf">
-              <strong>CCNA: Introduction to Networks</strong>
-              <span>29 Dec 2024 / Certificate PDF</span>
-            </a>
-            <a href="certificates/ccna-switching-routing-wireless.pdf">
-              <strong>CCNA: Switching, Routing, and Wireless Essentials</strong>
-              <span>17 Dec 2025 / Certificate PDF</span>
-            </a>
-          </div>
+            <div class="bento-copy">
+              <h3>Software &amp; web</h3>
+              <p class="bento-overview">Interfaces, APIs, and the data behind them.</p>
+              <p>I connect web interfaces to backend APIs, manage application state, and handle failed requests and retries.</p>
+              <p class="bento-tools"><strong>Tools I use</strong> JavaScript / TypeScript, Node.js, React, Express, Python, PHP, Laravel, HTML, CSS, SQL, SQLite, REST APIs, Git.</p>
+              <a class="text-link" href="projects.html?area=software">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <article class="bento-card" data-reveal>
+            <div class="agent-log" aria-hidden="true">
+              <p class="agent-log-head"><span class="hash">#</span> ops</p>
+              <ol class="agent-log-lines" data-log>
+                <li style="--tone:var(--lilac)"><b>Tracker</b><span>All services healthy.</span></li>
+                <li style="--tone:var(--mint)"><b>Worker</b><span>Job finished. Waiting for review.</span></li>
+                <li style="--tone:var(--amber)"><b>Tracker</b><span>Review passed. Deploy backed up.</span></li>
+              </ol>
+            </div>
+            <div class="bento-copy">
+              <h3>AI systems &amp; automation</h3>
+              <p class="bento-overview">Model routing, job queues, and review.</p>
+              <p>I run agents as Linux services, route model requests, and queue jobs. If a review can’t run, the output waits. I monitor the services and keep a rollback path for fixes.</p>
+              <p class="bento-tools"><strong>Tools I use</strong> LLM APIs, 9Router, Linux, systemd, Node.js, Python, Telegram controls, Docker Compose, n8n.</p>
+              <p class="bento-note">AI tools assist my work. I direct implementation, audit changes, and operate the systems.</p>
+              <a class="text-link" href="projects.html?area=ai">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <article class="bento-card" data-reveal>
+            <div class="packet-term" aria-hidden="true">
+              <p><span class="t-dim">L2</span> Ethernet <span class="t-dim">→</span> <span class="t-dim">L3</span> IPv4 <span class="t-dim">→</span> <span class="t-dim">L4</span> TCP</p>
+              <p><span class="t-dim">rule</span> port scan</p>
+              <p><span class="t-dim">rule</span> SYN spike</p>
+              <p><span class="t-dim">rule</span> DNS burst</p>
+              <p class="t-cursor">netwatch-rs<i></i></p>
+            </div>
+            <div class="bento-copy">
+              <h3>Computer networks</h3>
+              <p class="bento-overview">How devices connect, route traffic, and control access.</p>
+              <p>I studied routing, switching, and wireless networking through Cisco courses. I’ve also used MikroTik to configure network access and user authentication. In netwatch-rs I applied that foundation to raw packet parsing, traffic statistics, and rule-based anomaly detection in Rust.</p>
+              <p class="bento-tools"><strong>Coursework &amp; practice</strong> Cisco networking, routing, switching, wireless networks, MikroTik, access configuration, user authentication, Rust packet parsing, pcap, network security rules.</p>
+              <a class="text-link" href="projects.html?area=networks">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <article class="bento-card is-pastel" style="--card:var(--lilac)" data-reveal>
+            <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><rect x="26" y="26" width="44" height="44" rx="6"/><path d="M38 12v14m20-14v14M38 70v14m20-14v14M12 38h14m-14 20h14m44-20h14m-14 20h14"/><circle cx="48" cy="48" r="7"/></svg>
+            <div class="bento-copy">
+              <p class="eyebrow">Coursework &amp; practice</p>
+              <h3>Embedded &amp; hardware</h3>
+              <p class="bento-overview">Taking measurements and connecting them to software.</p>
+              <p>I work with microcontrollers and sensors, from taking a reading on an ESP32 to sending it to a ThingsBoard server on AWS and onto a dashboard.</p>
+              <p class="bento-tools">ESP / ESP32, Arduino, sensors, IoT, ESP-NOW, Firebase, AWS, Ubuntu server, ThingsBoard, device-to-dashboard data flow.</p>
+              <a class="text-link" href="projects.html?area=embedded">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <article class="bento-card is-pastel" style="--card:var(--mint)" data-reveal>
+            <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M14 30h20v36H14zM62 30h20v36H62z"/><path d="M34 40h28M34 56h28"/><circle cx="24" cy="48" r="4"/><circle cx="72" cy="48" r="4"/></svg>
+            <div class="bento-copy">
+              <p class="eyebrow">Studied in coursework</p>
+              <h3>Industrial automation</h3>
+              <p class="bento-overview">Logic that connects inputs, conditions, and outputs.</p>
+              <p>In class, I studied PLC control logic in CX-Programmer and used Factory I/O to see how it responds to simulated inputs.</p>
+              <p class="bento-tools">PLC logic, CX-Programmer, Factory I/O, input/output relationships, control sequences.</p>
+              <a class="text-link" href="projects.html?area=industrial">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <article class="bento-card is-pastel" style="--card:var(--amber)" data-reveal>
+            <svg class="bento-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M14 80h68"/><path d="M22 72V50m16 22V34m16 38V44m16 28V22"/></svg>
+            <div class="bento-copy">
+              <p class="eyebrow">Studied in coursework</p>
+              <h3>Data &amp; computing</h3>
+              <p class="bento-overview">Understanding the data, the OS, and the machine.</p>
+              <p>I used RStudio to process and analyse VitaLoop’s sensor data. My coursework also covers MATLAB, Linux, and computer architecture.</p>
+              <p class="bento-tools">RStudio, MATLAB, Linux, computer architecture, data processing.</p>
+              <a class="text-link" href="projects.html?area=data">See projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="contact" id="contact" tabindex="-1" aria-labelledby="contact-heading">
-        <div class="wrap">
-          <h2 id="contact-heading">Let’s Work Together</h2>
+      <section class="gpa page" aria-labelledby="gpa-title">
+        <h2 id="gpa-title" class="gpa-eyebrow" data-reveal>GPA, semesters 1–4</h2>
+        <p class="gpa-amount" data-reveal><span>3.61</span><span class="gpa-scale">/ 4.00</span></p>
+        <ul class="gpa-facts" data-reveal>
+          <li>IPB University, Sekolah Vokasi</li>
+          <li>Computer Engineering Technology (D4)</li>
+          <li>Semester 5 (2026) / Angkatan 61</li>
+        </ul>
+        <div class="gpa-actions" data-reveal>
+          <a class="btn btn-light btn-lg" href="M-Akhdan-Ramadhan-CV.pdf" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+            Download CV
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#education">Education
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="education page" id="education" aria-labelledby="education-title" data-stack>
+        <header class="education-aside">
+          <h2 id="education-title" class="display">Education</h2>
+          <p class="education-lede">Coursework in software, networks, and physical systems.</p>
+          <ol class="stack-progress">
+            <li data-active="true"><span>01</span>IPB University</li>
+            <li><span>02</span>Program focus</li>
+            <li><span>03</span>CCNA: Introduction to Networks</li>
+            <li><span>04</span>CCNA: Switching, Routing, and Wireless Essentials</li>
+          </ol>
+        </header>
+
+        <ol class="stack-cards">
+          <li class="stack-card" style="--card:var(--lilac)">
+            <div class="stack-card-top"><span class="stack-tag">IPB University</span><span class="stack-count">01 / 04</span></div>
+            <svg class="stack-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M8 38 48 18l40 20-40 20z"/><path d="M24 46v20c8 8 40 8 48 0V46M88 38v22"/></svg>
+            <h3>IPB University <span>Sekolah Vokasi</span></h3>
+            <p><strong>Teknologi Rekayasa Komputer</strong><br>Computer Engineering Technology, applied bachelor’s program (D4)<br>Semester 5 (2026) / Angkatan 61</p>
+          </li>
+          <li class="stack-card" style="--card:var(--mint)">
+            <div class="stack-card-top"><span class="stack-tag">Program focus</span><span class="stack-count">02 / 04</span></div>
+            <svg class="stack-glyph" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="20" r="8"/><circle cx="20" cy="72" r="8"/><circle cx="76" cy="72" r="8"/><path d="M44 27 24 64m28-37 20 37M28 72h40"/></svg>
+            <h3>Networks, IoT, and intelligent systems</h3>
+            <p>The program spans computer networks, sensor-based IoT, and intelligent systems and automation. <a href="https://sv.ipb.ac.id/teknologi-rekayasa-komputer/" target="_blank" rel="noopener">Official program description</a></p>
+          </li>
+          <li class="stack-card" style="--card:var(--amber)">
+            <div class="stack-card-top"><span class="stack-tag">Cisco Networking Academy</span><span class="stack-count">03 / 04</span></div>
+            <svg class="stack-glyph" viewBox="0 0 96 96" aria-hidden="true"><rect x="14" y="30" width="68" height="36" rx="6"/><path d="M28 48h4m10 0h4m10 0h4m10 0h4"/></svg>
+            <h3>CCNA: Introduction to Networks</h3>
+            <p>Completed course, 29 Dec 2024. Completed courses, not a professional CCNA certification.</p>
+            <a class="btn btn-ink" href="certificates/ccna-introduction-to-networks.pdf">Certificate PDF
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </li>
+          <li class="stack-card" style="--card:var(--sky)">
+            <div class="stack-card-top"><span class="stack-tag">Cisco Networking Academy</span><span class="stack-count">04 / 04</span></div>
+            <svg class="stack-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12v72M12 48h72"/><path d="m36 24 12-12 12 12M36 72l12 12 12-12M24 36 12 48l12 12m48-24 12 12-12 12"/></svg>
+            <h3>CCNA: Switching, Routing, and Wireless Essentials</h3>
+            <p>Completed course, 17 Dec 2025. Completed courses, not a professional CCNA certification.</p>
+            <a class="btn btn-ink" href="certificates/ccna-switching-routing-wireless.pdf">Certificate PDF
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </li>
+        </ol>
+      </section>
+
+      <section class="contact page" id="contact" aria-labelledby="contact-title">
+        <header class="section-heading" data-reveal>
+          <h2 id="contact-title">Get in touch</h2>
+          <p>Email, WhatsApp, GitHub, LinkedIn, or the one-page CV.</p>
+        </header>
+        <div class="contact-grid">
+          <a class="contact-card" style="--card:var(--lilac)" href="mailto:akhdanrama@gmail.com" data-reveal>
+            <span class="contact-chip">Email</span>
+            <svg class="contact-glyph" viewBox="0 0 96 96" aria-hidden="true"><rect x="12" y="22" width="72" height="52" rx="8"/><path d="m16 28 32 24 32-24"/></svg>
+            <span class="contact-name">Email</span>
+            <span class="contact-value">akhdanrama@gmail.com</span>
+            <span class="contact-action">Write an email<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+          <a class="contact-card" style="--card:var(--mint); --reveal-delay:1" href="https://wa.me/6287899694581" target="_blank" rel="noopener" data-reveal>
+            <span class="contact-chip">WhatsApp</span>
+            <svg class="contact-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="m14 82 5-18A34 34 0 1 1 32 77z"/><path d="M36 34c1 12 11 22 24 26l5-5-8-4-4 3c-4-2-7-5-9-9l3-4-4-8z"/></svg>
+            <span class="contact-name">WhatsApp</span>
+            <span class="contact-value">+62 878-9969-4581</span>
+            <span class="contact-action">Open chat<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+          <a class="contact-card" style="--card:var(--amber)" href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener" data-reveal>
+            <span class="contact-chip">GitHub</span>
+            <svg class="contact-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="m34 30-18 18 18 18m28-36 18 18-18 18M54 22 42 74"/></svg>
+            <span class="contact-name">GitHub</span>
+            <span class="contact-value">makhdanramadhan-ui</span>
+            <span class="contact-action">View repositories<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+          <a class="contact-card is-wide" style="--card:var(--sky)" href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener" data-reveal>
+            <span class="contact-chip">LinkedIn</span>
+            <svg class="contact-glyph" viewBox="0 0 96 96" aria-hidden="true"><rect x="14" y="14" width="68" height="68" rx="12"/><path d="M32 42v24M32 30v1M44 66V42m0 10c0-6 4-10 10-10s10 4 10 10v14"/></svg>
+            <span class="contact-name">LinkedIn</span>
+            <span class="contact-value">Muhamad Akhdan Ramadhan</span>
+            <span class="contact-action">Connect<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+          <a class="contact-card is-wide" style="--card:var(--coral)" href="M-Akhdan-Ramadhan-CV.pdf" download data-reveal>
+            <span class="contact-chip">PDF · 1 page</span>
+            <svg class="contact-glyph" viewBox="0 0 96 96" aria-hidden="true"><path d="M26 10h30l18 18v58H26z"/><path d="M56 10v18h18M38 50h22M38 62h22M38 74h14"/></svg>
+            <span class="contact-name">Curriculum vitae</span>
+            <span class="contact-value">M-Akhdan-Ramadhan-CV.pdf</span>
+            <span class="contact-action">Download CV<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="closing-copy page" data-reveal>
+          <h2 id="closing-title">Let’s work together.</h2>
           <p>I’m looking for an internship in software, applied AI, or IoT. Send me a short note about the role, and I’ll reply with the projects that fit.</p>
-          <div class="contact-rows">
-            <a class="contact-row" href="mailto:akhdanrama@gmail.com">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7 12 13.5 20.5 7"/></svg>
-              <span class="row-label">Email</span>
-              <span class="row-val">akhdanrama@gmail.com</span>
+          <div class="closing-actions">
+            <a class="btn btn-light btn-lg" href="mailto:akhdanrama@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+              Email me
             </a>
-            <a class="contact-row" href="https://wa.me/6287899694581" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5 4.8 15.9A8.5 8.5 0 1 1 8.2 19.3z"/><path d="M9 8.5c.2 3 2.7 5.6 6 6.5l1.2-1.3-2-1-1 .8c-.9-.4-1.7-1.2-2.1-2.1l.8-1-1-2z"/></svg>
-              <span class="row-label">WhatsApp</span>
-              <span class="row-val">+62 878-9969-4581</span>
+            <a class="btn btn-glass btn-lg" href="projects.html">See all projects
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
             </a>
-          </div>
-          <div class="contact-links">
-            <a href="M-Akhdan-Ramadhan-CV.pdf">Download CV (PDF)</a>
-            <a href="projects.html">Projects</a>
-            <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub profile</a>
-            <a href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="#about">Back to top</a>
           </div>
         </div>
+        <div class="closing-glow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </section>
     </main>
 
-    <footer>
-      <div class="wrap footer-inner">
-        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
-        <div class="footer-links">
-          <a href="M-Akhdan-Ramadhan-CV.pdf">CV</a>
-          <a href="mailto:akhdanrama@gmail.com">Email</a>
-          <a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener">LinkedIn</a>
+    <footer class="site-footer">
+      <div class="page footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">MA</span><span>Muhamad Akhdan Ramadhan</span></a>
+          <p class="footer-statement">Computer Engineering Technology student at IPB University, building software, applied AI, and IoT projects.</p>
+          <a class="text-link footer-cta" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></a>
         </div>
+        <nav class="footer-columns" aria-label="Footer navigation">
+          <div>
+            <h2>Pages</h2>
+            <ul>
+              <li><a href="#work">Selected work</a></li>
+              <li><a href="#skills">Skills &amp; Stack</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="projects.html">All projects</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Projects</h2>
+            <ul>
+              <li><a href="projects.html#costmosys">COSTMOSYS</a></li>
+              <li><a href="projects.html#agent-platform">Multi-agent platform</a></li>
+              <li><a href="projects.html#doorlink">DoorLink</a></li>
+              <li><a href="projects.html#netwatch-rs">netwatch-rs</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><a href="mailto:akhdanrama@gmail.com">Email</a></li>
+              <li><a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a></li>
+              <li><a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="page footer-bottom">
+        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
+        <p class="footer-status"><span class="status-dot" aria-hidden="true"></span>Open to internships in software, applied AI, and IoT</p>
       </div>
     </footer>
   </body>

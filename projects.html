@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0c111b">
+    <meta name="theme-color" content="#1a1a1a">
     <meta name="description" content="Software, applied AI, and IoT projects by Muhamad Akhdan Ramadhan: COSTMOSYS, a multi-agent automation platform, a calibrated churn model, IoT and networking coursework, and PLC simulations. Open to internships in software, applied AI, and IoT.">
     <link rel="canonical" href="https://makhdanramadhan-ui.github.io/projects.html">
     <meta property="og:type" content="website">
@@ -21,10 +21,11 @@
     <meta name="twitter:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="preload" href="assets/fonts/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/public-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
     <script>document.documentElement.classList.add("js");</script>
+    <script src="site.js" defer></script>
     <script src="motion.js" defer></script>
     <title>Projects | Muhamad Akhdan Ramadhan</title>
   </head>
@@ -32,28 +33,50 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <div class="wrap header-inner">
-        <a class="home-link" href="index.html">Muhamad Akhdan Ramadhan</a>
-        <nav class="site-nav" aria-label="Main navigation">
-          <button
-            class="menu-button"
-            type="button"
-            popovertarget="site-menu"
-            popovertargetaction="toggle"
-            aria-controls="site-menu"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-            <span>Menu</span>
-          </button>
-          <ul id="site-menu" class="site-menu" popover="auto">
-            <li><a href="index.html#skills">Skills</a></li>
-            <li><a href="index.html#education">Education</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
-            <li><a href="projects.html" aria-current="page">Projects</a></li>
-          </ul>
-        </nav>
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">MA</span><span class="brand-name">Muhamad Akhdan Ramadhan</span></a>
+      <nav class="nav-track" aria-label="Main navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#agents">Agents</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#education">Education</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-light" href="M-Akhdan-Ramadhan-CV.pdf" download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+          Download CV
+        </a>
+        <a class="btn btn-glass" href="index.html#contact">
+          Contact
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-sheet" data-sheet-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+        </button>
       </div>
     </header>
+
+    <div class="site-sheet" id="site-sheet" role="dialog" aria-modal="true" aria-label="Site menu">
+      <div class="site-sheet-top">
+        <span class="brand"><span class="brand-mark" aria-hidden="true">MA</span><span class="brand-name">Muhamad Akhdan Ramadhan</span></span>
+        <button class="menu-toggle" type="button" aria-label="Close menu" data-sheet-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Site menu links">
+        <a href="index.html#work" style="--i:0">Work</a>
+        <a href="index.html#agents" style="--i:1">Agents</a>
+        <a href="index.html#skills" style="--i:2">Skills</a>
+        <a href="index.html#education" style="--i:3">Education</a>
+        <a href="index.html#contact" style="--i:4">Contact</a>
+        <a href="projects.html" aria-current="page" style="--i:5">Projects</a>
+      </nav>
+      <div class="site-sheet-actions">
+        <a class="btn btn-light btn-lg" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV (PDF, 1 page)</a>
+        <a class="btn btn-glass btn-lg" href="mailto:akhdanrama@gmail.com">Email me</a>
+      </div>
+    </div>
 
     <main id="main" tabindex="-1">
       <section class="projects-hero" aria-labelledby="page-title">
@@ -227,7 +250,7 @@
           <article class="study" id="agent-platform" data-areas="ai software">
             <div class="study-text">
               <h3>Multi-agent automation platform</h3>
-              <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener" style="color:var(--signal)">Link: control UI demo (synthetic data)</a> · AI · Software · Automation</p>
+              <p class="meta"><b>Solo personal project</b> · private backend repositories · <a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener" style="color:var(--link)">Link: control UI demo (synthetic data)</a> · AI · Software · Automation</p>
               <p class="lede">Nine Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB RAM) under systemd, plus a 9Router model gateway. The services are written in TypeScript. A master tracker watches the other agents, reviews their work, and handles alerts. Telegram and a React web dashboard handle commands and history.</p>
             </div>
             <div class="study-visual">
@@ -899,16 +922,46 @@
       </form>
     </dialog>
 
-    <footer>
-      <div class="wrap footer-inner">
-        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
-        <div class="footer-links">
-          <a href="M-Akhdan-Ramadhan-CV.pdf">CV</a>
-          <a href="mailto:akhdanrama@gmail.com">Email</a>
-          <a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener">LinkedIn</a>
+    <footer class="site-footer">
+      <div class="page footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">MA</span><span>Muhamad Akhdan Ramadhan</span></a>
+          <p class="footer-statement">Computer Engineering Technology student at IPB University, building software, applied AI, and IoT projects.</p>
+          <a class="text-link footer-cta" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></a>
         </div>
+        <nav class="footer-columns" aria-label="Footer navigation">
+          <div>
+            <h2>Pages</h2>
+            <ul>
+              <li><a href="index.html#work">Selected work</a></li>
+              <li><a href="index.html#skills">Skills &amp; Stack</a></li>
+              <li><a href="index.html#education">Education</a></li>
+              <li><a href="projects.html" aria-current="page">All projects</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Projects</h2>
+            <ul>
+              <li><a href="#costmosys">COSTMOSYS</a></li>
+              <li><a href="#agent-platform">Multi-agent platform</a></li>
+              <li><a href="#doorlink">DoorLink</a></li>
+              <li><a href="#netwatch-rs">netwatch-rs</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><a href="mailto:akhdanrama@gmail.com">Email</a></li>
+              <li><a href="https://wa.me/6287899694581" target="_blank" rel="noopener">WhatsApp</a></li>
+              <li><a href="https://github.com/makhdanramadhan-ui" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/muhamad-akhdan-ramadhan-4517bb314/" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="page footer-bottom">
+        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
+        <p class="footer-status"><span class="status-dot" aria-hidden="true"></span>Open to internships in software, applied AI, and IoT</p>
       </div>
     </footer>
   </body>
