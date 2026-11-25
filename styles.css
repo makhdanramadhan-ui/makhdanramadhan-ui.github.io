@@ -351,12 +351,6 @@ main:focus {
   opacity: 1;
 }
 
-.menu-toggle[data-beam-source] {
-  border-color: transparent;
-  background: var(--action);
-  color: var(--ink);
-}
-
 .site-header {
   position: relative;
   z-index: 20;
