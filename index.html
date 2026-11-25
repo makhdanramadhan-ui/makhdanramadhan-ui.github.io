@@ -82,7 +82,7 @@
 
     <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="beam" aria-hidden="true" data-surface=".showcase .window" data-source=".site-header .btn-light" data-beam-x="0.78">
+        <div class="beam" aria-hidden="true" data-surface=".showcase .window" data-source=".site-header .btn-light" data-avoid=".hero-badge, .hero-title > *, .hero-lead, .hero-actions" data-beam-x="0.78">
           <canvas class="beam-canvas"></canvas>
         </div>
 
@@ -390,10 +390,6 @@
           <li>Semester 5 (2026) / Angkatan 61</li>
         </ul>
         <div class="gpa-actions" data-reveal>
-          <a class="btn btn-light btn-lg" href="M-Akhdan-Ramadhan-CV.pdf" download>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
-            Download CV
-          </a>
           <a class="btn btn-ghost btn-lg" href="#education">Education
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
           </a>
@@ -513,7 +509,6 @@
         <div class="footer-brand">
           <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">MA</span><span>Muhamad Akhdan Ramadhan</span></a>
           <p class="footer-statement">Computer Engineering Technology student at IPB University, building software, applied AI, and IoT projects.</p>
-          <a class="text-link footer-cta" href="M-Akhdan-Ramadhan-CV.pdf" download>Download CV<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></a>
         </div>
         <nav class="footer-columns" aria-label="Footer navigation">
           <div>
@@ -546,7 +541,7 @@
         </nav>
       </div>
       <div class="page footer-bottom">
-        <p>© 2026 Muhamad Akhdan Ramadhan · Updated November 2026</p>
+        <p>© 2026 Muhamad Akhdan Ramadhan</p>
         <p class="footer-status"><span class="status-dot" aria-hidden="true"></span>Open to internships in software, applied AI, and IoT</p>
       </div>
     </footer>
