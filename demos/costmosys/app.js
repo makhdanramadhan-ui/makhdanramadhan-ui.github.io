@@ -124,6 +124,16 @@
     drawChart();
   }
 
+  function switchTheme(origin) {
+    const theme = state.theme === 'dark' ? 'light' : 'dark', root = document.documentElement;
+    if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) { setTheme(theme); return; }
+    const r = origin.getBoundingClientRect();
+    root.style.setProperty('--theme-x', `${r.left + r.width / 2}px`);
+    root.style.setProperty('--theme-y', `${r.top + r.height / 2}px`);
+    root.classList.add('theme-swap');
+    document.startViewTransition(() => setTheme(theme)).finished.finally(() => root.classList.remove('theme-swap'));
+  }
+
   function openSidebar() {
     el.sidebar.classList.add('open');
     el.sidebar.setAttribute('aria-hidden', 'false');
@@ -610,7 +620,7 @@
   }
 
   function wire() {
-    el.themeBtn.addEventListener('click', () => setTheme(state.theme === 'dark' ? 'light' : 'dark'));
+    el.themeBtn.addEventListener('click', e => switchTheme(e.currentTarget));
     el.menuBtn.addEventListener('click', () => el.sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
     el.sideClose.addEventListener('click', closeSidebar);
     el.sideOverlay.addEventListener('click', closeSidebar);
