@@ -356,14 +356,14 @@ void main() {
     blue: { ...BASE_LOOK, color: "#3847ff" },
   };
   const BLENDED_RANGES = {
-    intensity: [1.2, 2], beamWidth: [0.9, 5.5], flare: [1.2, 3.6], spread: [2.4, 6.5], spill: [0.7, 1.4],
-    fall: [1.4, 2.8], fog: [0.1, 1], dust: [0.4, 2.2], streaks: [0.3, 1.8], dots: [0.4, 1.4],
+    intensity: [1.5, 2], beamWidth: [3.4, 5.5], flare: [2.4, 3.6], spread: [5.4, 6.5], spill: [1, 1.4],
+    fall: [1.4, 2.8], fog: [0.3, 1], dust: [0.4, 2.2], streaks: [0.3, 1.8], dots: [0.4, 1.4],
     pulse: [0.7, 1.8], speed: [1.1, 2.4],
   };
   const SMOKE_RANGES = {
     smokeSize: [0.45, 2.2], smokeDetail: [0, 1], smokeEdge: [0, 1], smokeSwirl: [0.3, 2], smokeDrift: [0.5, 2.4],
   };
-  const BASE_COLORS = ["#3847ff", "#5b5bff", "#2f8bff", "#38a8ff", "#6f8cff", "#7b3dff", "#a46cf5", "#c03cff", "#d46cf5", "#ff3df2", "#ff4fa3", "#ff4d6d"];
+  const BASE_COLORS = ["#3847ff", "#5b5bff", "#2f8bff", "#38a8ff", "#6f8cff", "#7b3dff", "#a46cf5", "#c03cff", "#d46cf5", "#ff3df2", "#ff4fa3", "#ff4d6d", "#ff2a3d", "#ff3b2f"];
   const PALETTE_STEPS = [
     [0, 1], [-11.5, 0.77], [9.5, 0.95], [-53.5, 0.79], [39.5, 0.77], [16, 0.81], [-16.3, 0.92], [13.3, 0.96],
     [3, 1.01], [1, 0.68], [1, 1.15], [142.5, 0.51], [113.6, 0.28], [-7.5, 0.13], [-2.7, 0.32], [7.5, 0.81],
