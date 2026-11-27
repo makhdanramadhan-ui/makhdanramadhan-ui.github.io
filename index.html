@@ -129,7 +129,7 @@
           <div class="window">
             <div class="window-bar">
               <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="window-title">Selected work <span>· 8 projects</span></span>
+              <span class="window-title">Selected work <span>· 9 projects</span></span>
               <a class="window-link" href="projects.html">All case studies
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
               </a>
@@ -144,6 +144,11 @@
                 <button class="project-tab" role="tab" id="tab-agents" aria-controls="panel-agents" aria-selected="false" tabindex="-1" style="--tone:var(--lilac)">
                   <span class="project-avatar shape-blob" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M2 14h2M20 14h2M9 13v2M15 13v2"/></svg></span>
                   <span class="project-tab-text"><span class="project-tab-name">Multi-agent platform <em>Solo</em></span><span class="project-tab-line">Nine services on one VPS</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-rakitkarier" aria-controls="panel-rakitkarier" aria-selected="false" tabindex="-1" style="--tone:var(--sky)">
+                  <span class="project-avatar shape-diamond" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18M11 12.5v1.5h2v-1.5"/></svg></span>
+                  <span class="project-tab-text"><span class="project-tab-name">RakitKarier <em>Team of 4</em></span><span class="project-tab-line">Job search and CV platform</span></span>
                   <span class="project-tab-progress" aria-hidden="true"></span>
                 </button>
                 <button class="project-tab" role="tab" id="tab-scafi" aria-controls="panel-scafi" aria-selected="false" tabindex="-1" style="--tone:var(--coral)">
@@ -195,6 +200,15 @@
                     <h3>Multi-agent automation platform</h3>
                     <p>Nine Node.js services run on one Ubuntu VPS (2 vCPU, 2 GB RAM) under systemd, plus a 9Router model gateway. The services are written in TypeScript. A master tracker watches the other agents, reviews their work, and handles alerts. Telegram and a React web dashboard handle commands and history.</p>
                     <p class="panel-links"><a href="projects.html#agent-platform">Case study</a><a href="https://makhdanramadhan-ui.github.io/lynx-agent-control-demo/" target="_blank" rel="noopener">Demo</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-rakitkarier" aria-labelledby="tab-rakitkarier" hidden>
+                  <figure class="panel-media"><img src="assets/projects/rakitkarier/landing.webp" width="1440" height="585" loading="lazy" alt="RakitKarier landing page with a job search headline and a profile match preview"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Competition project</b> · SEVENT X · team of 4 · backend lead · Web · Next.js · Supabase</p>
+                    <h3>RakitKarier <span>SEVENT X Job Platform</span></h3>
+                    <p>A live job search site for Indonesia that shows which requirements match a user’s profile, helps build a CV, and sends users to the official listing to apply. I built the backend: authentication, account security, profile APIs, and email notifications.</p>
+                    <p class="panel-links"><a href="projects.html#rakitkarier">Case study</a><a href="https://rakitkarier.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
                   </div>
                 </article>
                 <article class="project-panel" role="tabpanel" id="panel-scafi" aria-labelledby="tab-scafi" hidden>
@@ -524,6 +538,7 @@
             <ul>
               <li><a href="projects.html#costmosys">COSTMOSYS</a></li>
               <li><a href="projects.html#agent-platform">Multi-agent platform</a></li>
+              <li><a href="projects.html#rakitkarier">RakitKarier</a></li>
               <li><a href="projects.html#doorlink">DoorLink</a></li>
               <li><a href="projects.html#netwatch-rs">netwatch-rs</a></li>
             </ul>

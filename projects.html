@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1a1a1a">
-    <meta name="description" content="Software, applied AI, and IoT projects by Muhamad Akhdan Ramadhan: COSTMOSYS, a multi-agent automation platform, a calibrated churn model, IoT and networking coursework, and PLC simulations. Open to internships in software, applied AI, and IoT.">
+    <meta name="description" content="Software, applied AI, and IoT projects by Muhamad Akhdan Ramadhan: COSTMOSYS, a multi-agent automation platform, the RakitKarier job platform, a calibrated churn model, IoT and networking coursework, and PLC simulations. Open to internships in software, applied AI, and IoT.">
     <link rel="canonical" href="https://makhdanramadhan-ui.github.io/projects.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Muhamad Akhdan Ramadhan">
     <meta property="og:title" content="Projects | Muhamad Akhdan Ramadhan">
-    <meta property="og:description" content="Software, applied AI, and IoT projects: COSTMOSYS, a multi-agent automation platform, a calibrated churn model, and coursework builds. Open to internships in software, applied AI, and IoT.">
+    <meta property="og:description" content="Software, applied AI, and IoT projects: COSTMOSYS, a multi-agent automation platform, the RakitKarier job platform, a calibrated churn model, and coursework builds. Open to internships in software, applied AI, and IoT.">
     <meta property="og:url" content="https://makhdanramadhan-ui.github.io/projects.html">
     <meta property="og:image" content="https://makhdanramadhan-ui.github.io/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -402,6 +402,64 @@
                     </a>
                     <figcaption>Spot/Futures closed position history and timeline selector (demo mode).</figcaption>
                   </figure>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="study" id="rakitkarier" data-areas="software" data-reveal data-spotlight>
+            <div class="study-text">
+              <h3>RakitKarier</h3>
+              <p class="subtitle">SEVENT X Job Platform</p>
+              <p class="meta"><b>Competition project</b> · SEVENT X Software Development, SDG 8 · team of 4 · backend and integration lead · <a href="https://rakitkarier.vercel.app/" target="_blank" rel="noopener" style="color:var(--link)">Link: live site</a> · Web · Next.js · Supabase</p>
+              <p class="lede">A job search website for Indonesia. Users fill in a profile, browse listings collected from official sources, see which requirements they meet and which are missing, build or import a CV, and apply on the employer’s own page. The site never submits applications for the user.</p>
+            </div>
+            <div class="study-visual">
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/rakitkarier/landing.webp" data-title="RakitKarier — Landing page">
+                  <img src="assets/projects/rakitkarier/landing.webp" width="1440" height="585" loading="lazy" alt="RakitKarier landing page headline about finding jobs in Indonesia and checking profile fit, with a match preview card">
+                </a>
+                <figcaption>Live landing page. The interface is in Indonesian.</figcaption>
+              </figure>
+              <figure class="figure">
+                <a class="figure-trigger" href="assets/projects/rakitkarier/login.webp" data-title="RakitKarier — Sign-in page">
+                  <img src="assets/projects/rakitkarier/login.webp" width="1440" height="800" loading="lazy" alt="RakitKarier sign-in form with email and password fields, a forgot password link, and a Google sign-in button">
+                </a>
+                <figcaption>Sign-in with email and password or Google, part of the backend I built.</figcaption>
+              </figure>
+            </div>
+            <details class="more study-more">
+              <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
+              <div class="detail detail-grid">
+                <div>
+                  <h4>Problem</h4>
+                  <p>Job seekers jump between many job boards and rarely know which requirements they are missing before they apply. The competition theme was SDG 8, decent work and economic growth.</p>
+                  <h4>Personal contribution</h4>
+                  <p>Team of four. I led the backend and integration, coordinated the technical side, and own the repository. The other members handled the frontend and UX, the job scraper and recommendation rules, and the CV studio and QA. I used AI coding tools for parts of the implementation and reviewed every change.</p>
+                  <h4>What I built</h4>
+                  <ul>
+                    <li>Sign-up and sign-in with email and password or Google OAuth through Supabase Auth.</li>
+                    <li>Rate limits on sign-up, sign-in, and password reset, stored in Postgres and keyed by SHA-256 hashes of the IP or email, never raw values.</li>
+                    <li>Password reset with an 8-digit email code that does not reveal whether an account exists.</li>
+                    <li>Account settings to change email, change password, or delete the account, each confirmed with a one-time email code.</li>
+                    <li>Profile API with avatar upload, a 571-skill catalog with autocomplete, and a 366-entry job position catalog.</li>
+                    <li>Scheduled email alerts for new listings that match a profile by 70% or more and for saved listings whose deadline is three days or one day away.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Key decisions</h4>
+                  <ul>
+                    <li>Recommendations use transparent rules, not an LLM, so every score comes with the reasons a listing fits or does not.</li>
+                    <li>Row-level security in Supabase keeps each user’s profile, CV, and bookmarks private. Job listings are written only through a server-side function.</li>
+                    <li>If the rate-limit store fails, sign-up is refused, while sign-in stays open so existing users are not locked out.</li>
+                  </ul>
+                  <h4>Status</h4>
+                  <p>Live on Vercel. The competition result has not been announced yet.</p>
+                  <h4>Stack</h4>
+                  <p class="stack">Next.js, React, TypeScript, Supabase (Postgres, Auth, Storage, row-level security), Nodemailer, Vercel Cron, GitHub Actions, Docker; Python for the job scraper.</p>
+                  <h4>Links</h4>
+                  <p class="links"><a href="https://rakitkarier.vercel.app/" target="_blank" rel="noopener">Live site</a> · <a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
+                  <p class="note">The site and the README are written in Indonesian.</p>
                 </div>
               </div>
             </details>
@@ -911,18 +969,6 @@
               <p>Semester 1 coursework. I built a remote-controlled car using an IC and a transmitter/receiver pair. No photos, video, or schematics are available.</p>
             </div>
           </details>
-
-          <details class="entry" id="sevent-x-job-platform" data-areas="software" data-reveal>
-            <summary><span class="node" aria-hidden="true"></span><span class="summary-title">SEVENT X Job Platform</span><span class="domain-overview">Personal project · In progress. Software · Web · Next.js · Supabase</span><span class="toggle" aria-hidden="true"></span></summary>
-            <div class="entry-body detail">
-              <p><b>In progress.</b> A job-search website developed for the SEVENT X Software Development competition (SDG 8: Decent Work and Economic Growth). Planned features include aggregation of job listings from external sources with authorized access and links to the original source, job recommendations based on skills, experience, and preferences, importing or creating a CV with simple templates, and saving favorite listings while users apply through the original source.</p>
-              <p>The README states that backend and database migrations are available, while the product frontend, job pipeline, recommendations, and CV import/export are not yet implemented. LinkedIn access is not available and would require an authorized path.</p>
-              <h4>Stack</h4>
-              <p class="stack">Next.js, TypeScript, Supabase (website, authentication, database); Python planned for job data collection.</p>
-              <h4>Links</h4>
-              <p class="links"><a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
-            </div>
-          </details>
         </div>
       </section>
     </main>
@@ -964,6 +1010,7 @@
             <ul>
               <li><a href="#costmosys">COSTMOSYS</a></li>
               <li><a href="#agent-platform">Multi-agent platform</a></li>
+              <li><a href="#rakitkarier">RakitKarier</a></li>
               <li><a href="#doorlink">DoorLink</a></li>
               <li><a href="#netwatch-rs">netwatch-rs</a></li>
             </ul>
