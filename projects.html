@@ -1017,10 +1017,10 @@
                       <li>Factory I/O reaches the PLC through its OPC Client driver and Omron’s <code>OMRON.OpenDataServer</code>. Each button, level sensor, valve and lamp is bound to a <code>TANGKI</code> tag.</li>
                     </ul>
                     <figure class="figure">
-                      <a class="figure-trigger" href="assets/projects/plc/tank-driver.webp" data-title="Water-tank control — Factory I/O OPC driver">
-                        <img src="assets/projects/plc/tank-driver.webp" width="1532" height="751" loading="lazy" alt="Factory I/O driver page set to OPC Client DA/UA with server OMRON.OpenDataServer.1, listing scene sensors on the left, actuators on the right, and TANGKI tags such as Start, Stop, Kuras, Pompa_isi, Pompa_kuras, Sensor_atas and Sensor_bawah in the middle">
+                      <a class="figure-trigger" href="assets/projects/plc/tank-opc.webp" data-title="Water-tank control — CX-Server OPC points">
+                        <img src="assets/projects/plc/tank-opc.webp" width="1135" height="563" loading="lazy" alt="CX-Server OPC Project Editor for Tangki Air_Kelompok 5.cdm listing 12 points in group TANGKI, such as Kuras at tangki_air/0.4, Pompa_isi at tangki_air/100.0 and indikator_kuras at tangki_air/100.6">
                       </a>
-                      <figcaption>Factory I/O driver: OPC Client to the Omron OPC server, with the TANGKI tags.</figcaption>
+                      <figcaption>CX-Server OPC: the 12 TANGKI points and their PLC addresses.</figcaption>
                     </figure>
                   </div>
                 </div>
@@ -1038,6 +1038,18 @@
                         <img src="assets/projects/plc/tank-ladder-autofill.webp" width="691" height="242" loading="lazy" alt="Ladder rungs 3 to 6: a KEEP for auto-fill set by start_autofill and reset by stop_autofill, then three rungs driving the fill, drain and auto-fill indicator lamps">
                       </a>
                       <figcaption>Rungs 3–6: auto-fill mode and the three indicator lamps.</figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="detail hardware">
+                  <h4>OPC link: CX-Server OPC and Factory I/O</h4>
+                  <p>The CX-Server OPC project <code>Tangki Air_Kelompok 5</code> exposes the 12 ladder addresses as points in the <code>TANGKI</code> group on the device <code>tangki_air</code>. Factory I/O’s OPC Client driver binds the buttons and level sensors to the input points, and the output points to the fill valve, the discharge valve and the panel lamps.</p>
+                  <div class="hw-grid hw-opc">
+                    <figure class="figure wide">
+                      <a class="figure-trigger" href="assets/projects/plc/tank-driver.webp" data-title="Water-tank control — Factory I/O OPC driver">
+                        <img src="assets/projects/plc/tank-driver.webp" width="1532" height="398" loading="lazy" alt="Factory I/O driver set to OPC Client DA/UA on OMRON.OpenDataServer.1: the Kuras, Sensor_atas, Sensor_bawah, Start, Stop and autofill sensors bound to TANGKI tags, and Pompa_isi, Pompa_kuras and the three indicator tags bound to the fill valve, discharge valve, Start Autofill, Startind and Kurasind">
+                      </a>
+                      <figcaption>Factory I/O driver: sensors on the left and actuators on the right, bound to the TANGKI tags.</figcaption>
                     </figure>
                   </div>
                 </div>
@@ -1085,9 +1097,10 @@
                         <tr><th scope="row">I:0.05</th><td>PB_START</td><td>Start, lids line</td></tr>
                         <tr><th scope="row">I:0.06</th><td>PB_STOP</td><td>Stop, lids line, normally closed</td></tr>
                         <tr><th scope="row">Q:100.00</th><td>STARTBASE</td><td>Bases line running</td></tr>
-                        <tr><th scope="row">Q:100.02</th><td>MULAIBASE</td><td>Bases line start output</td></tr>
+                        <tr><th scope="row">Q:100.02</th><td>MULAIBASE</td><td>Bases conveyors, center start and remover</td></tr>
                         <tr><th scope="row">Q:100.01</th><td>MULAILIDS</td><td>Lids line running</td></tr>
-                        <tr><th scope="row">10.00 / 20.00</th><td>EMITERBASE / EMITERLIDS</td><td>Raw-piece emitters</td></tr>
+                        <tr><th scope="row">200.01</th><td>MULAILIDS</td><td>Lids conveyors, center start and remover</td></tr>
+                        <tr><th scope="row">10.00 / 20.00</th><td>EMITERBASE / EMITERLIDS</td><td>Bases and lids emitters</td></tr>
                         <tr><th scope="row">10.05 / 20.05</th><td>EMITERBASE2 / EMITERLIDS2</td><td>Emitter cycle reset</td></tr>
                         <tr><th scope="row">T0000 / T0001</th><td>#350</td><td>35 s wait between pieces</td></tr>
                         <tr><th scope="row">T0002 / T0003</th><td>#30</td><td>3 s emitter pulse</td></tr>
@@ -1101,12 +1114,6 @@
                       <li>While a line runs, a 35 s timer turns its emitter on. Pressing Start turns the emitter on at once, so the first piece does not wait.</li>
                       <li>The emitter bit starts a 3 s timer whose done bit resets the 35 s timer. The emitter drops and the cycle repeats, so each line gets a new raw piece about every 38 s.</li>
                     </ul>
-                    <figure class="figure">
-                      <a class="figure-trigger" href="assets/projects/plc/conveyor-scene.webp" data-title="Conveyor control — Factory I/O tags">
-                        <img src="assets/projects/plc/conveyor-scene.webp" width="716" height="537" loading="lazy" alt="Factory I/O scene: an orange robot arm and conveyors inside a fenced cell, behind the simulator’s list of inputs and outputs for Bases and Lids">
-                      </a>
-                      <figcaption>Factory I/O tag list for the bases and lids lines.</figcaption>
-                    </figure>
                   </div>
                 </div>
                 <div class="detail hardware">
@@ -1135,6 +1142,24 @@
                         <img src="assets/projects/plc/conveyor-ladder.webp" width="716" height="537" loading="lazy" alt="CX-Programmer in monitor mode: project CONVEYOR with rungs labelled PB START, PB STOP, STARTBASE and EMITERB, a timer, and a compile output reading 0 errors, 0 warnings">
                       </a>
                       <figcaption>CX-Programmer, project CONVEYOR in monitor mode: 0 errors, 0 warnings.</figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="detail hardware">
+                  <h4>OPC link: CX-Server OPC and Factory I/O</h4>
+                  <p>The CX-Server OPC project <code>Conveyor_Kelompok 5</code> maps 18 points in the <code>CONVEYOR2</code> group. One output per line drives that line’s raw and exit conveyors, its machining center start and its remover: <code>100.02</code> for bases and <code>200.01</code> for lids. The emitters sit on <code>10.00</code> and <code>20.00</code>, and the stop buttons also feed each machining center’s stop input.</p>
+                  <div class="hw-grid hw-opc">
+                    <figure class="figure">
+                      <a class="figure-trigger" href="assets/projects/plc/conveyor-opc.webp" data-title="Conveyor control — CX-Server OPC points">
+                        <img src="assets/projects/plc/conveyor-opc.webp" width="1140" height="567" loading="lazy" alt="CX-Server OPC Project Editor for Conveyor_Kelompok 5.cdm listing 18 points in group CONVEYOR2, such as BASE1, BASECENTERSTART, BASERAW and REMOVEBASE at New PLC 1/100.2, the lids points at 200.1, BASEEMITTER at 10.0 and LIDSEMITTER at 20.0">
+                      </a>
+                      <figcaption>CX-Server OPC: the 18 CONVEYOR2 points and their PLC addresses.</figcaption>
+                    </figure>
+                    <figure class="figure">
+                      <a class="figure-trigger" href="assets/projects/plc/conveyor-scene.webp" data-title="Conveyor control — Factory I/O tags">
+                        <img src="assets/projects/plc/conveyor-scene.webp" width="716" height="537" loading="lazy" alt="Factory I/O scene: an orange robot arm and conveyors inside a fenced cell, behind the simulator’s list of inputs and outputs for Bases and Lids">
+                      </a>
+                      <figcaption>Factory I/O tag list for the bases and lids lines.</figcaption>
                     </figure>
                   </div>
                 </div>

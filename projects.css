@@ -753,7 +753,7 @@ code {
   align-items: start;
 }
 
-.clip-shots .figure.wide {
+.figure.wide {
   grid-column: 1 / -1;
 }
 
