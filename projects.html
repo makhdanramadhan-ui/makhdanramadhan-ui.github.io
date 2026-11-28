@@ -264,6 +264,20 @@
                     <figcaption>Installation: the enclosure and the solenoid valve on the pipe below it.</figcaption>
                   </figure>
                 </div>
+                <div class="hw-grid hw-deployed">
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/costmosys/deployed-barn.webp" data-title="COSTMOSYS — Right node (main node) in the barn">
+                      <img src="assets/projects/costmosys/deployed-barn.webp" width="947" height="467" loading="lazy" alt="The right node, the main node, in a black enclosure with a lit blue LCD mounted on a red barn post at night, with Holstein cows feeding in the stalls behind it">
+                    </a>
+                    <figcaption>Right node (main node) in operation on a barn post at night, next to the stalls.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/costmosys/lcd-readout.webp" data-title="COSTMOSYS — Right node LCD readout">
+                      <img src="assets/projects/costmosys/lcd-readout.webp" width="410" height="446" loading="lazy" alt="Front of the right node enclosure with a 16x2 LCD reading T:27.3C RH:100% on the first line and THI:81.20 on the second">
+                    </a>
+                    <figcaption>Right node (main node) LCD: temperature, humidity and THI.</figcaption>
+                  </figure>
+                </div>
               </div>
             </details>
           </article>
@@ -421,12 +435,38 @@
                 </a>
                 <figcaption>Live landing page. The interface is in Indonesian.</figcaption>
               </figure>
-              <figure class="figure">
-                <a class="figure-trigger" href="assets/projects/rakitkarier/login.webp" data-title="RakitKarier — Sign-in page">
-                  <img src="assets/projects/rakitkarier/login.webp" width="1440" height="800" loading="lazy" alt="RakitKarier sign-in form with email and password fields, a forgot password link, and a Google sign-in button">
-                </a>
-                <figcaption>Sign-in with email and password or Google, part of the backend I built.</figcaption>
-              </figure>
+              <div class="hw-grid hw-app">
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/rakitkarier/login.webp" data-title="RakitKarier — Sign-in page">
+                    <img src="assets/projects/rakitkarier/login.webp" width="1440" height="800" loading="lazy" alt="RakitKarier sign-in form with email and password fields, a forgot password link, and a Google sign-in button">
+                  </a>
+                  <figcaption>Sign-in with email and password or Google, part of the backend I built.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/rakitkarier/jobs-feed.webp" data-title="RakitKarier — Job feed">
+                    <img src="assets/projects/rakitkarier/jobs-feed.webp" width="1440" height="900" loading="lazy" alt="Lowongan page showing 12 of 251 listings with filters for type, work mode, level and status; cards for EY and Kredivo Group list contract type, location, education and skill tags">
+                  </a>
+                  <figcaption>Job feed: 251 listings with filters, skill tags and bookmarks.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/rakitkarier/job-match.webp" data-title="RakitKarier — Job detail and match analysis">
+                    <img src="assets/projects/rakitkarier/job-match.webp" width="1440" height="900" loading="lazy" alt="Job detail for Tax - Senior AI/ML Engineer at EY with education, deadline and posted date, the job description, and a profile match card at 18% listing three met requirements and three to complete">
+                  </a>
+                  <figcaption>Job detail: the match card lists what the profile meets and what is missing.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/rakitkarier/recommendations.webp" data-title="RakitKarier — Recommendations">
+                    <img src="assets/projects/rakitkarier/recommendations.webp" width="1440" height="900" loading="lazy" alt="Recommendation cards scored 100% for a Software Engineer Intern role and a Data Analyst role, each listing matched skill, position, level, location and job type, plus notes on unknown listing data">
+                  </a>
+                  <figcaption>Recommendations: each score explains the matched factors and the unknown data.</figcaption>
+                </figure>
+                <figure class="figure">
+                  <a class="figure-trigger" href="assets/projects/rakitkarier/cv-editor.webp" data-title="RakitKarier — CV studio">
+                    <img src="assets/projects/rakitkarier/cv-editor.webp" width="1440" height="900" loading="lazy" alt="CV studio editor with eight section tabs, identity fields filled with the sample person Budi Santoso, and a live one-column ATS CV preview beside buttons to translate to English, download a PDF and save">
+                  </a>
+                  <figcaption>CV studio with the built-in sample CV: section editor and live ATS preview.</figcaption>
+                </figure>
+              </div>
             </div>
             <details class="more study-more">
               <summary><span class="toggle" aria-hidden="true"></span>Read the case study</summary>
@@ -447,6 +487,10 @@
                   </ul>
                 </div>
                 <div>
+                  <h4>Job pipeline</h4>
+                  <p>Listings come from LinkedIn’s public guest pages and the Himalayas, Jobicy and Remotive APIs. Each listing is normalised, deduplicated and stored through an idempotent <code>ingest_job</code> function, so a listing keeps one row while every source link is kept. The LinkedIn scraper stops on HTTP 429 or an auth wall instead of bypassing it.</p>
+                  <h4>How matching works</h4>
+                  <p>A score from 0 to 100: skills 40, position 20, experience level 15, education 10, work mode and location 10, contract type 5. Missing data is listed as unknown instead of counted for or against. The score is a fit index, not a hiring probability.</p>
                   <h4>Key decisions</h4>
                   <ul>
                     <li>Recommendations use transparent rules, not an LLM, so every score comes with the reasons a listing fits or does not.</li>
@@ -460,6 +504,30 @@
                   <h4>Links</h4>
                   <p class="links"><a href="https://rakitkarier.vercel.app/" target="_blank" rel="noopener">Live site</a> · <a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
                   <p class="note">The site and the README are written in Indonesian.</p>
+                </div>
+              </div>
+              <div class="detail hardware">
+                <h4>Infrastructure: Vercel and Supabase</h4>
+                <p>Every merge to <code>main</code> deploys to production on Vercel, and feature branches get preview deployments. Three cron jobs run the daily listing refresh and the two email alerts. Supabase holds the 251 listings in the <code>jobs</code> table, alongside the profile, CV, bookmark and notification tables that row-level security keeps private.</p>
+                <div class="hw-grid hw-infra">
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/rakitkarier/vercel-deployments.webp" data-title="RakitKarier — Vercel deployments">
+                      <img src="assets/projects/rakitkarier/vercel-deployments.webp" width="1184" height="700" loading="lazy" alt="Vercel deployments list for the rakitkarier project: production deployments from main and preview deployments from feature branches, all marked Ready with build times between 13 seconds and 1 minute 26 seconds">
+                    </a>
+                    <figcaption>Vercel: production deploys from <code>main</code> and previews from feature branches.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/rakitkarier/supabase-jobs.webp" data-title="RakitKarier — Supabase jobs table">
+                      <img src="assets/projects/rakitkarier/supabase-jobs.webp" width="1440" height="625" loading="lazy" alt="Supabase Table Editor on the production project showing the public.jobs table with title, company, location and work mode columns, an RLS policy badge, and the ten public tables in the sidebar">
+                    </a>
+                    <figcaption>Supabase: the <code>jobs</code> table in production, with the other tables in the sidebar.</figcaption>
+                  </figure>
+                  <figure class="figure">
+                    <a class="figure-trigger" href="assets/projects/rakitkarier/vercel-cron.webp" data-title="RakitKarier — Vercel cron jobs">
+                      <img src="assets/projects/rakitkarier/vercel-cron.webp" width="1184" height="370" loading="lazy" alt="Vercel cron jobs table with three active jobs: deadline-notify at 02:00 UTC, match-notify at 03:40 UTC and refresh-jobs at 01:00 UTC">
+                    </a>
+                    <figcaption>Vercel cron jobs: refresh-jobs at 01:00 UTC, deadline-notify at 02:00 and match-notify at 03:40.</figcaption>
+                  </figure>
                 </div>
               </div>
             </details>

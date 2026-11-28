@@ -690,6 +690,19 @@ code {
   object-fit: cover;
 }
 
+.hw-deployed {
+  grid-template-columns: minmax(0, 2.03fr) minmax(0, 0.92fr);
+  gap: 16px;
+}
+
+.hw-infra .figure:first-child {
+  grid-row: span 2;
+}
+
+.hw-app .figure:last-child {
+  grid-column: 1 / -1;
+}
+
 .proto-visual {
   grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
   align-items: start;
@@ -957,7 +970,8 @@ dialog.lightbox::backdrop {
   }
 
   .scafi-dashboard,
-  .scafi-enclosure {
+  .scafi-enclosure,
+  .hw-infra .figure:first-child {
     grid-row: auto;
     grid-column: auto;
   }
