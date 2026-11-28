@@ -753,6 +753,33 @@ code {
   align-items: start;
 }
 
+.clip-shots .figure.wide {
+  grid-column: 1 / -1;
+}
+
+.clip-shots .figure:not(.wide) img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.hw-ladder .figure-trigger img {
+  background: #fff;
+}
+
+.data.io-map {
+  max-width: none;
+  margin-top: 0;
+}
+
+.data.io-map td:not(:first-child),
+.data.io-map th:not(:first-child) {
+  text-align: left;
+}
+
+.data.io-map tbody th {
+  white-space: nowrap;
+}
+
 .yt-link {
   display: inline-flex;
   align-items: center;
@@ -987,5 +1014,14 @@ dialog.lightbox::backdrop {
   .data th,
   .data td {
     padding: 9px 10px;
+  }
+
+  .data.io-map {
+    font-size: 11px;
+  }
+
+  .data.io-map th,
+  .data.io-map td {
+    padding: 8px 7px;
   }
 }
