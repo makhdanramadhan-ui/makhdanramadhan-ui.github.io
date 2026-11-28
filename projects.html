@@ -961,7 +961,7 @@
                 <h3>Water-tank control</h3>
                 <p class="meta"><b>Coursework</b> · Semester 4, PLC course · group project · Industrial Automation · PLC</p>
                 <p>For Tugas 6, our group controlled a water tank in Factory I/O. KEEP instructions latch the system state, the fill pump, the drain pump and the auto-fill mode. Level sensors stop each pump, and the two pumps lock each other out. I wrote the ladder logic and built the Factory I/O 3D scene.</p>
-                <p class="stack">CX-Programmer (Omron CP1H), Factory I/O.</p>
+                <p class="stack">CX-Programmer (Omron CP1H), Omron OPC server, Factory I/O.</p>
                 <a class="yt-link" href="https://www.youtube.com/watch?v=fr9WfGdHkas" target="_blank" rel="noopener">Watch the run on YouTube<svg viewBox="0 0 40 14" aria-hidden="true"><path d="M1 7h37m-5-5 5 5-5 5"/></svg></a>
               </div>
               <div class="clip-shots">
@@ -1014,7 +1014,14 @@
                       <li>The fill pump starts when auto-fill is on, the tank is below the high-level sensor and the drain pump is off. It stops at the high-level sensor.</li>
                       <li>The drain pump starts on the drain button while the low-level sensor still sees water and the fill pump is off. It stops when the level drops below that sensor.</li>
                       <li>Each pump’s rung checks that the other pump is off, so the tank never fills and drains at once. Three lamps mirror the fill pump, the drain pump and auto-fill.</li>
+                      <li>Factory I/O reaches the PLC through its OPC Client driver and Omron’s <code>OMRON.OpenDataServer</code>. Each button, level sensor, valve and lamp is bound to a <code>TANGKI</code> tag.</li>
                     </ul>
+                    <figure class="figure">
+                      <a class="figure-trigger" href="assets/projects/plc/tank-driver.webp" data-title="Water-tank control — Factory I/O OPC driver">
+                        <img src="assets/projects/plc/tank-driver.webp" width="1532" height="751" loading="lazy" alt="Factory I/O driver page set to OPC Client DA/UA with server OMRON.OpenDataServer.1, listing scene sensors on the left, actuators on the right, and TANGKI tags such as Start, Stop, Kuras, Pompa_isi, Pompa_kuras, Sensor_atas and Sensor_bawah in the middle">
+                      </a>
+                      <figcaption>Factory I/O driver: OPC Client to the Omron OPC server, with the TANGKI tags.</figcaption>
+                    </figure>
                   </div>
                 </div>
                 <div class="detail hardware">
