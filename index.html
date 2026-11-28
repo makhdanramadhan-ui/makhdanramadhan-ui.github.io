@@ -129,7 +129,7 @@
           <div class="window">
             <div class="window-bar">
               <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="window-title">Selected work <span>· 9 projects</span></span>
+              <span class="window-title">Selected work <span>· 10 projects</span></span>
               <a class="window-link" href="projects.html">All case studies
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
               </a>
@@ -149,6 +149,11 @@
                 <button class="project-tab" role="tab" id="tab-rakitkarier" aria-controls="panel-rakitkarier" aria-selected="false" tabindex="-1" style="--tone:var(--sky)">
                   <span class="project-avatar shape-diamond" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18M11 12.5v1.5h2v-1.5"/></svg></span>
                   <span class="project-tab-text"><span class="project-tab-name">RakitKarier <em>Team of 4</em></span><span class="project-tab-line">Job search and CV platform</span></span>
+                  <span class="project-tab-progress" aria-hidden="true"></span>
+                </button>
+                <button class="project-tab" role="tab" id="tab-plc" aria-controls="panel-plc" aria-selected="false" tabindex="-1" style="--tone:var(--amber)">
+                  <span class="project-avatar shape-blob" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="15" width="18" height="5" rx="2.5"/><circle cx="7.5" cy="17.5" r=".8"/><circle cx="12" cy="17.5" r=".8"/><circle cx="16.5" cy="17.5" r=".8"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M12 9V4M9.5 4h5"/></svg></span>
+                  <span class="project-tab-text"><span class="project-tab-name">PLC automation <em>Factory I/O</em></span><span class="project-tab-line">Tank and conveyor ladder logic</span></span>
                   <span class="project-tab-progress" aria-hidden="true"></span>
                 </button>
                 <button class="project-tab" role="tab" id="tab-scafi" aria-controls="panel-scafi" aria-selected="false" tabindex="-1" style="--tone:var(--coral)">
@@ -209,6 +214,15 @@
                     <h3>RakitKarier <span>SEVENT X Job Platform</span></h3>
                     <p>A live job search site for Indonesia that shows which requirements match a user’s profile, helps build a CV, and sends users to the official listing to apply. I built the backend: authentication, account security, profile APIs, and email notifications.</p>
                     <p class="panel-links"><a href="projects.html#rakitkarier">Case study</a><a href="https://rakitkarier.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/makhdanramadhan-ui/sevent-x-job-platform" target="_blank" rel="noopener">Repository</a></p>
+                  </div>
+                </article>
+                <article class="project-panel" role="tabpanel" id="panel-plc" aria-labelledby="tab-plc" hidden>
+                  <figure class="panel-media"><img src="assets/projects/plc/conveyor-overview.webp" width="853" height="537" loading="lazy" alt="Factory I/O scene with two fenced machining cells, each with an orange robot arm and conveyors"></figure>
+                  <div class="panel-copy">
+                    <p class="panel-meta"><b>Coursework</b> · Semester 4, PLC course · group project · Industrial Automation · PLC</p>
+                    <h3>PLC automation <span>Factory I/O simulations</span></h3>
+                    <p>Ladder logic in CX-Programmer for an Omron CP1H, linked to Factory I/O through Omron’s OPC server. One scene is a water tank with interlocked fill and drain pumps and auto-fill; the other has two conveyor lines that feed machining centers with timed raw-piece emitters.</p>
+                    <p class="panel-links"><a href="projects.html#plc">Case study</a><a href="https://www.youtube.com/watch?v=fr9WfGdHkas" target="_blank" rel="noopener">Tank video</a><a href="https://www.youtube.com/watch?v=G-StfIa9DR0" target="_blank" rel="noopener">Conveyor video</a></p>
                   </div>
                 </article>
                 <article class="project-panel" role="tabpanel" id="panel-scafi" aria-labelledby="tab-scafi" hidden>
